@@ -1,8 +1,9 @@
 #include <iostream>
-//#include <string>
 
 #define RUNNING 1
 #define WINNER_FOUND 0
+
+#define INVALID_COORDINATE 0
 
 #define EMPTY 0
 #define FULL 3
@@ -13,20 +14,17 @@
 #define CheckForDiagRight 3
 
 
-char board[3][3] = { {'-', '-', '-'},
-					 {'-', '-', '-'},
-					 {'-', '-', '-'} };
 
-struct line {
-	unsigned char count = EMPTY;
-	char elements[3] = { '-' };
-} row_0, row_1, row_2, col_0, col_1, col_2, diag_left, diag_right;
+unsigned char board[3][3] = { 0 };
 
 unsigned char rows[3] = { EMPTY, EMPTY, EMPTY };
 unsigned char cols[3] = { EMPTY, EMPTY, EMPTY };
 unsigned char diagonals[2] = { EMPTY, EMPTY };
 
-char current_letter = 'X';
+char CharTranslation[3] = { '-', 'X', 'O' };
+
+enum letter : unsigned char { UNOCCUPIED, X, O };
+letter current_letter = X;
 
 unsigned char GAME_STATE = RUNNING;
 
@@ -34,71 +32,41 @@ static void Log(const char* message) {
 	std::cout << message << std::endl;
 }
 
-static int CheckForWinner(int index, unsigned char CheckFor) {
+static int CheckForWinner(short int index, unsigned char CheckFor) {
 	if (CheckFor == CheckForRow) {
 		if (board[index][0] == board[index][1] && board[index][0] == board[index][2]) return WINNER_FOUND;
-		return RUNNING;
 	}
 	if (CheckFor == CheckForCol) {
 		if (board[0][index] == board[1][index] && board[0][index] == board[2][index]) return WINNER_FOUND;
-		return RUNNING;
 	}
 	if (CheckFor == CheckForDiagLeft) {
 		if (board[0][0] == board[1][1] && board[0][0] == board[2][2]) return WINNER_FOUND;
-		return RUNNING;
 	}
 	if (CheckFor == CheckForDiagRight) {
 		if (board[0][2] == board[1][1] && board[0][2] == board[2][0]) return WINNER_FOUND;
-		return RUNNING;
 	}
-	/*
-	unsigned char row = 0;
-	while (row < 3) {
-		if (board[row][0] == board[row][1] && board[row][0] == board[row][2]) {
-			return WINNER_FOUND;
-		}
-		row++;
-	}
-	unsigned char column = 0;
-	while (column < 3) {
-		if (board[0][column] == board[1][column] && board[0][column] == board[2][column]) {
-			return WINNER_FOUND;
-		}
-		column++;
-	}
-	if (board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
-		return WINNER_FOUND;
-	}
-	if (board[0][2] == board[1][1] && board[0][2] == board[2][0]) {
-		return WINNER_FOUND;
-	}*/
-}
-
-static void UpdateLetter() {
-	if (current_letter == 'X') {
-		current_letter = 'O';
-		return; // Perguntar ao devm se o compiler optimiza isto
-	}
-	else {
-		current_letter = 'X';
-	}
-}
-
-static void MarkOnBoard(int x, int y) {
-	board[y][x] = current_letter;
+	return RUNNING;
 }
 
 static void PrintBoard() {
 	Log("  0 1 2");
 	Log("  -----");
 	for (unsigned char i = 0; i < 3; i++) {
-		std::cout << +i << "|" << board[i][0] << " " << board[i][1] << " " << board[i][2] << "|" << std::endl;
-		//Log("|- - -|");
+		std::cout << +i << "|" << CharTranslation[board[i][0]] << " " << CharTranslation[board[i][1]] << " " << CharTranslation[board[i][2]] << "|" << std::endl;
 	}
 	Log("  -----");
 }
 
-static int UpdateBoard(int x, int y) {
+static void UpdateLetter() {
+	if (current_letter == X) {
+		current_letter = O;
+	}
+	else {
+		current_letter = X;
+	}
+}
+
+static int UpdateBoard(short int x, short int y) {
 	rows[y] += 1;
 	cols[x] += 1;
 	if (rows[y] == FULL && !CheckForWinner(y, CheckForRow)) return WINNER_FOUND;
@@ -112,27 +80,55 @@ static int UpdateBoard(int x, int y) {
 	return RUNNING;
 }
 
-static void TakeTurn() {
+static int MarkOnBoard(short int x, short int y) {
+	if (board[y][x] != UNOCCUPIED) return INVALID_COORDINATE;
+	board[y][x] = current_letter;
+	return RUNNING;
+}
 
-	std::cout << "Where do you wish to place? (vertical)\n";
-	int Y;
-	std::cin >> Y;
+static int MakeMove(short int X, short int Y) {
 
-	std::cout << "Where do you wish to place? (horizontal)\n";
-	int X;
-	std::cin >> X;
-
-	MarkOnBoard(X, Y);
+	if (!MarkOnBoard(X, Y)) return INVALID_COORDINATE;
 
 	if (UpdateBoard(X, Y) == WINNER_FOUND) GAME_STATE = WINNER_FOUND;
+
 	else UpdateLetter();
+
+	return RUNNING;
+}
+
+static int GetMove(short int& X, short int& Y) {
+	Log("Where do you wish to place? (vertical)");
+	std::cin >> Y;
+	if (Y < 0 || Y > 2 || Y % 1 != 0) return INVALID_COORDINATE;
+
+	Log("Where do you wish to place? (horizontal)");
+	std::cin >> X;
+	if (X < 0 || X > 2 || X % 1 != 0) return INVALID_COORDINATE;
+
+	return RUNNING;
+}
+
+static void TakeTurn() {
+	short int X = 0;
+	short int Y = 0;
+
+	if (!GetMove(X, Y)) {
+		Log("Your last coordinate was invalid. Please, type your coordinates again.");
+		return;
+	}
+
+	if (!MakeMove(X, Y)) Log("The coordinate you tried to mark is already occupied. Please, choose another.");
 }
 
 int main() {
+	Log("Let's play a game of Tic-Tac-Toe!");
+	std::cin.get();
 	while (GAME_STATE == RUNNING) {
 		PrintBoard();
 		TakeTurn();
 	}
+	PrintBoard();
 	std::cout << "Congratulations! You won!" << std::endl;
 	std::cin.get();
 	std::cin.get();

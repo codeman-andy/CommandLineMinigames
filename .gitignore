@@ -37,6 +37,9 @@
 *.out
 *.app
 
+# Directories
+/.vs/
+
 # debug information files
 *.dwo
 *.vsidx
