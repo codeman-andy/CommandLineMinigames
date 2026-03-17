@@ -40,3 +40,5 @@
 # debug information files
 *.dwo
 *.vsidx
+/.vs/CommandLineMinigames.slnx/v18/Browse.VC.db
+/.vs/CommandLineMinigames.slnx/v18/Browse.VC.db-shm
