@@ -14,8 +14,12 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -24,9 +28,9 @@
               "RelativeDocumentMoniker": "TicTacToe\\src\\Main.cpp",
               "ToolTip": "C:\\Dev\\CPP\\CommandLineMinigames\\TicTacToe\\src\\Main.cpp",
               "RelativeToolTip": "TicTacToe\\src\\Main.cpp",
-              "ViewState": "AgIAAGAAAAAAAAAAAAAAAH8AAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAAAHYAAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-03-17T21:54:42.415Z",
+              "WhenOpened": "2026-03-18T22:37:25.517Z",
               "EditorCaption": ""
             }
           ]
