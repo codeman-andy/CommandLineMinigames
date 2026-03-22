@@ -38,6 +38,9 @@
 *.app
 
 # Directories
+\.vs
+.vs/
+.vs\
 /.vs/
 
 # debug information files
