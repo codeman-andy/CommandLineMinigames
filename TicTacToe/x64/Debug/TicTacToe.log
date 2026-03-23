@@ -1,4 +1,3 @@
-﻿  Main.cpp
-  TicTacToe.cpp
-  Generating Code...
-  TicTacToe.vcxproj -> C:\Dev\CPP\CommandLineMinigames\x64\Debug\TicTacToe.exe
+﻿  TicTacToe.cpp
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\TicTacToe.cpp(119,14): error C2276: '&': illegal operation on bound member function expression
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\TicTacToe.cpp(120,14): error C2276: '&': illegal operation on bound member function expression

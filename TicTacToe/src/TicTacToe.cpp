@@ -1,7 +1,7 @@
 #include "TicTacToe.h"
 
 TicTacToe::TicTacToe()
-	: board({ UNOCCUPIED }), rows({ EMPTY }), cols({ EMPTY }), diagonals({ EMPTY }), CharTranslation('-', 'X', 'O'), current_letter(UNOCCUPIED), Players({ nullptr }), current_player(nullptr), game_state(RUNNING)
+	: board({ UNOCCUPIED }), rows({ EMPTY }), cols({ EMPTY }), diagonals({ EMPTY }), CharTranslation('-', 'X', 'O'), current_letter(UNOCCUPIED), turns({ nullptr }), current_turn(nullptr), Players({ nullptr }), current_player(nullptr)
 {
 };
 
@@ -64,7 +64,7 @@ int TicTacToe::isValid(size_t coord) {
 	return INVALID_COORDINATE;
 }
 
-int TicTacToe::GetMove(size_t& X, size_t& Y) {
+int TicTacToe::GetPlayerMove(size_t& X, size_t& Y) {
 	Log("Where do you wish to place? (vertically)\n");
 	std::cin >> Y;
 	if (!isValid(Y)) return INVALID_COORDINATE;
@@ -80,11 +80,11 @@ int TicTacToe::TakeTurn() {
 	size_t X = 0;
 	size_t Y = 0;
 
-	if (!GetMove(X, Y)) return INVALID_COORDINATE;
+	if (GetPlayerMove(X, Y) == INVALID_COORDINATE) return INVALID_COORDINATE;
 
-	if (!isPossible(X, Y)) return INVALID_MOVE;
+	else if (!isPossible(X, Y)) return INVALID_MOVE;
 
-	if (!MakeMove(X, Y)) return WINNER_FOUND;
+	if (MakeMove(X, Y) == WINNER_FOUND) return WINNER_FOUND;
 
 	return RUNNING;
 }
@@ -100,13 +100,24 @@ void TicTacToe::SetPlayer() {
 }
 
 void TicTacToe::SetUpTurn() {
+	if (current_turn != turns[0]) current_turn = turns[0];
+	else current_turn = turns[1];
 	SetPlayer();
 	SetLetter();
 }
 
 void TicTacToe::SetUpPlayers() {
-	Players[0] = Player::CreatePlayer();
-	Players[1] = Player::CreatePlayer();
+	Players[0] = Human_Player::CreatePlayer();
+	Players[1] = Human_Player::CreatePlayer();
+}
+
+void TicTacToe::SetUpGame() {
+	Log("Select a match:\n1. Player vs. Player\n2.Player vs. AI\n");
+	size_t input;
+	std::cin >> input;
+	if (input == 1) {
+		turns[0] = { &TakeTurn };
+	}
 }
 
 void TicTacToe::PrintBoard() {

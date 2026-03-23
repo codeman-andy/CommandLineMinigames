@@ -9,7 +9,5 @@ public:
 
 	const char* GetName() const;
 
-	static const char* GetPlayerNameFromInput();
-
-	static Player* CreatePlayer();
+	static Player* CreatePlayer(const char* name);
 };

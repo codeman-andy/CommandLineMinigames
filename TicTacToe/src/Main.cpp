@@ -7,6 +7,8 @@ TicTacToe GAME = TicTacToe();
 int main() {
 	TicTacToe::PrintWelcomeMessage();
 
+	GAME.SetUpGame();
+
 	GAME.SetUpPlayers();
 
 	GAME.SetUpTurn();
