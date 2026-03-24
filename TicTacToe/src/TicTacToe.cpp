@@ -99,7 +99,7 @@ int TicTacToe::TakePlayerTurn() {
 }
 
 int TicTacToe::TakeAITurn() {
-	Log("It is Pam's turn!");
+	Log("It is Pam's turn!\n");
 	coords decision = AI::DecideMove();
 	if (MakeMove(decision.x, decision.y) == WINNER_FOUND) return WINNER_FOUND;
 
@@ -150,6 +150,7 @@ void TicTacToe::SetUpGame() {
 	else {
 		turns[0] = { &TakePlayerTurn };
 		turns[1] = { &TakeAITurn };
+		SetUpPvE();
 	}
 }
 
