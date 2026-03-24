@@ -1,8 +1,14 @@
 #pragma once
 
+struct coords {
+	size_t x;
+	size_t y;
+};
+
 #include "Game.h"
 #include "Player.h"
 #include "Human_Player.h"
+#include "AI.h"
 
 #define INVALID_COORDINATE 0
 #define INVALID_MOVE 0
@@ -17,31 +23,35 @@
 
 enum letter : size_t { UNOCCUPIED, X, O };
 
-struct TicTacToe : Game {
-	size_t board[3][3];
-	size_t rows[3];
-	size_t cols[3];
-	size_t diagonals[2];
-	char CharTranslation[3];
-	letter current_letter;
+struct TicTacToe : public Game {
+	static size_t board[3][3];
+	static size_t rows[3];
+	static size_t cols[3];
+	static size_t diagonals[2];
+	static char CharTranslation[3];
+	static int (*current_turn)();
+	static Player* current_player;
+	static letter current_letter;
 	//(int (*func)())* turns[2];
-	int (TicTacToe::*turns[2])();
-	int (TicTacToe::*current_turn)();
+	int (*turns[2])();
 	Player* Players[2];
-	Player* current_player;
 	TicTacToe();
-	int CheckForWinner(size_t index, size_t CheckFor);
-	int UpdateBoard(size_t x, size_t y);
-	void MarkOnBoard(size_t x, size_t y);
-	int MakeMove(size_t X, size_t Y);
-	int isPossible(size_t X, size_t Y);
-	int isValid(size_t coord);
-	int GetPlayerMove(size_t& X, size_t& Y);
-	int TakeTurn();
-	void SetLetter();
-	void SetPlayer();
+	static int CheckForWinner(size_t index, size_t CheckFor);
+	static int UpdateBoard(size_t x, size_t y);
+	static void MarkOnBoard(size_t x, size_t y);
+	static int MakeMove(size_t x, size_t y);
+	static int isPossible(size_t X, size_t Y);
+	static int isValid(size_t Coord);
+	static int GetPlayerMove(size_t& X, size_t& Y);
+	static int TakePlayerTurn();
+	static int TakeAITurn();
+	static int TakeTurn();
+	void ToggleLetter();
+	void TogglePlayer();
+	void ToggleTurn();
 	void SetUpTurn();
-	void SetUpPlayers();
+	void SetUpPvE();
+	void SetUpPvP();
 	void SetUpGame();
 	void PrintBoard();
 	void PrintVictoryMessage();

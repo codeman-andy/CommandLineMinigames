@@ -1,7 +1,16 @@
 #include "TicTacToe.h"
 
+size_t TicTacToe::board[3][3];
+size_t TicTacToe::rows[3];
+size_t TicTacToe::cols[3];
+size_t TicTacToe::diagonals[2];
+int (*TicTacToe::current_turn)();
+Player* TicTacToe::current_player;
+letter TicTacToe::current_letter;
+char TicTacToe::CharTranslation[3] = { '-', 'X', 'O' };
+
 TicTacToe::TicTacToe()
-	: board({ UNOCCUPIED }), rows({ EMPTY }), cols({ EMPTY }), diagonals({ EMPTY }), CharTranslation('-', 'X', 'O'), current_letter(UNOCCUPIED), turns({ nullptr }), current_turn(nullptr), Players({ nullptr }), current_player(nullptr)
+	: turns({ nullptr }), Players({ nullptr })
 {
 };
 
@@ -39,10 +48,10 @@ void TicTacToe::MarkOnBoard(size_t x, size_t y) {
 	board[y][x] = current_letter;
 }
 
-int TicTacToe::MakeMove(size_t X, size_t Y) {
-	MarkOnBoard(X, Y);
+int TicTacToe::MakeMove(size_t x, size_t y) {
+	MarkOnBoard(x, y);
 
-	if (UpdateBoard(X, Y) == WINNER_FOUND) {
+	if (UpdateBoard(x, y) == WINNER_FOUND) {
 		game_state = WINNER_FOUND;
 		return WINNER_FOUND;
 	}
@@ -57,8 +66,8 @@ int TicTacToe::isPossible(size_t X, size_t Y) {
 	return INVALID_MOVE;
 }
 
-int TicTacToe::isValid(size_t coord) {
-	if (coord % 1 == 0 && coord >= 0 && coord <= 2) return RUNNING;
+int TicTacToe::isValid(size_t Coord) {
+	if (Coord % 1 == 0 && Coord >= 0 && Coord <= 2) return RUNNING;
 
 	else Log("Your last coordinate was invalid. Please, type your coordinates again.\n");
 	return INVALID_COORDINATE;
@@ -76,7 +85,7 @@ int TicTacToe::GetPlayerMove(size_t& X, size_t& Y) {
 	return RUNNING;
 }
 
-int TicTacToe::TakeTurn() {
+int TicTacToe::TakePlayerTurn() {
 	size_t X = 0;
 	size_t Y = 0;
 
@@ -89,34 +98,58 @@ int TicTacToe::TakeTurn() {
 	return RUNNING;
 }
 
-void TicTacToe::SetLetter() {
-	if (current_letter == X) current_letter = O;
-	else current_letter = X;
+int TicTacToe::TakeAITurn() {
+	Log("It is Pam's turn!");
+	coords decision = AI::DecideMove();
+	if (MakeMove(decision.x, decision.y) == WINNER_FOUND) return WINNER_FOUND;
+
+	return RUNNING;
 }
 
-void TicTacToe::SetPlayer() {
-	if (current_player == Players[0]) current_player = Players[1];
-	else current_player = Players[0];
+int TicTacToe::TakeTurn() {
+	return current_turn();
+}
+
+void TicTacToe::ToggleLetter() {
+	current_letter = (current_letter == X) ? O : X;
+}
+
+void TicTacToe::TogglePlayer() {
+	current_player = (current_player == Players[0]) ? Players[1] : Players[0];
+}
+
+void TicTacToe::ToggleTurn() {
+	current_turn = (current_turn == turns[0]) ? turns[1] : turns[0];
 }
 
 void TicTacToe::SetUpTurn() {
-	if (current_turn != turns[0]) current_turn = turns[0];
-	else current_turn = turns[1];
-	SetPlayer();
-	SetLetter();
+	ToggleTurn();
+	TogglePlayer();
+	ToggleLetter();
 }
 
-void TicTacToe::SetUpPlayers() {
+void TicTacToe::SetUpPvE() {
+	Players[0] = Human_Player::CreatePlayer();
+	Players[1] = (AI*) Player::CreatePlayer("Pam");
+}
+
+void TicTacToe::SetUpPvP() {
 	Players[0] = Human_Player::CreatePlayer();
 	Players[1] = Human_Player::CreatePlayer();
 }
 
 void TicTacToe::SetUpGame() {
-	Log("Select a match:\n1. Player vs. Player\n2.Player vs. AI\n");
+	Log("Select a match:\n1. Player vs. Player\n2. Player vs. AI\n");
 	size_t input;
 	std::cin >> input;
 	if (input == 1) {
-		turns[0] = { &TakeTurn };
+		turns[0] = { &TakePlayerTurn };
+		turns[1] = { &TakePlayerTurn };
+		SetUpPvP();
+	}
+	else {
+		turns[0] = { &TakePlayerTurn };
+		turns[1] = { &TakeAITurn };
 	}
 }
 

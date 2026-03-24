@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Player.h"
+#include "TicTacToe.h"
 
-class AI : Player {
-	int DecideMove();
+class AI : public Player {
+public:
+	static coords DecideMove();
 };

@@ -3,7 +3,7 @@
 enum state : size_t { WINNER_FOUND, RUNNING };
 
 struct Game {
-	state game_state;
+	static state game_state;
 	Game();
 	virtual void PrintVictoryMessage() = 0;
 	static void PrintWelcomeMessage();

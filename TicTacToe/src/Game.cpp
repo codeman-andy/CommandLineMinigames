@@ -1,3 +1,5 @@
 #include "Game.h"
 
-Game::Game() : game_state(RUNNING) {};
+state Game::game_state = RUNNING;
+
+Game::Game() {};
