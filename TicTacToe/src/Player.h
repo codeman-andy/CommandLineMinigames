@@ -3,8 +3,9 @@
 #include "Log.h"
 
 class Player {
-	const char* m_name;
 public:
+	const char* m_name;
+	Player();
 	Player(const char* name);
 
 	const char* GetName() const;

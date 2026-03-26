@@ -57,5 +57,4 @@ private:
 	void ToggleTurn();
 	void SetUpPvE();
 	void SetUpPvP();
-
 };

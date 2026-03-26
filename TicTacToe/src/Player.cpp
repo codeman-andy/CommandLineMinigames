@@ -1,5 +1,7 @@
 #include "Player.h"
 
+Player::Player() : m_name("Undefined") {};
+
 Player::Player(const char* name) {
 	m_name = name;
 }

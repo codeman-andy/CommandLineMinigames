@@ -130,7 +130,7 @@ void TicTacToe::SetUpTurn() {
 
 void TicTacToe::SetUpPvE() {
 	Players[0] = Human_Player::CreatePlayer();
-	Players[1] = (AI*) Player::CreatePlayer("Pam");
+	Players[1] = AI::CreatePlayer("Pam");
 }
 
 void TicTacToe::SetUpPvP() {
