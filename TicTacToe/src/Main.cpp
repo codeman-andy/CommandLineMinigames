@@ -13,7 +13,7 @@ int main() {
 
 	GAME.PrintBoard();
 	while (GAME.game_state == RUNNING) {
-		if (TicTacToe::current_turn() != WINNER_FOUND) GAME.SetUpTurn();
+		if (TicTacToe::TakeTurn() != WINNER_FOUND) GAME.SetUpTurn();
 		GAME.PrintBoard();
 	}
 	GAME.PrintVictoryMessage();

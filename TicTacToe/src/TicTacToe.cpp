@@ -100,7 +100,7 @@ int TicTacToe::TakePlayerTurn() {
 
 int TicTacToe::TakeAITurn() {
 	Log("It is Pam's turn!\n");
-	coords decision = AI::DecideMove();
+	coords decision = AI::DecideMove(board, rows, cols, diagonals, current_letter);
 	if (MakeMove(decision.x, decision.y) == WINNER_FOUND) return WINNER_FOUND;
 
 	return RUNNING;

@@ -3,7 +3,7 @@
 #include "Player.h"
 
 class Human_Player : public Player {
-public:
 	static const char* GetPlayerNameFromInput();
+public:
 	static Human_Player* CreatePlayer();
 };
