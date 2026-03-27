@@ -11,39 +11,40 @@ void AI::SetValidMoves(size_t dimensions_lengths[]) {
 		m_nr_of_valid_moves = m_nr_of_valid_moves * dimensions_lengths[i];
 	}
 
-	m_valid_moves = (move*) calloc(m_nr_of_valid_moves, sizeof(coords));
+	m_valid_moves = new move[m_nr_of_valid_moves];
 
 	size_t idx = 0;
 	for (size_t i = 0; i < dimensions_lengths[0]; i++) {
 		for (size_t j = 0; j < dimensions_lengths[1]; j++) {
-			m_valid_moves[idx].position.y = i;
-			m_valid_moves[idx].position.x = j;
-			m_valid_moves[idx].valid = true;
+			m_valid_moves[idx].y = i;
+			m_valid_moves[idx].x = j;
 			idx++;
 		}
 	}
 }
 
-void AI::RemoveValidMove(coords move) {
+void AI::RemoveFromValidMoves(move move) {
 	m_nr_of_valid_moves--;
 
-	size_t i;
-	while (m_valid_moves[i].position.x != move.x && m_valid_moves[i].position.y != move.y) {
+	size_t i = 0;
+	while (m_valid_moves[i].x != move.x || m_valid_moves[i].y != move.y) {
 		i++;
 	}
 
 	while (i < m_nr_of_valid_moves) {
-		m_valid_moves[i].position = m_valid_moves[i + 1].position;
+		m_valid_moves[i].x = m_valid_moves[i + 1].x;
+		m_valid_moves[i].y = m_valid_moves[i + 1].y;
+		i++;
 	}
 }
 
-coords AI::MakeRandomMove() {
+move AI::MakeRandomMove() {
 	size_t random_index = rand() % (m_nr_of_valid_moves - 1);
-	return m_valid_moves[random_index].position;
+	return m_valid_moves[random_index];
 }
 
-coords AI::DecideMove(size_t board[3][3], size_t rows[3], size_t cols[3], size_t diagonals[2], letter my_letter) {
-	coords decision = { 0 };
+move AI::DecideMove(size_t board[3][3], size_t rows[3], size_t cols[3], size_t diagonals[2], letter my_letter) {
+	move decision = { 0 };
 	size_t win_c = 0;
 	for (int i = 0; (i < 3 && rows[i] < FULL); i++) {
 		if (my_letter * rows[i] == board[i][0] + board[i][1] + board[i][2]) {
@@ -69,4 +70,11 @@ coords AI::DecideMove(size_t board[3][3], size_t rows[3], size_t cols[3], size_t
 	}
 	std::cout << "Pam decided: [" << decision.y << ", " << decision.x << "]" << std::endl;
 	return decision;
+}
+
+AI* AI::CreatePlayer(const char* name) {
+
+	AI* ptr = new AI(name);
+
+	return ptr;
 }

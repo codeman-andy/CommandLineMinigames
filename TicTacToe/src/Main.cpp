@@ -9,12 +9,10 @@ int main() {
 
 	GAME.SetUpGame();
 
-	GAME.SetUpTurn();
-
-	GAME.PrintBoard();
-	while (GAME.game_state == RUNNING) {
-		if (TicTacToe::TakeTurn() != WINNER_FOUND) GAME.SetUpTurn();
-		GAME.PrintBoard();
+	TicTacToe::PrintBoard();
+	while (GAME.STATE == RUNNING) {
+		TicTacToe::TakeTurn();
+		TicTacToe::PrintBoard();
 	}
 	GAME.PrintVictoryMessage();
 

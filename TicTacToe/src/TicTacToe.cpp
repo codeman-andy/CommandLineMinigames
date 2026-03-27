@@ -4,13 +4,13 @@ size_t TicTacToe::board[3][3];
 size_t TicTacToe::rows[3];
 size_t TicTacToe::cols[3];
 size_t TicTacToe::diagonals[2];
-int (*TicTacToe::current_turn)();
+char TicTacToe::CharTranslation[3] = { '-', 'X', 'O' };
+int (*TicTacToe::game_mode)();
 Player* TicTacToe::current_player;
 letter TicTacToe::current_letter;
-char TicTacToe::CharTranslation[3] = { '-', 'X', 'O' };
+Player* TicTacToe::Players[2];
 
 TicTacToe::TicTacToe()
-	: turns({ nullptr }), Players({ nullptr })
 {
 };
 
@@ -27,10 +27,11 @@ int TicTacToe::CheckForWinner(size_t index, size_t CheckFor) {
 	if (CheckFor == CheckForDiagRight) {
 		if (board[0][2] == board[1][1] && board[0][2] == board[2][0]) return WINNER_FOUND;
 	}
+
 	return RUNNING;
 }
 
-int TicTacToe::UpdateBoard(size_t x, size_t y) {
+int TicTacToe::UpdateAndCheckBoard(size_t x, size_t y) {
 	rows[y] += 1;
 	cols[x] += 1;
 	if (rows[y] == FULL && CheckForWinner(y, CheckForRow) == WINNER_FOUND) return WINNER_FOUND;
@@ -51,8 +52,8 @@ void TicTacToe::MarkOnBoard(size_t x, size_t y) {
 int TicTacToe::MakeMove(size_t x, size_t y) {
 	MarkOnBoard(x, y);
 
-	if (UpdateBoard(x, y) == WINNER_FOUND) {
-		game_state = WINNER_FOUND;
+	if (UpdateAndCheckBoard(x, y) == WINNER_FOUND) {
+		STATE = WINNER_FOUND;
 		return WINNER_FOUND;
 	}
 
@@ -73,42 +74,40 @@ int TicTacToe::isValid(size_t Coord) {
 	return INVALID_COORDINATE;
 }
 
-int TicTacToe::GetPlayerMove(size_t& X, size_t& Y) {
+int TicTacToe::GetPlayerMove(move& move) {
 	Log("Where do you wish to place? (vertically)\n");
-	std::cin >> Y;
-	if (!isValid(Y)) return INVALID_COORDINATE;
+	std::cin >> move.y;
+	if (!isValid(move.y)) return INVALID_COORDINATE;
 
 	Log("Where do you wish to place? (horizontally)\n");
-	std::cin >> X;
-	if (!isValid(X)) return INVALID_COORDINATE;
+	std::cin >> move.x;
+	if (!isValid(move.x)) return INVALID_COORDINATE;
 
 	return RUNNING;
 }
 
+/*
 int TicTacToe::TakePlayerTurn() {
-	size_t X = 0;
-	size_t Y = 0;
+	move move = { 0 };
 
-	if (GetPlayerMove(X, Y) == INVALID_COORDINATE) return INVALID_COORDINATE;
+	if (GetPlayerMove(move) == INVALID_COORDINATE) return INVALID_COORDINATE;
 
-	else if (!isPossible(X, Y)) return INVALID_MOVE;
+	else if (!isPossible(move.x, move.y)) return INVALID_MOVE;
 
-	if (MakeMove(X, Y) == WINNER_FOUND) return WINNER_FOUND;
+	if (MakeMove(move.x, move.y) == WINNER_FOUND) return WINNER_FOUND;
 
 	return RUNNING;
 }
 
 int TicTacToe::TakeAITurn() {
 	Log("It is Pam's turn!\n");
-	coords decision = AI::DecideMove(board, rows, cols, diagonals, current_letter);
+	AI* bot = (AI*) current_player;
+	move decision = bot->MakeRandomMove();
 	if (MakeMove(decision.x, decision.y) == WINNER_FOUND) return WINNER_FOUND;
 
 	return RUNNING;
 }
-
-int TicTacToe::TakeTurn() {
-	return current_turn();
-}
+*/
 
 void TicTacToe::ToggleLetter() {
 	current_letter = (current_letter == X) ? O : X;
@@ -118,48 +117,119 @@ void TicTacToe::TogglePlayer() {
 	current_player = (current_player == Players[0]) ? Players[1] : Players[0];
 }
 
+/*
 void TicTacToe::ToggleTurn() {
 	current_turn = (current_turn == turns[0]) ? turns[1] : turns[0];
 }
+*/
 
 void TicTacToe::SetUpTurn() {
-	ToggleTurn();
 	TogglePlayer();
 	ToggleLetter();
 }
 
+int TicTacToe::PvERound() {
+	move move = { 0 };
+
+	if (GetPlayerMove(move) == INVALID_COORDINATE) return INVALID_COORDINATE;
+
+	else if (!isPossible(move.x, move.y)) return INVALID_MOVE;
+
+	if (MakeMove(move.x, move.y) == WINNER_FOUND) return WINNER_FOUND;
+
+	SetUpTurn();
+
+	AI* bot = (AI*) current_player;
+
+	bot->RemoveFromValidMoves(move);
+
+	std::cout << "It's  " << bot->GetName() << "'s turn! ";
+
+	move = bot->MakeRandomMove();
+
+	std::cout << bot->GetName() << " chose [" << move.x << ", " << move.y << "]" << std::endl;
+
+	if (MakeMove(move.x, move.y) == WINNER_FOUND) return WINNER_FOUND;
+
+	bot->RemoveFromValidMoves(move);
+
+	SetUpTurn();
+
+	return RUNNING;
+}
+
+int TicTacToe::PvPRound() {
+	move move = { 0 };
+
+	if (GetPlayerMove(move) == INVALID_COORDINATE) return INVALID_COORDINATE;
+
+	else if (!isPossible(move.x, move.y)) return INVALID_MOVE;
+
+	if (MakeMove(move.x, move.y) == WINNER_FOUND) return WINNER_FOUND;
+
+	SetUpTurn();
+
+	PrintBoard();
+
+	if (GetPlayerMove(move) == INVALID_COORDINATE) return INVALID_COORDINATE;
+
+	else if (!isPossible(move.x, move.y)) return INVALID_MOVE;
+
+	if (MakeMove(move.x, move.y) == WINNER_FOUND) return WINNER_FOUND;
+
+	SetUpTurn();
+
+	return RUNNING;
+}
+
+int TicTacToe::TakeTurn() {
+	return game_mode();
+}
+
 void TicTacToe::SetUpPvE() {
+	game_mode = &PvERound;
+
 	Players[0] = Human_Player::CreatePlayer();
-	Players[1] = AI::CreatePlayer("Pam");
+
+	AI* bot_player = AI::CreatePlayer("Pam");
+
+	Players[1] = bot_player;
+
+	size_t board_dimensions[2] = { 3, 3 };
+	bot_player->SetValidMoves(board_dimensions);
 }
 
 void TicTacToe::SetUpPvP() {
+	game_mode = &PvPRound;
 	Players[0] = Human_Player::CreatePlayer();
 	Players[1] = Human_Player::CreatePlayer();
 }
 
 void TicTacToe::SetUpGame() {
-	Log("Select a match:\n1. Player vs. Player\n2. Player vs. AI\n");
 	size_t input;
+
+	Log("Select a match:\n1. Player vs. Player\n2. Player vs. AI\n");
 	std::cin >> input;
-	if (input == 1) {
-		turns[0] = { &TakePlayerTurn };
-		turns[1] = { &TakePlayerTurn };
-		SetUpPvP();
-	}
-	else {
-		turns[0] = { &TakePlayerTurn };
-		turns[1] = { &TakeAITurn };
-		SetUpPvE();
-	}
+
+	if (input == 1) SetUpPvP();
+
+	else SetUpPvE();
+
+	SetUpTurn();
 }
+
+
+
+/*	LOGGING MEMBERS  */
 
 void TicTacToe::PrintBoard() {
 	Log("  0 1 2\n");
 	Log("  -----\n");
+
 	for (size_t i = 0; i < 3; i++) {
 		std::cout << +i << "|" << CharTranslation[board[i][0]] << " " << CharTranslation[board[i][1]] << " " << CharTranslation[board[i][2]] << "|" << std::endl;
 	}
+
 	Log("  -----\n");
 }
 

@@ -1,9 +1,2 @@
-﻿  AI.cpp
-  Game.cpp
-  Human_Player.cpp
-  Log.cpp
-  Main.cpp
-  Player.cpp
-  TicTacToe.cpp
-  Generating Code...
+﻿  TicTacToe.cpp
   TicTacToe.vcxproj -> C:\Dev\CPP\CommandLineMinigames\x64\Debug\TicTacToe.exe
