@@ -12,5 +12,7 @@ public:
 	void SetValidMoves(size_t dimensions_lengths[]);
 	void RemoveFromValidMoves(move move);
 	move MakeRandomMove();
+	int FindWinningMove(move& winning_move, size_t board[3][3], size_t row_count[3], size_t col_count[3], size_t diagonal_count[2]);
+	move WinOrMakeRandomMove(size_t board[3][3], size_t row_count[3], size_t col_count[3], size_t diagonal_count[2]);
 	static AI* CreatePlayer(const char* name);
 };

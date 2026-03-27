@@ -25,6 +25,7 @@ enum letter : size_t { UNOCCUPIED, X, O };
 
 struct TicTacToe : public Game {
 	TicTacToe();
+	static letter GetCurrentLetter();
 	static int MakeMove(size_t x, size_t y);
 	static int GetPlayerMove(move& move);
 	static int TakeTurn();

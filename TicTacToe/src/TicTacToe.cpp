@@ -14,6 +14,10 @@ TicTacToe::TicTacToe()
 {
 };
 
+letter TicTacToe::GetCurrentLetter() {
+	return current_letter;
+}
+
 int TicTacToe::CheckForWinner(size_t index, size_t CheckFor) {
 	if (CheckFor == CheckForRow) {
 		if (board[index][0] == board[index][1] && board[index][0] == board[index][2]) return WINNER_FOUND;
@@ -145,7 +149,7 @@ int TicTacToe::PvERound() {
 
 	std::cout << "It's  " << bot->GetName() << "'s turn! ";
 
-	move = bot->MakeRandomMove();
+	move = bot->WinOrMakeRandomMove(board, rows, cols, diagonals);
 
 	std::cout << bot->GetName() << " chose [" << move.x << ", " << move.y << "]" << std::endl;
 
