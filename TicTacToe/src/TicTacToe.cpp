@@ -133,29 +133,29 @@ void TicTacToe::SetUpTurn() {
 }
 
 int TicTacToe::PvERound() {
-	move move = { 0 };
+	move player_move = move();
 
-	if (GetPlayerMove(move) == INVALID_COORDINATE) return INVALID_COORDINATE;
+	if (GetPlayerMove(player_move) == INVALID_COORDINATE) return INVALID_COORDINATE;
 
-	else if (!isPossible(move.x, move.y)) return INVALID_MOVE;
+	else if (!isPossible(player_move.x, player_move.y)) return INVALID_MOVE;
 
-	if (MakeMove(move.x, move.y) == WINNER_FOUND) return WINNER_FOUND;
+	if (MakeMove(player_move.x, player_move.y) == WINNER_FOUND) return WINNER_FOUND;
 
 	SetUpTurn();
 
 	AI* bot = (AI*) current_player;
 
-	bot->RemoveFromValidMoves(move);
+	bot->RemoveFromValidMoves(player_move);
 
 	std::cout << "It's  " << bot->GetName() << "'s turn! ";
 
-	move = bot->WinOrMakeRandomMove(board, rows, cols, diagonals);
+	move ai_move = bot->FindWinOrMakeRandomMove(board, rows, cols, diagonals);
 
-	std::cout << bot->GetName() << " chose [" << move.x << ", " << move.y << "]" << std::endl;
+	std::cout << bot->GetName() << " chose [" << ai_move.x << ", " << ai_move.y << "]" << std::endl;
 
-	if (MakeMove(move.x, move.y) == WINNER_FOUND) return WINNER_FOUND;
+	if (MakeMove(ai_move.x, ai_move.y) == WINNER_FOUND) return WINNER_FOUND;
 
-	bot->RemoveFromValidMoves(move);
+	bot->RemoveFromValidMoves(ai_move);
 
 	SetUpTurn();
 
@@ -163,23 +163,23 @@ int TicTacToe::PvERound() {
 }
 
 int TicTacToe::PvPRound() {
-	move move = { 0 };
+	move player_move = move();
 
-	if (GetPlayerMove(move) == INVALID_COORDINATE) return INVALID_COORDINATE;
+	if (GetPlayerMove(player_move) == INVALID_COORDINATE) return INVALID_COORDINATE;
 
-	else if (!isPossible(move.x, move.y)) return INVALID_MOVE;
+	else if (!isPossible(player_move.x, player_move.y)) return INVALID_MOVE;
 
-	if (MakeMove(move.x, move.y) == WINNER_FOUND) return WINNER_FOUND;
+	if (MakeMove(player_move.x, player_move.y) == WINNER_FOUND) return WINNER_FOUND;
 
 	SetUpTurn();
 
 	PrintBoard();
 
-	if (GetPlayerMove(move) == INVALID_COORDINATE) return INVALID_COORDINATE;
+	if (GetPlayerMove(player_move) == INVALID_COORDINATE) return INVALID_COORDINATE;
 
-	else if (!isPossible(move.x, move.y)) return INVALID_MOVE;
+	else if (!isPossible(player_move.x, player_move.y)) return INVALID_MOVE;
 
-	if (MakeMove(move.x, move.y) == WINNER_FOUND) return WINNER_FOUND;
+	if (MakeMove(player_move.x, player_move.y) == WINNER_FOUND) return WINNER_FOUND;
 
 	SetUpTurn();
 

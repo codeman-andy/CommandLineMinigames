@@ -1,3 +1,5 @@
 ﻿  AI.cpp
-C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.cpp(111,1): warning C4715: 'AI::FindWinningMove': not all control paths return a value
+  Main.cpp
+  TicTacToe.cpp
+  Generating Code...
   TicTacToe.vcxproj -> C:\Dev\CPP\CommandLineMinigames\x64\Debug\TicTacToe.exe

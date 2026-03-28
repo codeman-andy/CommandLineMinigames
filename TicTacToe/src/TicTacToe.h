@@ -3,6 +3,21 @@
 struct move {
 	size_t x;
 	size_t y;
+
+	move() : x(0), y(0) {}
+
+	move(size_t X, size_t Y) {
+		x = X;
+		y = Y;
+	}
+
+	bool operator==(move& other) {
+		return (x == other.x && y == other.y);
+	}
+
+	bool operator!=(move& other) {
+		return (x != other.x || y != other.y);
+	}
 };
 
 enum letter : size_t { UNOCCUPIED, X, O };
