@@ -1,12 +1,12 @@
 #pragma once
 
 struct move {
-	size_t x;
-	size_t y;
+	int x;
+	int y;
 
 	move() : x(0), y(0) {}
 
-	move(size_t X, size_t Y) {
+	move(int X, int Y) {
 		x = X;
 		y = Y;
 	}
@@ -20,7 +20,7 @@ struct move {
 	}
 };
 
-enum letter : size_t { UNOCCUPIED, X, O };
+enum letter { UNOCCUPIED, X, O };
 
 #include "Game.h"
 #include "Player.h"
@@ -40,8 +40,10 @@ enum letter : size_t { UNOCCUPIED, X, O };
 
 struct TicTacToe : public Game {
 	TicTacToe();
+	move* GetValidMoves();
 	static letter GetCurrentLetter();
-	static int MakeMove(size_t x, size_t y);
+	static int CheckForDraw();
+	static int MakeMove(int x, int y);
 	static int GetPlayerMove(move& move);
 	static int TakeTurn();
 	static void SetUpTurn();
@@ -50,20 +52,20 @@ struct TicTacToe : public Game {
 	void PrintVictoryMessage();
 	static void PrintWelcomeMessage();
 private:
-	static size_t board[3][3];
-	static size_t rows[3];
-	static size_t cols[3];
-	static size_t diagonals[2];
+	static int board[3][3];
+	static int rows[3];
+	static int cols[3];
+	static int diagonals[2];
 	static char CharTranslation[3];
 	static int (*game_mode)();
 	static Player* current_player;
 	static letter current_letter;
 	static Player* Players[2];
-	static int CheckForWinner(size_t index, size_t CheckFor);
-	static int UpdateAndCheckBoard(size_t x, size_t y);
-	static void MarkOnBoard(size_t x, size_t y);
-	static int isPossible(size_t X, size_t Y);
-	static int isValid(size_t Coord);
+	static int CheckForWinner(int index, int CheckFor);
+	static int UpdateAndCheckBoard(int x, int y);
+	static void MarkOnBoard(int x, int y);
+	static int isPossible(int X, int Y);
+	static int isValid(int Coord);
 	//static int TakePlayerTurn();
 	//static int TakeAITurn();
 	static int PvERound();

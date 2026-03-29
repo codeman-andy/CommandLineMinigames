@@ -1,6 +1,6 @@
 #pragma once
 
-enum state : size_t { WINNER_FOUND, RUNNING };
+enum state { WINNER_FOUND, RUNNING, DRAW };
 
 struct Game {
 	static state STATE;
