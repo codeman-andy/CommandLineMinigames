@@ -8,17 +8,19 @@ class AI : public Player {
 	 int m_nr_of_valid_moves;
 	 int FindMoveIndex(move move) const;
 	 void DecrementValidMoves(int index);
+	 void CopyBoard(int board[3][3], int new_board[3][3]);
 public:
 	AI(const char* name);
-	void SetValidMoves(int dimensions_lengths[]);
+	void SetValidMoves(move* valid_moves);
 	void RemoveFromValidMoves(move move);
 	move MakeRandomMove() const;
-	static int FindWinningMoveInRows(move& winning_move, int board[3][3], int row_count[3], int my_letter);
-	static int FindWinningMoveInCols(move& winning_move, int board[3][3], int col_count[3], int my_letter);
-	static int FindWinningMoveInDiagonals(move& winning_move, int board[3][3], int diagonal_count[2], int my_letter);
-	static int FindWinningMove(move& winning_move, int board[3][3], int row_count[3], int col_count[3], int diagonal_count[2], int my_letter);
-	move FindWinOrMakeRandomMove(int board[3][3], int row_count[3], int col_count[3], int diagonal_count[2]) const;
-	move FindWinOrPreventLossOrMakeRandomMove(int board[3][3], int row_count[3], int col_count[3], int diagonal_count[2]) const;
-	//int MinMaxMove(move& winning_move, int board[3][3], int row_count[3], int col_count[3], int diagonal_count[2], int my_letter);
+	static int FindWinningMoveInRows(move& winning_move, ttt_board board, int my_letter);
+	static int FindWinningMoveInCols(move& winning_move, ttt_board board, int my_letter);
+	static int FindWinningMoveInDiagonals(move& winning_move, ttt_board board, int my_letter);
+	static int FindWinningMove(move& winning_move, ttt_board board, int my_letter);
+	move FindWinOrMakeRandomMove(ttt_board board) const;
+	move FindWinOrPreventLossOrMakeRandomMove(ttt_board board) const;
+	int MinMaxScore(move& last_move, ttt_board board, int last_letter);
+	int MinMaxMove(ttt_board board, int my_letter);
 	static AI* CreatePlayer(const char* name);
 };

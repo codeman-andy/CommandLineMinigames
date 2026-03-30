@@ -1,6 +1,6 @@
 #include "TicTacToe.h"
 
-int TicTacToe::board[3][3];
+ttt_board TicTacToe::board;
 int TicTacToe::rows[3];
 int TicTacToe::cols[3];
 int TicTacToe::diagonals[2];
@@ -14,26 +14,32 @@ TicTacToe::TicTacToe()
 {
 };
 
-move* TicTacToe::GetValidMoves() {
-	move valid_moves[9];
-	int max_index = 0;
+int TicTacToe::GetNrOfValidMoves(int board[3][3]) {
+	int nr_of_valid_moves = 0;
 
 	for (int row = 0; row < 3; row++) {
 		for (int col = 0; col < 3; col++) {
-			if (board[col][row] == UNOCCUPIED) {
-				valid_moves[max_index] = move(col, row);
-				max_index++;
+			if (board[col][row] == UNOCCUPIED) nr_of_valid_moves++;
+		}
+	}
+
+	return nr_of_valid_moves;
+}
+
+move* TicTacToe::GetValidMoves(ttt_board board) {
+	move* valid_moves = (move*) new move[board.nr_of_available_moves];
+
+	int index = 0;
+	for (int row = 0; row < 3; row++) {
+		for (int col = 0; col < 3; col++) {
+			if (board.coordinates[col][row] == UNOCCUPIED) {
+				valid_moves[index] = move(col, row);
+				index++;
 			}
 		}
 	}
 
-	move* r_valid_moves = (move*) new move[max_index];
-
-	for (int index = 0; index < max_index; index++) {
-		r_valid_moves[index] = valid_moves[index];
-	}
-
-	return r_valid_moves;
+	return valid_moves;
 }
 
 letter TicTacToe::GetCurrentLetter() {
@@ -44,51 +50,55 @@ int TicTacToe::CheckForDraw() {
 	int letter_count = 0;
 
 	for (int i = 0; i < 3; i++) {
-		for (int j = 0; (j < 3) && (board[j][i] != UNOCCUPIED); j++) letter_count++;
+		for (int j = 0; (j < 3) && (board.coordinates[j][i] != UNOCCUPIED); j++) letter_count++;
 	}
 
 	if (letter_count >= 8) return DRAW;
 }
 
-int TicTacToe::CheckForWinner(int index, int CheckFor) {
+int TicTacToe::CheckForWinner(ttt_board board, int index, int CheckFor) {
 	if (CheckFor == CheckForRow) {
-		if (board[index][0] == board[index][1] && board[index][0] == board[index][2]) return WINNER_FOUND;
+		if (board.coordinates[index][0] == board.coordinates[index][1] && board.coordinates[index][0] == board.coordinates[index][2]) return WINNER_FOUND;
 	}
 	if (CheckFor == CheckForCol) {
-		if (board[0][index] == board[1][index] && board[0][index] == board[2][index]) return WINNER_FOUND;
+		if (board.coordinates[0][index] == board.coordinates[1][index] && board.coordinates[0][index] == board.coordinates[2][index]) return WINNER_FOUND;
 	}
 	if (CheckFor == CheckForDiagLeft) {
-		if (board[0][0] == board[1][1] && board[0][0] == board[2][2]) return WINNER_FOUND;
+		if (board.coordinates[0][0] == board.coordinates[1][1] && board.coordinates[0][0] == board.coordinates[2][2]) return WINNER_FOUND;
 	}
 	if (CheckFor == CheckForDiagRight) {
-		if (board[0][2] == board[1][1] && board[0][2] == board[2][0]) return WINNER_FOUND;
+		if (board.coordinates[0][2] == board.coordinates[1][1] && board.coordinates[0][2] == board.coordinates[2][0]) return WINNER_FOUND;
 	}
 
 	return RUNNING;
 }
 
-int TicTacToe::UpdateAndCheckBoard(int x, int y) {
-	rows[y] += 1;
-	cols[x] += 1;
-	if (rows[y] == FULL && CheckForWinner(y, CheckForRow) == WINNER_FOUND) return WINNER_FOUND;
-	if (cols[x] == FULL && CheckForWinner(x, CheckForCol) == WINNER_FOUND) return WINNER_FOUND;
+int TicTacToe::CheckBoard(ttt_board board, int x, int y) {
+	if (board.row_counter[y] == FULL && CheckForWinner(board, y, CheckForRow) == WINNER_FOUND) return WINNER_FOUND;
+	if (board.col_counter[x] == FULL && CheckForWinner(board, x, CheckForCol) == WINNER_FOUND) return WINNER_FOUND;
 
-	if (x == y) diagonals[0]++;
-	if (x + y == 2) diagonals[1]++;
-	if (diagonals[0] == FULL && CheckForWinner(0, CheckForDiagLeft) == WINNER_FOUND) return WINNER_FOUND;
-	if (diagonals[1] == FULL && CheckForWinner(1, CheckForDiagRight) == WINNER_FOUND) return WINNER_FOUND;
+	if (board.diagonal_counter[0] == FULL && CheckForWinner(board, 0, CheckForDiagLeft) == WINNER_FOUND) return WINNER_FOUND;
+	if (board.diagonal_counter[1] == FULL && CheckForWinner(board, 1, CheckForDiagRight) == WINNER_FOUND) return WINNER_FOUND;
 
 	return RUNNING;
 }
 
-void TicTacToe::MarkOnBoard(int x, int y) {
-	board[y][x] = current_letter;
+void TicTacToe::MarkOnBoard(ttt_board& board, int x, int y, int letter) {
+	board.coordinates[y][x] = letter;
+	board.row_counter[y] += 1;
+	board.col_counter[x] += 1;
+
+	if (x == y) board.diagonal_counter[0]++;
+
+	if (x + y == 2) board.diagonal_counter[1]++;
+
+	board.nr_of_available_moves--;
 }
 
 int TicTacToe::MakeMove(int x, int y) {
-	MarkOnBoard(x, y);
+	MarkOnBoard(board, x, y, current_letter);
 
-	if (UpdateAndCheckBoard(x, y) == WINNER_FOUND) {
+	if (CheckBoard(board, x, y) == WINNER_FOUND) {
 		STATE = WINNER_FOUND;
 		return WINNER_FOUND;
 	}
@@ -97,7 +107,7 @@ int TicTacToe::MakeMove(int x, int y) {
 }
 
 int TicTacToe::isPossible(int X, int Y) {
-	if (board[Y][X] == UNOCCUPIED) return RUNNING;
+	if (board.coordinates[Y][X] == UNOCCUPIED) return RUNNING;
 
 	else Log("The coordinate you tried to mark is already occupied. Please, choose another.\n");
 	return INVALID_MOVE;
@@ -181,7 +191,7 @@ int TicTacToe::PvERound() {
 
 	std::cout << "It's  " << bot->GetName() << "'s turn! ";
 
-	move ai_move = bot->FindWinOrPreventLossOrMakeRandomMove(board, rows, cols, diagonals);
+	move ai_move = bot->FindWinOrPreventLossOrMakeRandomMove(board);
 
 	std::cout << bot->GetName() << " chose [" << ai_move.x << ", " << ai_move.y << "]" << std::endl;
 
@@ -231,8 +241,8 @@ void TicTacToe::SetUpPvE() {
 
 	Players[1] = bot_player;
 
-	int board_dimensions[2] = { 3, 3 };
-	bot_player->SetValidMoves(board_dimensions);
+	move* valid_moves = GetValidMoves(board);
+	bot_player->SetValidMoves(valid_moves);
 }
 
 void TicTacToe::SetUpPvP() {
@@ -263,7 +273,7 @@ void TicTacToe::PrintBoard() {
 	Log("  -----\n");
 
 	for (int i = 0; i < 3; i++) {
-		std::cout << +i << "|" << CharTranslation[board[i][0]] << " " << CharTranslation[board[i][1]] << " " << CharTranslation[board[i][2]] << "|" << std::endl;
+		std::cout << i << "|" << CharTranslation[board.coordinates[i][0]] << " " << CharTranslation[board.coordinates[i][1]] << " " << CharTranslation[board.coordinates[i][2]] << "|" << std::endl;
 	}
 
 	Log("  -----\n");

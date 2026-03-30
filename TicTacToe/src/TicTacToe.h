@@ -6,10 +6,7 @@ struct move {
 
 	move() : x(0), y(0) {}
 
-	move(int X, int Y) {
-		x = X;
-		y = Y;
-	}
+	move(int X, int Y) : x(X), y(Y) {};
 
 	bool operator==(move& other) {
 		return (x == other.x && y == other.y);
@@ -21,6 +18,52 @@ struct move {
 };
 
 enum letter { UNOCCUPIED, X, O };
+
+struct ttt_board {
+	int coordinates[3][3];
+	int row_counter[3];
+	int col_counter[3];
+	int diagonal_counter[2];
+	int nr_of_available_moves;
+
+	ttt_board() : coordinates({ 0 }), row_counter({ 0 }), col_counter({ 0 }), diagonal_counter({ 0 }), nr_of_available_moves(9) {};
+
+	ttt_board(int coordinates[3][3], int rows_counters[3], int cols_counters[3], int diagonals_counters[2], int nr_of_available_moves) {
+		for (int row = 0; row < 3; row++) {
+			for (int col = 0; col < 3; col++) {
+				this->coordinates[col][row] = coordinates[col][row];
+			}
+		}
+
+		for (int counter_index = 0; counter_index < 2; counter_index++) {
+			this->row_counter[counter_index] = rows_counters[counter_index];
+			this->col_counter[counter_index] = cols_counters[counter_index];
+			this->diagonal_counter[counter_index] = diagonals_counters[counter_index];
+		}
+		this->row_counter[2] = rows_counters[2];
+		this->col_counter[2] = cols_counters[2];
+
+		this->nr_of_available_moves = nr_of_available_moves;
+	}
+
+	void CopyBoard(ttt_board other) {
+		for (int row = 0; row < 3; row++) {
+			for (int col = 0; col < 3; col++) {
+				this->coordinates[col][row] = other.coordinates[col][row];
+			}
+		}
+
+		for (int counter_index = 0; counter_index < 2; counter_index++) {
+			this->row_counter[counter_index] = other.row_counter[counter_index];
+			this->col_counter[counter_index] = other.col_counter[counter_index];
+			this->diagonal_counter[counter_index] = other.diagonal_counter[counter_index];
+		}
+		this->row_counter[2] = other.row_counter[2];
+		this->col_counter[2] = other.col_counter[2];
+
+		this->nr_of_available_moves = other.nr_of_available_moves;
+	}
+};
 
 #include "Game.h"
 #include "Player.h"
@@ -40,9 +83,13 @@ enum letter { UNOCCUPIED, X, O };
 
 struct TicTacToe : public Game {
 	TicTacToe();
-	move* GetValidMoves();
+	static int GetNrOfValidMoves(int board[3][3]);
+	static move* GetValidMoves(ttt_board board);
 	static letter GetCurrentLetter();
 	static int CheckForDraw();
+	static int CheckForWinner(ttt_board board, int index, int CheckFor);
+	static int CheckBoard(ttt_board board, int x, int y);
+	static void MarkOnBoard(ttt_board& board, int x, int y, int letter);
 	static int MakeMove(int x, int y);
 	static int GetPlayerMove(move& move);
 	static int TakeTurn();
@@ -52,7 +99,7 @@ struct TicTacToe : public Game {
 	void PrintVictoryMessage();
 	static void PrintWelcomeMessage();
 private:
-	static int board[3][3];
+	static ttt_board board;
 	static int rows[3];
 	static int cols[3];
 	static int diagonals[2];
@@ -61,9 +108,6 @@ private:
 	static Player* current_player;
 	static letter current_letter;
 	static Player* Players[2];
-	static int CheckForWinner(int index, int CheckFor);
-	static int UpdateAndCheckBoard(int x, int y);
-	static void MarkOnBoard(int x, int y);
 	static int isPossible(int X, int Y);
 	static int isValid(int Coord);
 	//static int TakePlayerTurn();

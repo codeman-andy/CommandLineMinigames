@@ -16,6 +16,21 @@ void AI::DecrementValidMoves(int index) {
 	for (index; index < m_nr_of_valid_moves; index++) m_valid_moves[index] = m_valid_moves[index + 1];
 }
 
+/**
+void AI::CopyBoard(int board[3][3], int new_board[3][3]) {
+	for (int row = 0; row < 3; row++) {
+		for (int col = 0; col < 3; col++) {
+			new_board[col][row] = board[col][row];
+		}
+	}
+}
+*/
+
+void AI::SetValidMoves(move* valid_moves) {
+	m_valid_moves = valid_moves;
+}
+
+/*
 void AI::SetValidMoves(int dimensions_lengths[]) {
 	for (int i = 0; i < 2; i++) {
 		m_nr_of_valid_moves = m_nr_of_valid_moves * dimensions_lengths[i];
@@ -32,6 +47,7 @@ void AI::SetValidMoves(int dimensions_lengths[]) {
 		}
 	}
 }
+*/
 
 void AI::RemoveFromValidMoves(move move) {
 	m_nr_of_valid_moves--;
@@ -46,18 +62,18 @@ move AI::MakeRandomMove() const {
 	return m_valid_moves[random_index];
 }
 
-int AI::FindWinningMoveInRows(move& winning_move, int board[3][3], int row_count[3], int my_letter) {
+int AI::FindWinningMoveInRows(move& winning_move, ttt_board board, int my_letter) {
 	int my_letter_count;
 	move available_spot = move();
 
 	for (int row = 0; row < 3; row++) {
-		if (row_count[row] != 2) continue;
+		if (board.row_counter[row] != 2) continue;
 
 		my_letter_count = 0;
 		int col = 0;
 		for (col; col < 3; col++) {
-			if (board[row][col] == my_letter) my_letter_count++;
-			else if (board[row][col] == UNOCCUPIED) available_spot = move(col, row);
+			if (board.coordinates[row][col] == my_letter) my_letter_count++;
+			else if (board.coordinates[row][col] == UNOCCUPIED) available_spot = move(col, row);
 		}
 
 		if (my_letter_count == 2) {
@@ -69,18 +85,18 @@ int AI::FindWinningMoveInRows(move& winning_move, int board[3][3], int row_count
 	return RUNNING;
 }
 
-int AI::FindWinningMoveInCols(move& winning_move, int board[3][3], int col_count[3], int my_letter) {
+int AI::FindWinningMoveInCols(move& winning_move, ttt_board board, int my_letter) {
 	int my_letter_count;
 	move available_spot = move();
 
 	for (int col = 0; col < 3; col++) {
-		if (col_count[col] != 2) continue;
+		if (board.col_counter[col] != 2) continue;
 
 		my_letter_count = 0;
 		int row = 0;
 		for (row; row < 3; row++) {
-			if (board[row][col] == my_letter) my_letter_count++;
-			else if (board[row][col] == UNOCCUPIED) available_spot = move(col, row);
+			if (board.coordinates[row][col] == my_letter) my_letter_count++;
+			else if (board.coordinates[row][col] == UNOCCUPIED) available_spot = move(col, row);
 		}
 
 		if (my_letter_count == 2) {
@@ -92,16 +108,16 @@ int AI::FindWinningMoveInCols(move& winning_move, int board[3][3], int col_count
 	return RUNNING;
 }
 
-int AI::FindWinningMoveInDiagonals(move& winning_move, int board[3][3], int diagonal_count[2], int my_letter) {
+int AI::FindWinningMoveInDiagonals(move& winning_move, ttt_board board, int my_letter) {
 	int my_letter_count;
 	move available_spot = move();
 
-	if (diagonal_count[0] == 2) {
+	if (board.diagonal_counter[0] == 2) {
 		my_letter_count = 0;
 		int equal = 0;
 		for (equal; equal < 3; equal++) {
-			if (board[equal][equal] == my_letter) my_letter_count++;
-			else if (board[equal][equal] == UNOCCUPIED) available_spot = move(equal, equal);
+			if (board.coordinates[equal][equal] == my_letter) my_letter_count++;
+			else if (board.coordinates[equal][equal] == UNOCCUPIED) available_spot = move(equal, equal);
 		}
 
 		if (my_letter_count == 2) {
@@ -110,13 +126,13 @@ int AI::FindWinningMoveInDiagonals(move& winning_move, int board[3][3], int diag
 		}
 	}
 
-	if (diagonal_count[1] == 2) {
+	if (board.diagonal_counter[1] == 2) {
 		my_letter_count = 0;
 
 		int alternate = 0;
 		for (alternate; alternate < 3; alternate++) {
-			if (board[alternate][2 - alternate] == my_letter) my_letter_count++;
-			else if (board[alternate][2 - alternate] == UNOCCUPIED) available_spot = move(2 - alternate, alternate);
+			if (board.coordinates[alternate][2 - alternate] == my_letter) my_letter_count++;
+			else if (board.coordinates[alternate][2 - alternate] == UNOCCUPIED) available_spot = move(2 - alternate, alternate);
 		}
 
 		if (my_letter_count == 2) {
@@ -128,53 +144,104 @@ int AI::FindWinningMoveInDiagonals(move& winning_move, int board[3][3], int diag
 	return RUNNING;
 }
 
-int AI::FindWinningMove(move& winning_move, int board[3][3], int row_count[3], int col_count[3], int diagonal_count[2], int my_letter) {
+int AI::FindWinningMove(move& winning_move, ttt_board board, int my_letter) {
 
-	if (FindWinningMoveInRows(winning_move, board, row_count, my_letter) == WINNER_FOUND) return WINNER_FOUND;
+	if (FindWinningMoveInRows(winning_move, board, my_letter) == WINNER_FOUND) return WINNER_FOUND;
 
-	if (FindWinningMoveInCols(winning_move, board, col_count, my_letter) == WINNER_FOUND) return WINNER_FOUND;
+	if (FindWinningMoveInCols(winning_move, board, my_letter) == WINNER_FOUND) return WINNER_FOUND;
 
-	if (FindWinningMoveInDiagonals(winning_move, board, diagonal_count, my_letter) == WINNER_FOUND) return WINNER_FOUND;
+	if (FindWinningMoveInDiagonals(winning_move, board, my_letter) == WINNER_FOUND) return WINNER_FOUND;
 
 	return RUNNING;
 }
 
-move AI::FindWinOrMakeRandomMove(int board[3][3], int row_count[3], int col_count[3], int diagonal_count[2]) const {
+move AI::FindWinOrMakeRandomMove(ttt_board board) const {
 	int my_letter = TicTacToe::GetCurrentLetter();
 
 	move winning_move(-33, -33);
 
-	if (FindWinningMove(winning_move, board, row_count, col_count, diagonal_count, my_letter) == WINNER_FOUND) return winning_move;
+	if (FindWinningMove(winning_move, board, my_letter) == WINNER_FOUND) return winning_move;
 
 	else return MakeRandomMove();
 }
 
 
-move AI::FindWinOrPreventLossOrMakeRandomMove(int board[3][3], int row_count[3], int col_count[3], int diagonal_count[2]) const {
+move AI::FindWinOrPreventLossOrMakeRandomMove(ttt_board board) const {
 	int my_letter = TicTacToe::GetCurrentLetter();
 
 	move winning_move(-33, -33);
 
-	if (FindWinningMove(winning_move, board, row_count, col_count, diagonal_count, my_letter) == WINNER_FOUND) return winning_move;
+	if (FindWinningMove(winning_move, board, my_letter) == WINNER_FOUND) return winning_move;
 
 	int opponent_letter = (my_letter == O) ? X : O;
 
-	if (FindWinningMove(winning_move, board, row_count, col_count, diagonal_count, opponent_letter) == WINNER_FOUND) return winning_move;
+	if (FindWinningMove(winning_move, board, opponent_letter) == WINNER_FOUND) return winning_move;
 
 	else return MakeRandomMove();
 }
-/*
-int AI::MinMaxMove(move& winning_move, int my_letter) {
-	if (TicTacToe::FindWinningMoveForLetter(winning_move, my_letter) == WINNER_FOUND) return 10;
 
-	int opponent_letter = (my_letter == O) ? X : O;
+int Min(int* scores, int length) {
+	int min_value = 10;
 
-	if (TicTacToe::FindWinningMoveForLetter(winning_move, opponent_letter) == WINNER_FOUND) return -10;
+	for (int i = 0; i < length; i++) {
+		if (scores[i] < min_value) min_value = scores[i];
+	}
+
+	return min_value;
+}
+
+int Max(int* scores, int length) {
+	int max_value = -10;
+
+	for (int i = 0; i < length; i++) {
+		if (scores[i] > max_value) max_value = scores[i];
+	}
+
+	return max_value;
+}
+
+int AI::MinMaxScore(move& last_move, ttt_board board, int last_letter) {
+
+	int my_letter = TicTacToe::GetCurrentLetter();
+
+	if (TicTacToe::CheckBoard(board, last_move.x, last_move.y) == WINNER_FOUND) {
+		if (last_letter == my_letter) return 10;
+		else return -10;
+	}
 
 	if (TicTacToe::CheckForDraw() == DRAW) return 0;
 
+	move* valid_moves = TicTacToe::GetValidMoves(board);
 
-}*/
+	int* scores = new int[board.nr_of_available_moves];
+
+	for (int move_index = 0; move_index < board.nr_of_available_moves; move_index++) {
+		ttt_board new_board;
+		new_board.CopyBoard(board);
+
+		int next_letter = (last_letter == O) ? X : O;
+
+		TicTacToe::MarkOnBoard(new_board, valid_moves[move_index].x, valid_moves[move_index].y, next_letter);
+
+		int score = MinMaxScore(valid_moves[move_index], new_board, next_letter);
+
+		scores[move_index] = score;
+	}
+
+	int r_score;
+
+	if (last_letter == my_letter) r_score = Max(scores, board.nr_of_available_moves);
+
+	else r_score = Min(scores, board.nr_of_available_moves);
+
+	delete[](scores);
+
+	return r_score;
+}
+
+int MinMaxMove(ttt_board board, int my_letter) {
+
+}
 
 AI* AI::CreatePlayer(const char* name) {
 
