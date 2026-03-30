@@ -32,7 +32,7 @@ move* TicTacToe::GetValidMoves(ttt_board board) {
 	int index = 0;
 	for (int row = 0; row < 3; row++) {
 		for (int col = 0; col < 3; col++) {
-			if (board.coordinates[col][row] == UNOCCUPIED) {
+			if (board.coordinates[row][col] == UNOCCUPIED) {
 				valid_moves[index] = move(col, row);
 				index++;
 			}
@@ -191,7 +191,7 @@ int TicTacToe::PvERound() {
 
 	std::cout << "It's  " << bot->GetName() << "'s turn! ";
 
-	move ai_move = bot->FindWinOrPreventLossOrMakeRandomMove(board);
+	move ai_move = bot->MinMaxMove(board, current_letter);
 
 	std::cout << bot->GetName() << " chose [" << ai_move.x << ", " << ai_move.y << "]" << std::endl;
 
@@ -242,7 +242,7 @@ void TicTacToe::SetUpPvE() {
 	Players[1] = bot_player;
 
 	move* valid_moves = GetValidMoves(board);
-	bot_player->SetValidMoves(valid_moves);
+	bot_player->SetValidMoves(valid_moves, board.nr_of_available_moves);
 }
 
 void TicTacToe::SetUpPvP() {

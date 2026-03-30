@@ -26,8 +26,9 @@ void AI::CopyBoard(int board[3][3], int new_board[3][3]) {
 }
 */
 
-void AI::SetValidMoves(move* valid_moves) {
+void AI::SetValidMoves(move* valid_moves, int nr_of_valid_moves) {
 	m_valid_moves = valid_moves;
+	m_nr_of_valid_moves = nr_of_valid_moves;
 }
 
 /*
@@ -180,7 +181,7 @@ move AI::FindWinOrPreventLossOrMakeRandomMove(ttt_board board) const {
 	else return MakeRandomMove();
 }
 
-int Min(int* scores, int length) {
+int AI::Min(int* scores, int length) {
 	int min_value = 10;
 
 	for (int i = 0; i < length; i++) {
@@ -190,7 +191,7 @@ int Min(int* scores, int length) {
 	return min_value;
 }
 
-int Max(int* scores, int length) {
+int AI::Max(int* scores, int length) {
 	int max_value = -10;
 
 	for (int i = 0; i < length; i++) {
@@ -198,6 +199,18 @@ int Max(int* scores, int length) {
 	}
 
 	return max_value;
+}
+
+int AI::FindMaxIndex(int* scores, int length) {
+	int max = Max(scores, length);
+
+	int max_index = 0;
+
+	for (int i = 0; i < length; i++) {
+		if (scores[i] == max) max_index = i;
+	}
+
+	return max_index;
 }
 
 int AI::MinMaxScore(move& last_move, ttt_board board, int last_letter) {
@@ -234,13 +247,32 @@ int AI::MinMaxScore(move& last_move, ttt_board board, int last_letter) {
 
 	else r_score = Min(scores, board.nr_of_available_moves);
 
-	delete[](scores);
+	delete[] valid_moves;
+
+	delete[] scores;
 
 	return r_score;
 }
 
-int MinMaxMove(ttt_board board, int my_letter) {
+move AI::MinMaxMove(ttt_board board, int my_letter) {
+	int* scores = new int[board.nr_of_available_moves];
 
+	for (int move_index = 0; move_index < board.nr_of_available_moves; move_index++) {
+		ttt_board new_board;
+		new_board.CopyBoard(board);
+
+		TicTacToe::MarkOnBoard(new_board, m_valid_moves[move_index].x, m_valid_moves[move_index].y, my_letter);
+
+		int score = MinMaxScore(m_valid_moves[move_index], new_board, my_letter);
+
+		scores[move_index] = score;
+	}
+
+	int max_score_index = FindMaxIndex(scores, board.nr_of_available_moves);
+
+	delete[] scores;
+
+	return m_valid_moves[max_score_index];
 }
 
 AI* AI::CreatePlayer(const char* name) {
