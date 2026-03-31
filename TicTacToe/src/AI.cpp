@@ -1,9 +1,18 @@
 #include "AI.h"
 
-AI::AI(const char* name) {
+AI::AI(const char* name, difficulty difficulty) {
 	m_name = name;
 	m_valid_moves = nullptr;
 	m_nr_of_valid_moves = 1;
+	m_difficulty = difficulty;
+
+	Difficulty = (m_difficulty == EASY) ? &AI::FindWinOrMakeRandomMove
+		: (m_difficulty == MEDIUM) ? &AI::FindWinOrPreventLossOrMakeRandomMove
+		: &AI::MinMaxMove;
+}
+
+void AI::SetDifficulty(difficulty difficulty) {
+	m_difficulty = difficulty;
 }
 
 int AI::FindMoveIndex(move move) const {
@@ -16,39 +25,10 @@ void AI::DecrementValidMoves(int index) {
 	for (index; index < m_nr_of_valid_moves; index++) m_valid_moves[index] = m_valid_moves[index + 1];
 }
 
-/**
-void AI::CopyBoard(int board[3][3], int new_board[3][3]) {
-	for (int row = 0; row < 3; row++) {
-		for (int col = 0; col < 3; col++) {
-			new_board[col][row] = board[col][row];
-		}
-	}
-}
-*/
-
 void AI::SetValidMoves(move* valid_moves, int nr_of_valid_moves) {
 	m_valid_moves = valid_moves;
 	m_nr_of_valid_moves = nr_of_valid_moves;
 }
-
-/*
-void AI::SetValidMoves(int dimensions_lengths[]) {
-	for (int i = 0; i < 2; i++) {
-		m_nr_of_valid_moves = m_nr_of_valid_moves * dimensions_lengths[i];
-	}
-
-	m_valid_moves = new move[m_nr_of_valid_moves];
-
-	int idx = 0;
-	for (int i = 0; i < dimensions_lengths[0]; i++) {
-		for (int j = 0; j < dimensions_lengths[1]; j++) {
-			m_valid_moves[idx].y = i;
-			m_valid_moves[idx].x = j;
-			idx++;
-		}
-	}
-}
-*/
 
 void AI::RemoveFromValidMoves(move move) {
 	m_nr_of_valid_moves--;
@@ -181,7 +161,7 @@ move AI::FindWinOrPreventLossOrMakeRandomMove(ttt_board board) const {
 	else return MakeRandomMove();
 }
 
-int AI::Min(int* scores, int length) {
+int AI::Min(int* scores, int length) const {
 	int min_value = 10;
 
 	for (int i = 0; i < length; i++) {
@@ -191,7 +171,7 @@ int AI::Min(int* scores, int length) {
 	return min_value;
 }
 
-int AI::Max(int* scores, int length) {
+int AI::Max(int* scores, int length) const {
 	int max_value = -10;
 
 	for (int i = 0; i < length; i++) {
@@ -201,7 +181,7 @@ int AI::Max(int* scores, int length) {
 	return max_value;
 }
 
-int AI::FindMaxIndex(int* scores, int length) {
+int AI::FindMaxIndex(int* scores, int length) const {
 	int max = Max(scores, length);
 
 	int max_index = 0;
@@ -213,7 +193,7 @@ int AI::FindMaxIndex(int* scores, int length) {
 	return max_index;
 }
 
-int AI::MinMaxScore(move& last_move, ttt_board board, int last_letter) {
+int AI::MinMaxScore(move& last_move, ttt_board board, int last_letter) const {
 
 	int my_letter = TicTacToe::GetCurrentLetter();
 
@@ -228,6 +208,7 @@ int AI::MinMaxScore(move& last_move, ttt_board board, int last_letter) {
 
 	int* scores = new int[board.nr_of_available_moves];
 
+	// Get scores of available moves
 	for (int move_index = 0; move_index < board.nr_of_available_moves; move_index++) {
 		ttt_board new_board;
 		new_board.CopyBoard(board);
@@ -254,9 +235,12 @@ int AI::MinMaxScore(move& last_move, ttt_board board, int last_letter) {
 	return r_score;
 }
 
-move AI::MinMaxMove(ttt_board board, int my_letter) {
+move AI::MinMaxMove(ttt_board board) const {
+	int my_letter = TicTacToe::GetCurrentLetter();
+
 	int* scores = new int[board.nr_of_available_moves];
 
+	// Get scores of available moves
 	for (int move_index = 0; move_index < board.nr_of_available_moves; move_index++) {
 		ttt_board new_board;
 		new_board.CopyBoard(board);
@@ -275,9 +259,13 @@ move AI::MinMaxMove(ttt_board board, int my_letter) {
 	return m_valid_moves[max_score_index];
 }
 
-AI* AI::CreatePlayer(const char* name) {
+move AI::MakeMove(ttt_board board) const {
+	return (this->*Difficulty)(board);
+}
 
-	AI* ptr = new AI(name);
+AI* AI::CreatePlayer(const char* name, difficulty difficulty) {
+
+	AI* ptr = new AI(name, difficulty);
 
 	return ptr;
 }

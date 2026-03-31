@@ -5,7 +5,7 @@ int TicTacToe::rows[3];
 int TicTacToe::cols[3];
 int TicTacToe::diagonals[2];
 char TicTacToe::CharTranslation[3] = { '-', 'X', 'O' };
-int (*TicTacToe::game_mode)();
+int (*TicTacToe::game_loop)();
 Player* TicTacToe::current_player;
 letter TicTacToe::current_letter;
 Player* TicTacToe::Players[2];
@@ -191,7 +191,7 @@ int TicTacToe::PvERound() {
 
 	std::cout << "It's  " << bot->GetName() << "'s turn! ";
 
-	move ai_move = bot->MinMaxMove(board, current_letter);
+	move ai_move = bot->MakeMove(board);
 
 	std::cout << bot->GetName() << " chose [" << ai_move.x << ", " << ai_move.y << "]" << std::endl;
 
@@ -229,15 +229,23 @@ int TicTacToe::PvPRound() {
 }
 
 int TicTacToe::TakeTurn() {
-	return game_mode();
+	return game_loop();
 }
 
 void TicTacToe::SetUpPvE() {
-	game_mode = &PvERound;
+	game_loop = &PvERound;
+
+	Log("Choose Difficulty:\n1. Easy  2. Medium  3. Expert\n");
+	int input;
+	std::cin >> input;
+
+	difficulty chosen_difficulty = static_cast<difficulty>(input);
 
 	Players[0] = Human_Player::CreatePlayer();
 
-	AI* bot_player = AI::CreatePlayer("Pam");
+	const char* name = (chosen_difficulty == EASY) ? "Pam" : (chosen_difficulty == MEDIUM) ? "Donald J. Trump" : "Peter Thiel";
+
+	AI* bot_player = AI::CreatePlayer(name, chosen_difficulty);
 
 	Players[1] = bot_player;
 
@@ -246,7 +254,7 @@ void TicTacToe::SetUpPvE() {
 }
 
 void TicTacToe::SetUpPvP() {
-	game_mode = &PvPRound;
+	game_loop = &PvPRound;
 	Players[0] = Human_Player::CreatePlayer();
 	Players[1] = Human_Player::CreatePlayer();
 }

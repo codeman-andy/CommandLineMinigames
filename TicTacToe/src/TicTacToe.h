@@ -1,5 +1,8 @@
 #pragma once
 
+#define EMPTY 0
+#define FULL 3
+
 struct move {
 	int x;
 	int y;
@@ -26,7 +29,7 @@ struct ttt_board {
 	int diagonal_counter[2];
 	int nr_of_available_moves;
 
-	ttt_board() : coordinates({ 0 }), row_counter({ 0 }), col_counter({ 0 }), diagonal_counter({ 0 }), nr_of_available_moves(9) {};
+	ttt_board() : coordinates({ UNOCCUPIED }), row_counter({ EMPTY }), col_counter({ EMPTY }), diagonal_counter({ EMPTY }), nr_of_available_moves(9) {};
 
 	ttt_board(int coordinates[3][3], int rows_counters[3], int cols_counters[3], int diagonals_counters[2], int nr_of_available_moves) {
 		for (int row = 0; row < 3; row++) {
@@ -65,6 +68,8 @@ struct ttt_board {
 	}
 };
 
+enum difficulty { EASY = 1, MEDIUM, EXPERT };
+
 #include "Game.h"
 #include "Player.h"
 #include "Human_Player.h"
@@ -72,9 +77,6 @@ struct ttt_board {
 
 #define INVALID_COORDINATE 0
 #define INVALID_MOVE 0
-
-#define EMPTY 0
-#define FULL 3
 
 #define CheckForRow 0
 #define CheckForCol 1
@@ -104,7 +106,7 @@ private:
 	static int cols[3];
 	static int diagonals[2];
 	static char CharTranslation[3];
-	static int (*game_mode)();
+	static int (*game_loop)();
 	static Player* current_player;
 	static letter current_letter;
 	static Player* Players[2];
