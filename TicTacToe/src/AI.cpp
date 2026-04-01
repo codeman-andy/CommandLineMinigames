@@ -161,7 +161,7 @@ move AI::FindWinOrPreventLossOrMakeRandomMove(ttt_board board) const {
 	else return MakeRandomMove();
 }
 
-int AI::Min(int* scores, int length) const {
+int AI::Min(int* scores, int length) {
 	int min_value = 10;
 
 	for (int i = 0; i < length; i++) {
@@ -171,7 +171,7 @@ int AI::Min(int* scores, int length) const {
 	return min_value;
 }
 
-int AI::Max(int* scores, int length) const {
+int AI::Max(int* scores, int length) {
 	int max_value = -10;
 
 	for (int i = 0; i < length; i++) {
@@ -181,7 +181,7 @@ int AI::Max(int* scores, int length) const {
 	return max_value;
 }
 
-int AI::FindMaxIndex(int* scores, int length) const {
+int AI::FindMaxIndex(int* scores, int length) {
 	int max = Max(scores, length);
 
 	int max_index = 0;
@@ -193,7 +193,7 @@ int AI::FindMaxIndex(int* scores, int length) const {
 	return max_index;
 }
 
-int AI::MinMaxScore(move& last_move, ttt_board board, int last_letter) const {
+int AI::MinMaxScore(move& last_move, ttt_board board, int last_letter) {
 
 	int my_letter = TicTacToe::GetCurrentLetter();
 
@@ -202,7 +202,9 @@ int AI::MinMaxScore(move& last_move, ttt_board board, int last_letter) const {
 		else return -10;
 	}
 
-	if (TicTacToe::CheckForDraw() == DRAW) return 0;
+	if (TicTacToe::CheckForDraw(board) == DRAW) return 0;
+
+	int this_letter = (last_letter == O) ? X : O;
 
 	move* valid_moves = TicTacToe::GetValidMoves(board);
 
@@ -213,20 +215,18 @@ int AI::MinMaxScore(move& last_move, ttt_board board, int last_letter) const {
 		ttt_board new_board;
 		new_board.CopyBoard(board);
 
-		int next_letter = (last_letter == O) ? X : O;
+		TicTacToe::MarkOnBoard(new_board, valid_moves[move_index].x, valid_moves[move_index].y, this_letter);
 
-		TicTacToe::MarkOnBoard(new_board, valid_moves[move_index].x, valid_moves[move_index].y, next_letter);
-
-		int score = MinMaxScore(valid_moves[move_index], new_board, next_letter);
+		int score = MinMaxScore(valid_moves[move_index], new_board, this_letter);
 
 		scores[move_index] = score;
 	}
 
 	int r_score;
 
-	if (last_letter == my_letter) r_score = Max(scores, board.nr_of_available_moves);
+	if (last_letter == my_letter) r_score = Min(scores, board.nr_of_available_moves);
 
-	else r_score = Min(scores, board.nr_of_available_moves);
+	else r_score = Max(scores, board.nr_of_available_moves);
 
 	delete[] valid_moves;
 
@@ -251,6 +251,9 @@ move AI::MinMaxMove(ttt_board board) const {
 
 		scores[move_index] = score;
 	}
+
+	// If defeat is inevitable (i.e. every move leads to a defeat), then delay it as much as possible
+	if (Max(scores, board.nr_of_available_moves) == -10) return FindWinOrPreventLossOrMakeRandomMove(board);
 
 	int max_score_index = FindMaxIndex(scores, board.nr_of_available_moves);
 

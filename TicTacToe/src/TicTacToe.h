@@ -22,6 +22,8 @@ struct move {
 
 enum letter { UNOCCUPIED, X, O };
 
+//#include "string.h"
+
 struct ttt_board {
 	int coordinates[3][3];
 	int row_counter[3];
@@ -48,6 +50,15 @@ struct ttt_board {
 
 		this->nr_of_available_moves = nr_of_available_moves;
 	}
+
+	/*
+	ttt_board(const ttt_board& other) : nr_of_available_moves(other.nr_of_available_moves) {
+		memcpy(this->coordinates, other.coordinates, 9);
+		memcpy(this->row_counter, other.row_counter, 3);
+		memcpy(this->col_counter, other.col_counter, 3);
+		memcpy(this->diagonal_counter, other.diagonal_counter, 2);
+	}
+	*/
 
 	void CopyBoard(ttt_board other) {
 		for (int row = 0; row < 3; row++) {
@@ -85,14 +96,14 @@ enum difficulty { EASY = 1, MEDIUM, EXPERT };
 
 struct TicTacToe : public Game {
 	TicTacToe();
-	static int GetNrOfValidMoves(int board[3][3]);
-	static move* GetValidMoves(ttt_board board);
+	//static int GetNrOfValidMoves(int board[3][3]);
+	static move* GetValidMoves(const ttt_board& board);
 	static letter GetCurrentLetter();
-	static int CheckForDraw();
-	static int CheckForWinner(ttt_board board, int index, int CheckFor);
-	static int CheckBoard(ttt_board board, int x, int y);
-	static void MarkOnBoard(ttt_board& board, int x, int y, int letter);
-	static int MakeMove(int x, int y);
+	static int CheckForDraw(const ttt_board& board);
+	static int CheckForWinner(const ttt_board& board, const int& index, const int& CheckFor);
+	static int CheckBoard(const ttt_board& board, const int& x, const int& y);
+	static void MarkOnBoard(ttt_board& board, const int& x, const int& y, const int& letter);
+	static int MakeMove(const int& x, const int& y);
 	static int GetPlayerMove(move& move);
 	static int TakeTurn();
 	static void SetUpTurn();
@@ -110,8 +121,8 @@ private:
 	static Player* current_player;
 	static letter current_letter;
 	static Player* Players[2];
-	static int isPossible(int X, int Y);
-	static int isValid(int Coord);
+	static int isPossible(const int& X, const int& Y);
+	static int isValid(const int& Coord);
 	//static int TakePlayerTurn();
 	//static int TakeAITurn();
 	static int PvERound();
