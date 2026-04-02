@@ -132,6 +132,7 @@
     <ClCompile Include="src\Human_Player.cpp" />
     <ClCompile Include="src\Log.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Move.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\TicTacToe.cpp" />
   </ItemGroup>
@@ -140,6 +141,7 @@
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Human_Player.h" />
     <ClInclude Include="src\Log.h" />
+    <ClInclude Include="src\Move.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Printable.h" />
     <ClInclude Include="src\TicTacToe.h" />

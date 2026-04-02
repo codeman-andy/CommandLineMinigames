@@ -4,4 +4,4 @@
 
 void clear_buffer();
 
-void Log(const char* message);
+void Log(const char* const& message);

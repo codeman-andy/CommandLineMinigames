@@ -2,7 +2,7 @@
 
 Player::Player() : m_name("Undefined") {};
 
-Player::Player(const char* name) {
+Player::Player(const char* const& name) {
 	m_name = name;
 }
 

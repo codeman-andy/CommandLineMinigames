@@ -5,6 +5,6 @@ void clear_buffer() {
 	while ((c = getchar()) != '\n' && c != EOF) {}
 }
 
-void Log(const char* message) {
+void Log(const char* const& message) {
 	std::cout << message;
 }

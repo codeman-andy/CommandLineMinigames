@@ -3,26 +3,19 @@
 #define EMPTY 0
 #define FULL 3
 
-struct move {
-	int x;
-	int y;
+#define INVALID_COORDINATE 0
+#define INVALID_MOVE 0
 
-	move() : x(0), y(0) {}
-
-	move(int X, int Y) : x(X), y(Y) {};
-
-	bool operator==(move& other) {
-		return (x == other.x && y == other.y);
-	}
-
-	bool operator!=(move& other) {
-		return (x != other.x || y != other.y);
-	}
-};
+#define CheckForRow 0
+#define CheckForCol 1
+#define CheckForDiagLeft 2
+#define CheckForDiagRight 3
 
 enum letter { UNOCCUPIED, X, O };
 
-//#include "string.h"
+enum difficulty { EASY = 1, MEDIUM, EXPERT };
+
+#include "Move.h"
 
 struct ttt_board {
 	int coordinates[3][3];
@@ -79,24 +72,13 @@ struct ttt_board {
 	}
 };
 
-enum difficulty { EASY = 1, MEDIUM, EXPERT };
-
 #include "Game.h"
 #include "Player.h"
 #include "Human_Player.h"
 #include "AI.h"
 
-#define INVALID_COORDINATE 0
-#define INVALID_MOVE 0
-
-#define CheckForRow 0
-#define CheckForCol 1
-#define CheckForDiagLeft 2
-#define CheckForDiagRight 3
-
 struct TicTacToe : public Game {
 	TicTacToe();
-	//static int GetNrOfValidMoves(int board[3][3]);
 	static move* GetValidMoves(const ttt_board& board);
 	static letter GetCurrentLetter();
 	static int CheckForDraw(const ttt_board& board);

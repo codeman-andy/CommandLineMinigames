@@ -6,7 +6,7 @@ class Player {
 public:
 	const char* m_name;
 	Player();
-	Player(const char* name);
+	Player(const char* const& name);
 
 	const char* GetName() const;
 

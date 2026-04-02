@@ -1,6 +1,6 @@
 #include "AI.h"
 
-AI::AI(const char* name, difficulty difficulty) {
+AI::AI(const char* const& name, const difficulty& difficulty) {
 	m_name = name;
 	m_valid_moves = nullptr;
 	m_nr_of_valid_moves = 1;
@@ -11,11 +11,11 @@ AI::AI(const char* name, difficulty difficulty) {
 		: &AI::MinMaxMove;
 }
 
-void AI::SetDifficulty(difficulty difficulty) {
+void AI::SetDifficulty(const difficulty& difficulty) {
 	m_difficulty = difficulty;
 }
 
-int AI::FindMoveIndex(move move) const {
+int AI::FindMoveIndex(const move& move) const {
 	int index = 0;
 	while (m_valid_moves[index] != move) index++;
 	return index;
@@ -25,12 +25,12 @@ void AI::DecrementValidMoves(int index) {
 	for (index; index < m_nr_of_valid_moves; index++) m_valid_moves[index] = m_valid_moves[index + 1];
 }
 
-void AI::SetValidMoves(move* valid_moves, int nr_of_valid_moves) {
+void AI::SetValidMoves(move* const& valid_moves, const int& nr_of_valid_moves) {
 	m_valid_moves = valid_moves;
 	m_nr_of_valid_moves = nr_of_valid_moves;
 }
 
-void AI::RemoveFromValidMoves(move move) {
+void AI::RemoveFromValidMoves(const move& move) {
 	m_nr_of_valid_moves--;
 
 	int index = FindMoveIndex(move);
@@ -43,7 +43,7 @@ move AI::MakeRandomMove() const {
 	return m_valid_moves[random_index];
 }
 
-int AI::FindWinningMoveInRows(move& winning_move, ttt_board board, int my_letter) {
+int AI::FindWinningMoveInRows(move& winning_move, const ttt_board& board, const int& my_letter) {
 	int my_letter_count;
 	move available_spot = move();
 
@@ -66,7 +66,7 @@ int AI::FindWinningMoveInRows(move& winning_move, ttt_board board, int my_letter
 	return RUNNING;
 }
 
-int AI::FindWinningMoveInCols(move& winning_move, ttt_board board, int my_letter) {
+int AI::FindWinningMoveInCols(move& winning_move, const ttt_board& board, const int& my_letter) {
 	int my_letter_count;
 	move available_spot = move();
 
@@ -89,7 +89,7 @@ int AI::FindWinningMoveInCols(move& winning_move, ttt_board board, int my_letter
 	return RUNNING;
 }
 
-int AI::FindWinningMoveInDiagonals(move& winning_move, ttt_board board, int my_letter) {
+int AI::FindWinningMoveInDiagonals(move& winning_move, const ttt_board& board, const int& my_letter) {
 	int my_letter_count;
 	move available_spot = move();
 
@@ -125,7 +125,7 @@ int AI::FindWinningMoveInDiagonals(move& winning_move, ttt_board board, int my_l
 	return RUNNING;
 }
 
-int AI::FindWinningMove(move& winning_move, ttt_board board, int my_letter) {
+int AI::FindWinningMove(move& winning_move, const ttt_board& board, const int& my_letter) {
 
 	if (FindWinningMoveInRows(winning_move, board, my_letter) == WINNER_FOUND) return WINNER_FOUND;
 
@@ -136,7 +136,7 @@ int AI::FindWinningMove(move& winning_move, ttt_board board, int my_letter) {
 	return RUNNING;
 }
 
-move AI::FindWinOrMakeRandomMove(ttt_board board) const {
+move AI::FindWinOrMakeRandomMove(const ttt_board& board) const {
 	int my_letter = TicTacToe::GetCurrentLetter();
 
 	move winning_move(-33, -33);
@@ -147,7 +147,7 @@ move AI::FindWinOrMakeRandomMove(ttt_board board) const {
 }
 
 
-move AI::FindWinOrPreventLossOrMakeRandomMove(ttt_board board) const {
+move AI::FindWinOrPreventLossOrMakeRandomMove(const ttt_board& board) const {
 	int my_letter = TicTacToe::GetCurrentLetter();
 
 	move winning_move(-33, -33);
@@ -161,7 +161,7 @@ move AI::FindWinOrPreventLossOrMakeRandomMove(ttt_board board) const {
 	else return MakeRandomMove();
 }
 
-int AI::Min(int* scores, int length) {
+int AI::Min(const int* const& scores, const int& length) {
 	int min_value = 10;
 
 	for (int i = 0; i < length; i++) {
@@ -171,7 +171,7 @@ int AI::Min(int* scores, int length) {
 	return min_value;
 }
 
-int AI::Max(int* scores, int length) {
+int AI::Max(const int* const& scores, const int& length) {
 	int max_value = -10;
 
 	for (int i = 0; i < length; i++) {
@@ -181,7 +181,7 @@ int AI::Max(int* scores, int length) {
 	return max_value;
 }
 
-int AI::FindMaxIndex(int* scores, int length) {
+int AI::FindMaxIndex(const int* const& scores, const int& length) {
 	int max = Max(scores, length);
 
 	int max_index = 0;
@@ -193,7 +193,7 @@ int AI::FindMaxIndex(int* scores, int length) {
 	return max_index;
 }
 
-int AI::MinMaxScore(move& last_move, ttt_board board, int last_letter) {
+int AI::MinMaxScore(const move& last_move, const ttt_board& board, const int& last_letter) {
 
 	int my_letter = TicTacToe::GetCurrentLetter();
 
@@ -235,7 +235,7 @@ int AI::MinMaxScore(move& last_move, ttt_board board, int last_letter) {
 	return r_score;
 }
 
-move AI::MinMaxMove(ttt_board board) const {
+move AI::MinMaxMove(const ttt_board& board) const {
 	int my_letter = TicTacToe::GetCurrentLetter();
 
 	int* scores = new int[board.nr_of_available_moves];
@@ -266,7 +266,7 @@ move AI::MakeMove(ttt_board board) const {
 	return (this->*Difficulty)(board);
 }
 
-AI* AI::CreatePlayer(const char* name, difficulty difficulty) {
+AI* AI::CreatePlayer(const char* const name, const difficulty& difficulty) {
 
 	AI* ptr = new AI(name, difficulty);
 

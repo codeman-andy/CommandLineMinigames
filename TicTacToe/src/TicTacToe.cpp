@@ -14,20 +14,6 @@ TicTacToe::TicTacToe()
 {
 };
 
-/*
-int TicTacToe::GetNrOfValidMoves(int board[3][3]) {
-	int nr_of_valid_moves = 0;
-
-	for (int row = 0; row < 3; row++) {
-		for (int col = 0; col < 3; col++) {
-			if (board[col][row] == UNOCCUPIED) nr_of_valid_moves++;
-		}
-	}
-
-	return nr_of_valid_moves;
-}
-*/
-
 move* TicTacToe::GetValidMoves(const ttt_board& board) {
 	move* valid_moves = (move*) new move[board.nr_of_available_moves];
 
