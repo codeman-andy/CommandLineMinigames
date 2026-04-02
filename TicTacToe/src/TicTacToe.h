@@ -17,6 +17,7 @@ enum difficulty { EASY = 1, MEDIUM, EXPERT };
 
 #include "Move.h"
 
+/*
 struct ttt_board {
 	int coordinates[3][3];
 	int row_counter[3];
@@ -44,14 +45,13 @@ struct ttt_board {
 		this->nr_of_available_moves = nr_of_available_moves;
 	}
 
-	/*
+	
 	ttt_board(const ttt_board& other) : nr_of_available_moves(other.nr_of_available_moves) {
 		memcpy(this->coordinates, other.coordinates, 9);
 		memcpy(this->row_counter, other.row_counter, 3);
 		memcpy(this->col_counter, other.col_counter, 3);
 		memcpy(this->diagonal_counter, other.diagonal_counter, 2);
 	}
-	*/
 
 	void CopyBoard(ttt_board other) {
 		for (int row = 0; row < 3; row++) {
@@ -71,6 +71,7 @@ struct ttt_board {
 		this->nr_of_available_moves = other.nr_of_available_moves;
 	}
 };
+*/
 
 #include "Game.h"
 #include "Player.h"
@@ -78,6 +79,28 @@ struct ttt_board {
 #include "AI.h"
 
 struct TicTacToe : public Game {
+	struct ttt_board {
+		int coordinates[3][3];
+		int row_counter[3];
+		int col_counter[3];
+		int diagonal_counter[2];
+		int nr_of_available_moves;
+
+		ttt_board();
+
+		ttt_board(int coordinates[3][3], int rows_counters[3], int cols_counters[3], int diagonals_counters[2], int nr_of_available_moves);
+
+		/*
+		ttt_board(const ttt_board& other) : nr_of_available_moves(other.nr_of_available_moves) {
+			memcpy(this->coordinates, other.coordinates, 9);
+			memcpy(this->row_counter, other.row_counter, 3);
+			memcpy(this->col_counter, other.col_counter, 3);
+			memcpy(this->diagonal_counter, other.diagonal_counter, 2);
+		}
+		*/
+
+		void CopyBoard(ttt_board other);
+	};
 	TicTacToe();
 	static move* GetValidMoves(const ttt_board& board);
 	static letter GetCurrentLetter();
@@ -94,7 +117,7 @@ struct TicTacToe : public Game {
 	void PrintVictoryMessage();
 	static void PrintWelcomeMessage();
 private:
-	static ttt_board board;
+	static TicTacToe::ttt_board board;
 	static int rows[3];
 	static int cols[3];
 	static int diagonals[2];

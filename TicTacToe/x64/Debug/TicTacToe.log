@@ -1,7 +1,282 @@
 ﻿  AI.cpp
+  BoardTicTacToe.cpp
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(9,32): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(9,26): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(9,52): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(17,61): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(17,55): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(17,81): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(18,61): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(18,55): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(18,81): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(19,66): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(19,60): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(19,86): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(20,55): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(20,49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(20,75): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(24,54): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(24,48): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(24,74): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(25,37): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(25,31): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(25,57): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(26,50): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(26,44): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(26,70): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(27,24): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(27,18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(27,44): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(33,16): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(33,27): error C2061: syntax error: identifier 'ttt_board'
+  (compiling source file 'src/BoardTicTacToe.cpp')
+  
   Main.cpp
-  Move.cpp
-  Player.cpp
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(9,32): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(9,26): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(9,52): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(17,61): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(17,55): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(17,81): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(18,61): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(18,55): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(18,81): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(19,66): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(19,60): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(19,86): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(20,55): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(20,49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(20,75): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(24,54): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(24,48): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(24,74): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(25,37): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(25,31): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(25,57): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(26,50): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(26,44): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(26,70): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(27,24): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(27,18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(27,44): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(33,16): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/Main.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(33,27): error C2061: syntax error: identifier 'ttt_board'
+  (compiling source file 'src/Main.cpp')
+  
   TicTacToe.cpp
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(9,32): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(9,26): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(9,52): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(17,61): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(17,55): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(17,81): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(18,61): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(18,55): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(18,81): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(19,66): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(19,60): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(19,86): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(20,55): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(20,49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(20,75): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(24,54): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(24,48): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(24,74): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(25,37): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(25,31): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(25,57): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(26,50): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(26,44): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(26,70): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(27,24): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(27,18): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(27,44): error C2143: syntax error: missing ',' before '&'
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(33,16): error C2653: 'TicTacToe': is not a class or namespace name
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(33,27): error C2061: syntax error: identifier 'ttt_board'
+  (compiling source file 'src/TicTacToe.cpp')
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\TicTacToe.cpp(3,22): error C2143: syntax error: missing ';' before 'TicTacToe::board'
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\TicTacToe.cpp(3,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\TicTacToe.cpp(3,22): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\TicTacToe.cpp(3,22): error C2371: 'board': redefinition; different basic types
+      C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\TicTacToe.h(120,30):
+      see declaration of 'board'
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\TicTacToe.cpp(243,14): error C2660: 'AI::SetValidMoves': function does not take 1 arguments
+      C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\AI.h(31,7):
+      see declaration of 'AI::SetValidMoves'
+      C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\TicTacToe.cpp(243,14):
+      while trying to match the argument list '(move *)'
+  
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\TicTacToe.cpp(274,67): error C7732: expected an expression before ']'
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\TicTacToe.cpp(274,118): error C7732: expected an expression before ']'
+C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\TicTacToe.cpp(274,169): error C7732: expected an expression before ']'
   Generating Code...
-  TicTacToe.vcxproj -> C:\Dev\CPP\CommandLineMinigames\x64\Debug\TicTacToe.exe
