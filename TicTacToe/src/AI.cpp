@@ -1,5 +1,7 @@
 #include "AI.h"
 
+#include "BoardTicTacToe.cpp"
+
 AI::AI(const char* const& name, const difficulty& difficulty) {
 	m_name = name;
 	m_valid_moves = nullptr;

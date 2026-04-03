@@ -1,6 +1,6 @@
 #pragma once
 
-enum state { WINNER_FOUND, RUNNING, DRAW };
+#include "Settings.h"
 
 struct Game {
 	static state STATE;

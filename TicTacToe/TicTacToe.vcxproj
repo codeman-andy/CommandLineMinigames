@@ -145,6 +145,7 @@
     <ClInclude Include="src\Move.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Printable.h" />
+    <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\TicTacToe.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

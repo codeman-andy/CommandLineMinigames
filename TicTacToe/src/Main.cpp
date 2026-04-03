@@ -1,5 +1,3 @@
-#include "Log.h"
-#include "Player.h"
 #include "TicTacToe.h"
 
 TicTacToe GAME = TicTacToe();

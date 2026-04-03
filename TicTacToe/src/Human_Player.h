@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Log.h"
+
 #include "Player.h"
 
 class Human_Player : public Player {

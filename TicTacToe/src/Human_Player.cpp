@@ -5,7 +5,7 @@ const char* Human_Player::GetPlayerNameFromInput() {
 	Log("What do you want to be called? (max. 32-characters)\n");
 	char input[32];
 	std::cin >> input;
-	int name_length = strlen(input);
+	size_t name_length = strlen(input);
 	char* name = (char*)malloc(name_length + 1);
 	for (int i = 0; i <= name_length; i++) {
 		name[i] = input[i];

@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Log.h"
-
 class Player {
 public:
 	const char* m_name;

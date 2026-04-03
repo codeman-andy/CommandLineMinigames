@@ -1,6 +1,8 @@
 #include "TicTacToe.h"
 
-ttt_board TicTacToe::board;
+#include "BoardTicTacToe.cpp"
+
+TicTacToe::ttt_board TicTacToe::board;
 int TicTacToe::rows[3];
 int TicTacToe::cols[3];
 int TicTacToe::diagonals[2];
