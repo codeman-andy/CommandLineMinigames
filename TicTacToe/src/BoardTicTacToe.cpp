@@ -1,15 +1,15 @@
 #include "TicTacToe.h"
 
-struct TicTacToe::ttt_board {
+struct TicTacToe::Board {
 	int coordinates[3][3];
 	int row_counter[3];
 	int col_counter[3];
 	int diagonal_counter[2];
 	int nr_of_available_moves;
 
-	ttt_board() : coordinates({ UNOCCUPIED }), row_counter({ EMPTY }), col_counter({ EMPTY }), diagonal_counter({ EMPTY }), nr_of_available_moves(9) {};
+	Board() : coordinates({ UNOCCUPIED }), row_counter({ EMPTY }), col_counter({ EMPTY }), diagonal_counter({ EMPTY }), nr_of_available_moves(9) {};
 
-	ttt_board(int coordinates[3][3], int rows_counters[3], int cols_counters[3], int diagonals_counters[2], int nr_of_available_moves) {
+	Board(int coordinates[3][3], int rows_counters[3], int cols_counters[3], int diagonals_counters[2], int nr_of_available_moves) {
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 3; col++) {
 				this->coordinates[col][row] = coordinates[col][row];
@@ -28,7 +28,7 @@ struct TicTacToe::ttt_board {
 	}
 
 	/*
-	ttt_board(const ttt_board& other) : nr_of_available_moves(other.nr_of_available_moves) {
+	Board(const Board& other) : nr_of_available_moves(other.nr_of_available_moves) {
 		memcpy(this->coordinates, other.coordinates, 9);
 		memcpy(this->row_counter, other.row_counter, 3);
 		memcpy(this->col_counter, other.col_counter, 3);
@@ -36,7 +36,7 @@ struct TicTacToe::ttt_board {
 	}
 	*/
 
-	void CopyBoard(ttt_board other) {
+	void CopyBoard(Board other) {
 		for (int row = 0; row < 3; row++) {
 			for (int col = 0; col < 3; col++) {
 				this->coordinates[col][row] = other.coordinates[col][row];
@@ -55,9 +55,9 @@ struct TicTacToe::ttt_board {
 	}
 }
 /*
-TicTacToe::ttt_board::ttt_board() : coordinates({ UNOCCUPIED }), row_counter({ EMPTY }), col_counter({ EMPTY }), diagonal_counter({ EMPTY }), nr_of_available_moves(9) {};
+TicTacToe::Board::Board() : coordinates({ UNOCCUPIED }), row_counter({ EMPTY }), col_counter({ EMPTY }), diagonal_counter({ EMPTY }), nr_of_available_moves(9) {};
 
-TicTacToe::ttt_board::ttt_board(int coordinates[3][3], int rows_counters[3], int cols_counters[3], int diagonals_counters[2], int nr_of_available_moves) {
+TicTacToe::Board::Board(int coordinates[3][3], int rows_counters[3], int cols_counters[3], int diagonals_counters[2], int nr_of_available_moves) {
 	for (int row = 0; row < 3; row++) {
 		for (int col = 0; col < 3; col++) {
 			this->coordinates[col][row] = coordinates[col][row];
@@ -75,7 +75,7 @@ TicTacToe::ttt_board::ttt_board(int coordinates[3][3], int rows_counters[3], int
 	this->nr_of_available_moves = nr_of_available_moves;
 }
 
-void TicTacToe::ttt_board::CopyBoard(ttt_board other) {
+void TicTacToe::Board::CopyBoard(Board other) {
 	for (int row = 0; row < 3; row++) {
 		for (int col = 0; col < 3; col++) {
 			this->coordinates[col][row] = other.coordinates[col][row];

@@ -7,14 +7,14 @@
 #include "Player.h"
 
 struct TicTacToe : public Game {
-	struct ttt_board;
+	struct Board;
 	TicTacToe();
-	static move* GetValidMoves(const ttt_board& board);
+	static move* GetValidMoves(const Board& board);
 	static letter GetCurrentLetter();
-	static int CheckForDraw(const ttt_board& board);
-	static int CheckForWinner(const ttt_board& board, const int& index, const int& CheckFor);
-	static int CheckBoard(const ttt_board& board, const int& x, const int& y);
-	static void MarkOnBoard(ttt_board& board, const int& x, const int& y, const int& letter);
+	static int CheckForDraw(const Board& board);
+	static int CheckForWinner(const Board& board, const int& index, const int& CheckFor);
+	static int CheckBoard(const Board& board, const int& x, const int& y);
+	static void MarkOnBoard(Board& board, const int& x, const int& y, const int& letter);
 	static int MakeMove(const int& x, const int& y);
 	static int GetPlayerMove(move& move);
 	static int TakeTurn();
@@ -24,10 +24,7 @@ struct TicTacToe : public Game {
 	void PrintVictoryMessage();
 	static void PrintWelcomeMessage();
 private:
-	static ttt_board board;
-	static int rows[3];
-	static int cols[3];
-	static int diagonals[2];
+	static Board board;
 	static char CharTranslation[3];
 	static int (*game_loop)();
 	static Player* current_player;
@@ -35,8 +32,8 @@ private:
 	static Player* Players[2];
 	static int isPossible(const int& X, const int& Y);
 	static int isValid(const int& Coord);
-	//static int TakePlayerTurn();
-	//static int TakeAITurn();
+	static int TakePlayerTurn(move& move);
+	static int TakeAITurn(const move& last_move);
 	static int PvERound();
 	static int PvPRound();
 	static void ToggleLetter();
