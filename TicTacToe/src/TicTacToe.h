@@ -18,18 +18,20 @@ struct TicTacToe : public Game {
 	static int MakeMove(const int& x, const int& y);
 	static int GetPlayerMove(move& move);
 	static int TakeTurn();
-	static void SetUpTurn();
+	static void SetUpNextTurn();
 	void SetUpGame();
 	static void PrintBoard();
-	void PrintVictoryMessage();
+	static void PrintDrawMessage();
+	void PrintVictoryMessage() const;
 	static void PrintWelcomeMessage();
 private:
 	static Board board;
 	static char CharTranslation[3];
 	static int (*game_loop)();
+	static int turn_number;
+	static Player* Players[2];
 	static Player* current_player;
 	static letter current_letter;
-	static Player* Players[2];
 	static int isPossible(const int& X, const int& Y);
 	static int isValid(const int& Coord);
 	static int TakePlayerTurn(move& move);
@@ -38,7 +40,6 @@ private:
 	static int PvPRound();
 	static void ToggleLetter();
 	static void TogglePlayer();
-	//static void ToggleTurn();
 	void SetUpPvE();
 	void SetUpPvP();
 };

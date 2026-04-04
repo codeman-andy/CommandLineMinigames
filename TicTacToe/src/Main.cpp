@@ -7,12 +7,14 @@ int main() {
 
 	GAME.SetUpGame();
 
-	TicTacToe::PrintBoard();
 	while (GAME.STATE == RUNNING) {
 		TicTacToe::TakeTurn();
-		TicTacToe::PrintBoard();
 	}
-	GAME.PrintVictoryMessage();
+	TicTacToe::PrintBoard();
+
+	if (GAME.STATE == DRAW) TicTacToe::PrintDrawMessage();
+
+	else GAME.PrintVictoryMessage();
 
 	clear_buffer();
 	std::cin.get();

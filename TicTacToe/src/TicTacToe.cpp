@@ -5,6 +5,7 @@
 TicTacToe::Board TicTacToe::board;
 char TicTacToe::CharTranslation[3] = { '-', 'X', 'O' };
 int (*TicTacToe::game_loop)();
+int TicTacToe::turn_number = 0;
 Player* TicTacToe::current_player;
 letter TicTacToe::current_letter;
 Player* TicTacToe::Players[2];
@@ -121,7 +122,6 @@ int TicTacToe::GetPlayerMove(move& move) {
 	return RUNNING;
 }
 
-
 int TicTacToe::TakePlayerTurn(move& move) {
 
 	if (GetPlayerMove(move) == INVALID_COORDINATE) return INVALID_COORDINATE;
@@ -159,50 +159,50 @@ void TicTacToe::TogglePlayer() {
 	current_player = (current_player == Players[0]) ? Players[1] : Players[0];
 }
 
-/*
-void TicTacToe::ToggleTurn() {
-	current_turn = (current_turn == turns[0]) ? turns[1] : turns[0];
-}
-*/
-
-void TicTacToe::SetUpTurn() {
+void TicTacToe::SetUpNextTurn() {
+	turn_number++;
+	if (turn_number == 10) {
+		STATE = DRAW;
+		return;
+	}
 	TogglePlayer();
 	ToggleLetter();
 }
 
 int TicTacToe::PvERound() {
+	PrintBoard();
+
 	move player_move = move();
 
 	int outcome = TakePlayerTurn(player_move);
 
 	if (!outcome) return outcome;
 
-	SetUpTurn();
+	SetUpNextTurn();
+
+	if (turn_number == 10) {
+		STATE = DRAW;
+		return;
+	}
 
 	if (TakeAITurn(player_move) == WINNER_FOUND) return WINNER_FOUND;
 
-	SetUpTurn();
+	SetUpNextTurn();
 
 	return RUNNING;
 }
 
 int TicTacToe::PvPRound() {
+	PrintBoard();
+
 	move player_move = move();
 
 	int outcome = TakePlayerTurn(player_move);
 
 	if (!outcome) return outcome;
 
-	SetUpTurn();
-
-	PrintBoard();
-
-	outcome = TakePlayerTurn(player_move);
-
-	if (!outcome) return outcome;
-
-	SetUpTurn();
-
+	SetUpNextTurn();
+	
 	return RUNNING;
 }
 
@@ -241,11 +241,11 @@ void TicTacToe::SetUpGame() {
 	int input;
 	std::cin >> input;
 
-	if (input == 1) SetUpPvP();
+	if (input == PvP) SetUpPvP();
 
 	else SetUpPvE();
 
-	SetUpTurn();
+	SetUpNextTurn();
 }
 
 
@@ -263,7 +263,11 @@ void TicTacToe::PrintBoard() {
 	Log("  -----\n");
 }
 
-void TicTacToe::PrintVictoryMessage() {
+void TicTacToe::PrintDrawMessage() {
+	Log("The game ended with no victor...\n");
+}
+
+void TicTacToe::PrintVictoryMessage() const {
 	const char* winner = current_player->GetName();
 	std::cout << "Congratulations, " << winner << "! You won!" << std::endl;
 }

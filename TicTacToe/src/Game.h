@@ -5,6 +5,6 @@
 struct Game {
 	static state STATE;
 	Game();
-	virtual void PrintVictoryMessage() = 0;
+	virtual void PrintVictoryMessage() const = 0;
 	static void PrintWelcomeMessage();
 };

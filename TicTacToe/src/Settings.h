@@ -7,6 +7,8 @@ enum difficulty { EASY = 1, MEDIUM, EXPERT };
 #define EMPTY 0
 #define FULL 3
 
+#define PvP 1
+
 #define INVALID_COORDINATE 0
 #define INVALID_MOVE 0
 
