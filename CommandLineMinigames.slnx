@@ -3,5 +3,6 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Project Path="Battleship/Battleship.vcxproj" Id="7dad1727-71dc-498a-9435-3040161bc8ea" />
   <Project Path="TicTacToe/TicTacToe.vcxproj" Id="3480c8f4-18f2-49e0-9a3a-194ce658e260" />
 </Solution>
