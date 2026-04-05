@@ -182,7 +182,7 @@ int TicTacToe::PvERound() {
 
 	if (turn_number == 10) {
 		STATE = DRAW;
-		return;
+		return DRAW;
 	}
 
 	if (TakeAITurn(player_move) == WINNER_FOUND) return WINNER_FOUND;
