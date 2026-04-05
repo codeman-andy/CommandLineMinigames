@@ -1,21 +1,15 @@
 #include "TicTacToe.h"
 
-TicTacToe GAME = TicTacToe();
+void PlayTicTacToe() {
+	TicTacToe GAME = TicTacToe::Start();
+
+	TicTacToe::Loop();
+
+	GAME.End();
+}
 
 int main() {
-	TicTacToe::PrintWelcomeMessage();
-
-	GAME.SetUpGame();
-
-	while (GAME.STATE == RUNNING) {
-		TicTacToe::TakeTurn();
-	}
-	TicTacToe::PrintBoard();
-
-	if (GAME.STATE == DRAW) TicTacToe::PrintDrawMessage();
-
-	else GAME.PrintVictoryMessage();
-
+	PlayTicTacToe();
 	clear_buffer();
 	std::cin.get();
 }
