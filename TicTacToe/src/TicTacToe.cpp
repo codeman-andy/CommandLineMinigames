@@ -276,6 +276,13 @@ void TicTacToe::PrintWelcomeMessage() {
 	Log("Let's play a game of Tic-Tac-Toe!");
 }
 
+void TicTacToe::Reset() {
+	board.Reset();
+	current_player = nullptr;
+	current_letter = UNOCCUPIED;
+	turn_number = 0;
+}
+
 void TicTacToe::End() {
 	TicTacToe::PrintBoard();
 
@@ -291,6 +298,10 @@ void TicTacToe::Loop() {
 }
 
 TicTacToe& TicTacToe::Start() {
+	STATE = RUNNING;
+
+	if (turn_number != 0) Reset();
+
 	PrintWelcomeMessage();
 
 	static TicTacToe game = TicTacToe();

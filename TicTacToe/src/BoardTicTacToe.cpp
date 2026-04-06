@@ -27,6 +27,24 @@ struct TicTacToe::Board {
 		this->nr_of_available_moves = nr_of_available_moves;
 	}
 
+	void Reset() {
+		for (int row = 0; row < 3; row++) {
+			for (int col = 0; col < 3; col++) {
+				this->coordinates[col][row] = UNOCCUPIED;
+			}
+		}
+
+		for (int counter_index = 0; counter_index < 2; counter_index++) {
+			this->row_counter[counter_index] = EMPTY;
+			this->col_counter[counter_index] = EMPTY;
+			this->diagonal_counter[counter_index] = EMPTY;
+		}
+		this->row_counter[2] = EMPTY;
+		this->col_counter[2] = EMPTY;
+
+		this->nr_of_available_moves = 9;
+	}
+
 	/*
 	Board(const Board& other) : nr_of_available_moves(other.nr_of_available_moves) {
 		memcpy(this->coordinates, other.coordinates, 9);

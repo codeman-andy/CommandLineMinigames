@@ -9,7 +9,17 @@ void PlayTicTacToe() {
 }
 
 int main() {
-	PlayTicTacToe();
-	clear_buffer();
+
+	int command = 1;
+
+	while (command) {
+		PlayTicTacToe();
+		clear_buffer();
+
+		Log("Would you like to play again?\n");
+		Log("1. Yes [0. Exit]\n");
+		std::cin >> command;
+	}
+
 	std::cin.get();
 }

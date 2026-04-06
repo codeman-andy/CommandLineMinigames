@@ -62,6 +62,7 @@ private:
 	static void SetUpNextTurn();
 	void SetUpPvE();
 	void SetUpPvP();
+	static void Reset();
 };
 
 
