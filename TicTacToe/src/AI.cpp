@@ -183,7 +183,7 @@ int AI::Max(const int* const& scores, const int& length) {
 	return max_value;
 }
 
-int AI::FindMaxIndex(const int* const& scores, const int& length) {
+int AI::FindMax(const int* const& scores, const int& length) {
 	int max = Max(scores, length);
 
 	int max_index = 0;
@@ -199,7 +199,7 @@ int AI::MinMaxScore(const move& last_move, const TicTacToe::Board& board, const 
 
 	int my_letter = TicTacToe::GetCurrentLetter();
 
-	if (TicTacToe::CheckBoard(board, last_move.x, last_move.y) == WINNER_FOUND) {
+	if (board.CheckState(last_move) == WINNER_FOUND) {
 		if (last_letter == my_letter) return 10;
 		else return -10;
 	}
@@ -214,8 +214,7 @@ int AI::MinMaxScore(const move& last_move, const TicTacToe::Board& board, const 
 
 	// Get scores of available moves
 	for (int move_index = 0; move_index < board.nr_of_available_moves; move_index++) {
-		TicTacToe::Board new_board;
-		new_board.CopyBoard(board);
+		TicTacToe::Board new_board = board;
 
 		TicTacToe::MarkOnBoard(new_board, valid_moves[move_index].x, valid_moves[move_index].y, this_letter);
 
@@ -244,8 +243,7 @@ move AI::MinMaxMove(const TicTacToe::Board& board) const {
 
 	// Get scores of available moves
 	for (int move_index = 0; move_index < board.nr_of_available_moves; move_index++) {
-		TicTacToe::Board new_board;
-		new_board.CopyBoard(board);
+		TicTacToe::Board new_board = board;
 
 		TicTacToe::MarkOnBoard(new_board, m_valid_moves[move_index].x, m_valid_moves[move_index].y, my_letter);
 
@@ -257,7 +255,7 @@ move AI::MinMaxMove(const TicTacToe::Board& board) const {
 	// If defeat is inevitable (i.e. every move leads to a defeat), then delay it as much as possible
 	if (Max(scores, board.nr_of_available_moves) == -10) return FindWinOrPreventLossOrMakeRandomMove(board);
 
-	int max_score_index = FindMaxIndex(scores, board.nr_of_available_moves);
+	int max_score_index = FindMax(scores, board.nr_of_available_moves);
 
 	delete[] scores;
 

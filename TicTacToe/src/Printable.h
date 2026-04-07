@@ -1,5 +1,5 @@
 #pragma once
 
 class Printable {
-	virtual void PrintToConsole() = 0;
+	virtual void Print() = 0;
 };

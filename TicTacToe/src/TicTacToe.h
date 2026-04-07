@@ -23,34 +23,26 @@ struct TicTacToe : public Game {
 
 	/* Interface */
 	static letter GetCurrentLetter();
-	static int CheckForDraw();
-	static int CheckForWinner(const Board& board, const int& index, const int& CheckFor);
-	static int CheckBoard(const Board& board, const int& x, const int& y);
 	static void MarkOnBoard(Board& board, const int& x, const int& y, const int& letter);
 	static int TakeTurn();
-	void SetUpGame();
 	static void PrintBoard();
-	static void PrintDrawMessage();
-	void PrintVictoryMessage() const;
-	static void PrintWelcomeMessage();
-	void End();
+	void End() const;
 	static void Loop();
 	static TicTacToe& Start();
 
 private:
 	/* Variables */
 	static Board board;
-	static char CharTranslation[3];
 	static int (*game_loop)();
-	static int turn_number;
 	static Player* Players[2];
 	static Player* current_player;
 	static letter current_letter;
 
 	/* Methods */
-	static int isPossible(const int& X, const int& Y);
+	static int CheckForDraw();
+	static int isPossible(move& move);
 	static int isValid(const int& Coord);
-	static int MakeMove(const int& x, const int& y);
+	static int MakeMove(const move& move);
 	static int GetPlayerMove(move& move);
 	static int TakePlayerTurn(move& move);
 	static int TakeAITurn(const move& last_move);
@@ -62,6 +54,12 @@ private:
 	void SetUpPvE();
 	void SetUpPvP();
 	static void Reset();
+	void SetUpGame();
+
+	/* Logging */
+	static void PrintDrawMessage();
+	void PrintVictoryMessage() const;
+	static void PrintWelcomeMessage();
 };
 
 

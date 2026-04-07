@@ -38,7 +38,7 @@ class AI : public Player {
 	static int FindWinningMove(move& winning_move, const TicTacToe::Board& board, const int& my_letter);
 	static int Min(const int* const& scores, const int& length);
 	static int Max(const int* const& scores, const int& length);
-	static int FindMaxIndex(const int* const& scores, const int& length);
+	static int FindMax(const int* const& scores, const int& length);
 	static int MinMaxScore(const move& last_move, const TicTacToe::Board& board, const int& last_letter);
 	move FindWinOrMakeRandomMove(const TicTacToe::Board& board) const;
 	move FindWinOrPreventLossOrMakeRandomMove(const TicTacToe::Board& board) const;
