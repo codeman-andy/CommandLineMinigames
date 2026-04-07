@@ -204,11 +204,11 @@ int AI::MinMaxScore(const move& last_move, const TicTacToe::Board& board, const 
 		else return -10;
 	}
 
-	if (TicTacToe::CheckForDraw(board) == DRAW) return 0;
+	if (board.isFull()) return 0;
 
 	int this_letter = (last_letter == O) ? X : O;
 
-	move* valid_moves = TicTacToe::GetValidMoves(board);
+	move* valid_moves = board.GetValidMoves();
 
 	int* scores = new int[board.nr_of_available_moves];
 

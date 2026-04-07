@@ -24,4 +24,21 @@ struct Battleship::Board {
 
 		this->nr_of_available_moves = nr_of_available_moves;
 	}
-};
+
+		void Reset() {
+			for (int row = 0; row < 3; row++) {
+				for (int col = 0; col < 3; col++) {
+					this->coordinates[col][row] = UNOCCUPIED;
+				}
+			}
+
+			for (int counter_index = 0; counter_index < 9; counter_index++) {
+				this->row_counter[counter_index] = EMPTY;
+				this->col_counter[counter_index] = EMPTY;
+			}
+			this->col_counter[9] = EMPTY;
+			this->col_counter[10] = EMPTY;
+
+			this->nr_of_available_moves = 99;
+		}
+	}

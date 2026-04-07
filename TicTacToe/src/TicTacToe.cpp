@@ -14,36 +14,12 @@ TicTacToe::TicTacToe()
 {
 };
 
-move* TicTacToe::GetValidMoves(const Board& board) {
-	move* valid_moves = (move*) new move[board.nr_of_available_moves];
-
-	int index = 0;
-	for (int row = 0; row < 3; row++) {
-		for (int col = 0; col < 3; col++) {
-			if (board.coordinates[row][col] == UNOCCUPIED) {
-				valid_moves[index] = move(col, row);
-				index++;
-			}
-		}
-	}
-
-	return valid_moves;
-}
-
 letter TicTacToe::GetCurrentLetter() {
 	return current_letter;
 }
 
-int TicTacToe::CheckForDraw(const Board& board) {
-	int letter_count = 0;
-
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; (j < 3) && (board.coordinates[j][i] != UNOCCUPIED); j++) letter_count++;
-	}
-
-	if (letter_count == 9) return DRAW;
-
-	return RUNNING;
+int TicTacToe::CheckForDraw() {
+	return (turn_number == 10);
 }
 
 int TicTacToe::CheckForWinner(const Board& board,const int& index, const int& CheckFor) {
@@ -161,7 +137,7 @@ void TicTacToe::TogglePlayer() {
 
 void TicTacToe::SetUpNextTurn() {
 	turn_number++;
-	if (turn_number == 10) {
+	if (CheckForDraw()) {
 		STATE = DRAW;
 		return;
 	}
@@ -180,7 +156,7 @@ int TicTacToe::PvERound() {
 
 	SetUpNextTurn();
 
-	if (turn_number == 10) {
+	if (CheckForDraw()) {
 		STATE = DRAW;
 		return DRAW;
 	}
@@ -225,7 +201,7 @@ void TicTacToe::SetUpPvE() {
 
 	AI* bot_player = AI::CreatePlayer(name, chosen_difficulty);
 
-	bot_player->SetValidMoves(GetValidMoves(board), board.nr_of_available_moves);
+	bot_player->SetValidMoves(board.GetValidMoves(), board.nr_of_available_moves);
 
 	Players[1] = bot_player;
 }

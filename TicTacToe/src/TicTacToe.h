@@ -22,9 +22,8 @@ struct TicTacToe : public Game {
 	TicTacToe();
 
 	/* Interface */
-	static move* GetValidMoves(const Board& board);
 	static letter GetCurrentLetter();
-	static int CheckForDraw(const Board& board);
+	static int CheckForDraw();
 	static int CheckForWinner(const Board& board, const int& index, const int& CheckFor);
 	static int CheckBoard(const Board& board, const int& x, const int& y);
 	static void MarkOnBoard(Board& board, const int& x, const int& y, const int& letter);

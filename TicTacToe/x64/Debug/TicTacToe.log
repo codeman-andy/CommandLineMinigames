@@ -1,2 +1,5 @@
-﻿  TicTacToe.cpp
+﻿  AI.cpp
+  BoardTicTacToe.cpp
+  TicTacToe.cpp
+  Generating Code...
   TicTacToe.vcxproj -> C:\Dev\CPP\CommandLineMinigames\x64\Debug\TicTacToe.exe
