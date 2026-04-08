@@ -9,24 +9,27 @@ struct TicTacToe::Board : Printable {
 	int diagonal_counter[2];
 	int nr_of_available_moves;
 
-	Board() : coordinates({ UNOCCUPIED }), row_counter({ EMPTY }), col_counter({ EMPTY }), diagonal_counter({ EMPTY }), nr_of_available_moves(9)
-	{
-	}
+	Board() : coordinates({ UNOCCUPIED }), row_counter({ EMPTY }), col_counter({ EMPTY }), diagonal_counter({ EMPTY }), nr_of_available_moves(9) {}
 
-	Board(const Board& other) : nr_of_available_moves(other.nr_of_available_moves) {
+	Board(const Board& other) : nr_of_available_moves(other.nr_of_available_moves)
+	{
 		memcpy(this->coordinates, other.coordinates, sizeof(other.coordinates));
 		memcpy(this->row_counter, other.row_counter, sizeof(other.row_counter));
 		memcpy(this->col_counter, other.col_counter, sizeof(other.col_counter));
 		memcpy(this->diagonal_counter, other.diagonal_counter, sizeof(other.diagonal_counter));
 	}
 
-	move* GetValidMoves() const {
+	move* GetValidMoves() const
+	{
 		move* valid_moves = (move*) new move[nr_of_available_moves];
 
 		int index = 0;
-		for (int row = 0; row < 3; row++) {
-			for (int col = 0; col < 3; col++) {
-				if (coordinates[row][col] == UNOCCUPIED) {
+		for (int row = 0; row < 3; row++)
+		{
+			for (int col = 0; col < 3; col++)
+			{
+				if (coordinates[row][col] == UNOCCUPIED)
+				{
 					valid_moves[index] = move(col, row);
 					index++;
 				}
@@ -36,12 +39,20 @@ struct TicTacToe::Board : Printable {
 		return valid_moves;
 	}
 
-	bool isFull() const {
+	bool isEmpty() const
+	{
+		return (nr_of_available_moves == 9);
+	}
+
+	bool isFull() const
+	{
 		return (nr_of_available_moves == 0);
 	}
 
-	int CheckForWinner(const int& index, const int& CheckFor) const {
-		switch (CheckFor) {
+	int CheckForWinner(const int& index, const int& CheckFor) const
+	{
+		switch (CheckFor)
+		{
 		case CheckForRow:
 			if (coordinates[index][0] == coordinates[index][1] && coordinates[index][0] == coordinates[index][2]) return WINNER_FOUND;
 			[[fallthrough]];
@@ -58,7 +69,8 @@ struct TicTacToe::Board : Printable {
 		return RUNNING;
 	}
 
-	int CheckState(const move& last_move) const {
+	int CheckState(const move& last_move) const
+	{
 		if (row_counter[last_move.y] == FULL && CheckForWinner(last_move.y, CheckForRow) == WINNER_FOUND) return WINNER_FOUND;
 		if (col_counter[last_move.x] == FULL && CheckForWinner(last_move.x, CheckForCol) == WINNER_FOUND) return WINNER_FOUND;
 
@@ -70,14 +82,18 @@ struct TicTacToe::Board : Printable {
 		return RUNNING;
 	}
 
-	void Reset() {
-		for (int row = 0; row < 3; row++) {
-			for (int col = 0; col < 3; col++) {
-				this->coordinates[col][row] = UNOCCUPIED;
+	void Reset()
+	{
+		for (int row = 0; row < 3; row++)
+		{
+			for (int col = 0; col < 3; col++)
+			{
+				this->coordinates[row][col] = UNOCCUPIED;
 			}
 		}
 
-		for (int counter_index = 0; counter_index < 2; counter_index++) {
+		for (int counter_index = 0; counter_index < 2; counter_index++)
+		{
 			this->row_counter[counter_index] = EMPTY;
 			this->col_counter[counter_index] = EMPTY;
 			this->diagonal_counter[counter_index] = EMPTY;
@@ -88,11 +104,13 @@ struct TicTacToe::Board : Printable {
 		this->nr_of_available_moves = 9;
 	}
 
-	void Print() {
+	void Print()
+	{
 		Log("  0 1 2\n");
 		Log("  -----\n");
 
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 3; i++)
+		{
 			std::cout << i << "|" << CharTranslation[coordinates[i][0]] << " " << CharTranslation[coordinates[i][1]] << " " << CharTranslation[coordinates[i][2]] << "|" << std::endl;
 		}
 

@@ -39,7 +39,7 @@ private:
 	static letter current_letter;
 
 	/* Methods */
-	static int CheckForDraw();
+	static bool CheckForDraw();
 	static int isPossible(move& move);
 	static int isValid(const int& Coord);
 	static int MakeMove(const move& move);
