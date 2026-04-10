@@ -1,7 +1,7 @@
 #include "BoardBattleship.cpp"
 
-Battleship::Board Battleship::board;
-char Battleship::CharTranslation[3] = { '-', 'X', 'O' };
+Battleship::Board Battleship::player_home_board[2];
+Battleship::Board Battleship::player_hits_board[2];
 int (*Battleship::game_loop)();
 Player* Battleship::current_player;
 Player* Battleship::Players[2];
@@ -12,10 +12,9 @@ Battleship::Battleship() {}
 void Battleship::MarkOnBoard(Board& board, const int& x, const int& y)
 {
 	board.coordinates[y][x] = X;
-	board.row_counter[y] += 1;
-	board.col_counter[x] += 1;
 }
 
+/* TO BE REFACTORED
 int Battleship::MakeMove(const int& x, const int& y)
 {
 	MarkOnBoard(board, x, y);
@@ -28,6 +27,7 @@ int Battleship::MakeMove(const int& x, const int& y)
 
 	return RUNNING;
 }
+*/
 
 int Battleship::isPossible(const int& X, const int& Y)
 {
@@ -39,9 +39,21 @@ int Battleship::isPossible(const int& X, const int& Y)
 
 int Battleship::isValid(const int& Coord)
 {
-	if (Coord % 1 == 0 && Coord >= 0 && Coord <= 9) return RUNNING;
+	if (Coord % 1 == 0 && Coord >= 0 && Coord <= 2) return RUNNING;
 
 	else Log("Your last coordinate was invalid. Please, type your coordinates again.\n");
+	return INVALID_COORDINATE;
+}
+
+int Battleship::areValid(const int& X_start, const int& Y_start, const int& X_end, const int& Y_end)
+{
+	if ((X_start % 1 == 0 && X_start >= 1 && X_start <= 9) &&
+		(X_end % 1 == 0 && X_end >= 1 && X_end <= 9) &&
+		(Y_start % 1 == 0 && Y_start >= 1 && Y_start <= 11) &&
+		(Y_end % 1 == 0 && Y_end >= 1 && Y_end <= 11))
+		return RUNNING;
+
+	else Log("Your placement is invalid. Please, type your coordinates again.\n");
 	return INVALID_COORDINATE;
 }
 
@@ -140,9 +152,18 @@ int Battleship::TakeTurn()
 
 void Battleship::SetUpBoard()
 {
-	for (int current_type = Carrier; current_type < 5; current_type++)
+	for (int current_type = CARRIER; current_type < 5; current_type++)
 	{
-		std::cout << "Where do you want to place your " << Vessel::vessel_names[current_type] << "?" << std::endl;
+		int x_start, y_start, x_end, y_end;
+		do
+		{
+			Log("Vessels may be placed either horizontally of vertically.\n");
+			std::cout << "Where do you want to place your " << Vessel::vessel_names[current_type] << "?" << std::endl;
+			Log("Insert four valid values separated by a whitespace (i.e. <4 5 4 8>)\n");
+
+			std::cin >> x_start >> y_start >> x_end >> y_end;
+		}
+		while (!areValid(x_start, y_start, x_end, y_end));
 
 
 	}
@@ -184,26 +205,35 @@ void Battleship::SetUpGame()
 	int input;
 	std::cin >> input;
 
-	if (input == PvP) SetUpPvP();
+	SetUpPvP();
 
-	else SetUpPvE();
+	//if (input == PvP) SetUpPvP();
+
+	//else SetUpPvE();
+
+	SetUpBoard();
 
 	SetUpNextTurn();
+}
+
+void Battleship::Reset()
+{
+	for (int i = 0; i < 2; i++)
+	{
+		player_home_board[i].Reset();
+		player_hits_board[i].Reset();
+	}
+
+	current_player = nullptr;
 }
 
 
 
 /*	LOGGING MEMBERS  */
 
-void Battleship::PrintBoard() {
-	Log("  A B C D E F G H I J K\n");
-	Log("  ---------------------\n");
-
-	for (int i = 1; i < 10; i++) {
-		std::cout << i << "|" << CharTranslation[board.coordinates[i][0]] << " " << CharTranslation[board.coordinates[i][1]] << " " << CharTranslation[board.coordinates[i][2]] << "|" << std::endl;
-	}
-
-	Log("  ---------------------\n");
+void Battleship::PrintBoard()
+{
+	player_home_board[0].Print();
 }
 
 void Battleship::PrintVictoryMessage() const {
@@ -213,4 +243,35 @@ void Battleship::PrintVictoryMessage() const {
 
 void Battleship::PrintWelcomeMessage() {
 	Log("Let's play a game of Tic-Tac-Toe!");
+}
+
+
+
+/* INTERFACE */
+
+void Battleship::End() const
+{
+	Battleship::PrintBoard();
+
+	PrintVictoryMessage();
+}
+
+void Battleship::Loop()
+{
+	while (STATE == RUNNING) TakeTurn();
+}
+
+Battleship& Battleship::Start()
+{
+	STATE = RUNNING;
+
+	if (!player_home_board[0].isEmpty()) Reset();
+
+	PrintWelcomeMessage();
+
+	static Battleship game = Battleship();
+
+	game.SetUpGame();
+
+	return game;
 }

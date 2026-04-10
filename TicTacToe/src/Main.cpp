@@ -8,11 +8,11 @@ void PlayTicTacToe() {
 	GAME.End();
 }
 
-int main() {
-
+int main()
+{
 	int command = 1;
-
-	while (command) {
+	while (command)
+	{
 		PlayTicTacToe();
 		clear_buffer();
 

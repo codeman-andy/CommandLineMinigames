@@ -5,18 +5,14 @@
 struct Battleship::Board {
 	inline static const char const CharTranslation[3] = { '-', 'X', 'O' };
 	int coordinates[9][11];
-	int row_counter[9];
-	int col_counter[11];
 	int nr_of_vessels;
 	Vessel vessels[5];
 
-	Board() : coordinates({ UNOCCUPIED }), row_counter({ EMPTY }), col_counter({ EMPTY }), nr_of_vessels(0), vessels() {}
+	Board() : coordinates({ UNOCCUPIED }), nr_of_vessels(0), vessels() {}
 
 	Board(const Board& other) : nr_of_vessels(0)
 	{
 		memcpy(this->coordinates, other.coordinates, sizeof(other.coordinates));
-		memcpy(this->row_counter, other.row_counter, sizeof(other.row_counter));
-		memcpy(this->col_counter, other.col_counter, sizeof(other.col_counter));
 	}
 
 	move* GetValidMoves() const
@@ -69,20 +65,20 @@ struct Battleship::Board {
 	{
 		switch (vessel)
 		{
-		case Carrier:
-			Vessel boat = Vessel::Carrier(x_start, x_end, y_start, y_end);
+		case CARRIER:
+			Vessel boat = Vessel::Carrier();
 			vessels[vessel] = boat;
-		case Battle_Ship:
-			Vessel boat = Vessel::Battleship(x_start, x_end, y_start, y_end);
+		case BATTLESHIP:
+			Vessel boat = Vessel::Battleship();
 			vessels[vessel] = boat;
-		case Destroyer:
-			Vessel boat = Vessel::Destroyer(x_start, x_end, y_start, y_end);
+		case DESTROYER:
+			Vessel boat = Vessel::Destroyer();
 			vessels[vessel] = boat;
-		case Submarine:
-			Vessel boat = Vessel::Submarine(x_start, x_end, y_start, y_end);
+		case SUBMARINE:
+			Vessel boat = Vessel::Submarine();
 			vessels[vessel] = boat;
-		case Patrol_Boat:
-			Vessel boat = Vessel::PatroalBoat(x_start, x_end, y_start, y_end);
+		case PATROL_BOAT:
+			Vessel boat = Vessel::PatrolBoat();
 			vessels[vessel] = boat;
 		}
 
@@ -120,5 +116,18 @@ struct Battleship::Board {
 		this->col_counter[10] = EMPTY;
 
 		this->nr_of_available_moves = 99;
+	}
+
+	void Print()
+	{
+		Log("  0 1 2\n");
+		Log("  -----\n");
+
+		for (int i = 0; i < 3; i++)
+		{
+			std::cout << i << "|" << CharTranslation[coordinates[i][0]] << " " << CharTranslation[coordinates[i][1]] << " " << CharTranslation[coordinates[i][2]] << "|" << std::endl;
+		}
+
+		Log("  -----\n");
 	}
 };
