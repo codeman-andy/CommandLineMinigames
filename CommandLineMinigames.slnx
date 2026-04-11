@@ -4,5 +4,6 @@
     <Platform Name="x86" />
   </Configurations>
   <Project Path="Battleship/Battleship.vcxproj" Id="7dad1727-71dc-498a-9435-3040161bc8ea" />
+  <Project Path="Library/Library.vcxproj" Id="5b2c2708-1399-48e1-8e8e-19e76b773a8e" />
   <Project Path="TicTacToe/TicTacToe.vcxproj" Id="3480c8f4-18f2-49e0-9a3a-194ce658e260" />
 </Solution>

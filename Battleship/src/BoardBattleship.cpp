@@ -3,7 +3,7 @@
 #include "Vessel.cpp"
 
 struct Battleship::Board {
-	inline static const char const CharTranslation[3] = { '-', 'X', 'O' };
+	inline static const char CharTranslation[3] = { '-', 'X', 'O' };
 	int coordinates[11][9];
 	int nr_of_vessels;
 	Vessel vessels[5];
@@ -65,7 +65,7 @@ struct Battleship::Board {
 		}
 	}
 
-	int PlaceVessel(const int& vessel, const Placement& placement)
+	void PlaceVessel(const int& vessel, const Placement& placement)
 	{
 		switch (vessel)
 		{

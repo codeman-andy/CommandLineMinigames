@@ -3,9 +3,20 @@
 #define MISS 0
 #define HIT 1
 
-#include "../../TicTacToe/src/Game.h"
-#include "../../TicTacToe/src/Move.h"
-#include "../../TicTacToe/src/Player.h"
+#include "Log.h"
+#include "Game.h"
+#include "Move.h"
+#include "Player.h"
+#include "Human_Player.h"
+
+// TO BE CHANGED
+/*
+#include "../../TicTacToe/src/Log.cpp"
+#include "../../TicTacToe/src/Game.cpp"
+#include "../../TicTacToe/src/Move.cpp"
+#include "../../TicTacToe/src/Player.cpp"
+#include "../../TicTacToe/src/Human_Player.cpp"
+*/
 
 enum vessel_type { CARRIER, BATTLESHIP, DESTROYER, SUBMARINE, PATROL_BOAT };
 
@@ -15,7 +26,7 @@ struct Placement {
 	int y_start;
 	int y_end;
 
-	Placement() {}
+	Placement() : x_start(0), x_end(0), y_start(0), y_end(0) {}
 
 	Placement(int x_start, int x_end, int y_start, int y_end)
 		: x_start(x_start), x_end(x_end), y_start(y_start), y_end(y_end) {}
@@ -48,7 +59,8 @@ private:
 	static Board player_hits_board[2];
 	static int (*game_loop)();
 	static Player* Players[2];
-	static Player* current_player;
+	static int current;
+	static int opponent;
 
 	/* Methods */
 	static int isPossible(const int& X, const int& Y);
@@ -68,7 +80,3 @@ private:
 	void SetUpPvP();
 	static void Reset();
 };
-
-
-#include "../../TicTacToe/src/Human_Player.h"
-#include "../../TicTacToe/src/AI.h"

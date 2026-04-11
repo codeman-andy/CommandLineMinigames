@@ -3,22 +3,23 @@
 Battleship::Board Battleship::player_home_board[2];
 Battleship::Board Battleship::player_hits_board[2];
 int (*Battleship::game_loop)();
-Player* Battleship::current_player;
 Player* Battleship::Players[2];
+int Battleship::current;
+int Battleship::opponent;
 
 
 Battleship::Battleship() {}
 
 void Battleship::MarkOnBoard(Board& board, const int& x, const int& y)
 {
-	board.coordinates[x][y] = player_home_board[1].CheckHit(x, y) ? O : X;
+	board.coordinates[x][y] = player_home_board[opponent].CheckHit(x, y) ? O : X;
 }
 
 int Battleship::MakeMove(const int& x, const int& y)
 {
-	MarkOnBoard(player_hits_board[0], x, y);
+	MarkOnBoard(player_hits_board[current], x, y);
 
-	if (player_home_board[1].nr_of_vessels == 0)
+	if (player_home_board[opponent].nr_of_vessels == 0)
 	{
 		STATE = WINNER_FOUND;
 		return WINNER_FOUND;
@@ -30,7 +31,7 @@ int Battleship::MakeMove(const int& x, const int& y)
 
 int Battleship::isPossible(const int& X, const int& Y)
 {
-	if (player_hits_board[0].coordinates[Y][X] == UNOCCUPIED) return RUNNING;
+	if (player_hits_board[current].coordinates[Y][X] == UNOCCUPIED) return RUNNING;
 
 	else Log("You have already made a hit on that coordinate. Please, pick another.\n");
 	return INVALID_MOVE;
@@ -106,7 +107,9 @@ int Battleship::TakeAITurn(const move& last_move) {
 
 void Battleship::TogglePlayer()
 {
-	current_player = (current_player == Players[0]) ? Players[1] : Players[0];
+	current = (current == 0) ? 1 : 0;
+
+	opponent = (opponent == 1) ? 0 : 1;
 }
 
 void Battleship::SetUpNextTurn()
@@ -114,6 +117,7 @@ void Battleship::SetUpNextTurn()
 	TogglePlayer();
 }
 
+/*
 int Battleship::PvERound()
 {
 	PrintBoard();
@@ -132,6 +136,7 @@ int Battleship::PvERound()
 
 	return RUNNING;
 }
+*/
 
 int Battleship::PvPRound()
 {
@@ -234,7 +239,8 @@ void Battleship::Reset()
 		player_hits_board[i].Reset();
 	}
 
-	current_player = nullptr;
+	current = 3;
+	opponent = 3;
 }
 
 
@@ -247,12 +253,12 @@ void Battleship::PrintBoard()
 }
 
 void Battleship::PrintVictoryMessage() const {
-	const char* winner = current_player->GetName();
+	const char* winner = Players[current]->GetName();
 	std::cout << "Congratulations, " << winner << "! You won!" << std::endl;
 }
 
 void Battleship::PrintWelcomeMessage() {
-	Log("Let's play a game of Tic-Tac-Toe!");
+	Log("Let's play a game of Battleship!\n");
 }
 
 
