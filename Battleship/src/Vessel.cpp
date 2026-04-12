@@ -35,13 +35,9 @@ struct Battleship::Vessel {
 		return Vessel(CARRIER, 5);
 	}
 
-	void Hit() {
+	void Hit()
+	{
 		this->hit_points--;
-
-		if (hit_points == 0)
-		{
-			std::cout << "The " << vessel_names[this->type] << " has been destroyed!\n";
-		}
 	}
 
 	void Reset()

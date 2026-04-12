@@ -9,7 +9,14 @@ struct Battleship::Board {
 	Vessel vessels[5];
 	Placement placements[5];
 
-	Board() : coordinates({ UNOCCUPIED }), nr_of_vessels(0), vessels(), placements({ 0 }) {}
+	Board() : coordinates({ UNOCCUPIED }), nr_of_vessels(0), placements()
+	{
+		vessels[CARRIER] = Vessel::Carrier();
+		vessels[BATTLESHIP] = Vessel::Battleship();
+		vessels[DESTROYER] = Vessel::Destroyer();
+		vessels[SUBMARINE] = Vessel::Submarine();
+		vessels[PATROL_BOAT] = Vessel::PatrolBoat();
+	}
 
 	Board(const Board& other) : nr_of_vessels(0)
 	{
@@ -67,25 +74,6 @@ struct Battleship::Board {
 
 	void PlaceVessel(const int& vessel, const Placement& placement)
 	{
-		switch (vessel)
-		{
-		case CARRIER:
-			vessels[vessel] = Vessel::Carrier();
-			break;
-		case BATTLESHIP:
-			vessels[vessel] = Vessel::Battleship();
-			break;
-		case DESTROYER:
-			vessels[vessel] = Vessel::Destroyer();
-			break;
-		case SUBMARINE:
-			vessels[vessel] = Vessel::Submarine();
-			break;
-		case PATROL_BOAT:
-			vessels[vessel] = Vessel::PatrolBoat();
-			break;
-		}
-
 		placements[vessel] = placement;
 
 		if (placement.x_start == placement.x_end) PlaceVertically(placement.x_start, placement.y_start, placement.y_end);
@@ -98,8 +86,8 @@ struct Battleship::Board {
 	int IdentifyVessel(const int& x, const int& y) const
 	{
 		int v_type = 0;
-		while ((x != this->placements[v_type].x_start && x != this->placements[v_type].x_end)
-			|| (y != this->placements[v_type].y_start && y != this->placements[v_type].y_end))
+		while ((x < this->placements[v_type].x_start || x > this->placements[v_type].x_end)
+			|| (y < this->placements[v_type].y_start || y > this->placements[v_type].y_end))
 		{
 			v_type++;
 		}
@@ -108,12 +96,22 @@ struct Battleship::Board {
 
 	void MarkHit(const int& x, const int& y)
 	{
+		Log("You have hit a ship!\n");
+
 		int v_type = IdentifyVessel(x, y);
+
 		this->vessels[v_type].Hit();
 
 		this->coordinates[x][y] = O;
 
-		Log("You have hit a ship!\n");
+		if (vessels[v_type].hit_points == 0)
+		{
+			std::cout << "The " << Vessel::vessel_names[v_type] << " has been destroyed!\n";
+
+			this->nr_of_vessels--;
+
+			if (nr_of_vessels == 0)	STATE = WINNER_FOUND;
+		}
 	}
 
 	int CheckHit(const int& x, const int& y)
@@ -168,5 +166,10 @@ struct Battleship::Board {
 		}
 
 		Log("   ---------------------\n");
+	}
+
+	int GetVesselSize(int v_type) const
+	{
+		return vessels[v_type].size;
 	}
 };

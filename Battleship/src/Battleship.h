@@ -47,6 +47,7 @@ struct Battleship : public Game {
 	static int TakeTurn();
 	void SetUpGame();
 	static void PrintBoard();
+	static void PrintBoards();
 	void PrintVictoryMessage() const;
 	static void PrintWelcomeMessage();
 	void End() const;
@@ -66,7 +67,8 @@ private:
 	static int isPossible(const int& X, const int& Y);
 	static int XisValid(const int& X);
 	static int YisValid(const int& Y);
-	static int areValid(const int& X_start, const int& Y_start, const int& X_end, const int& Y_end);
+	static int areValid(const int& vessel_size, const int& X_start, const int& Y_start, const int& X_end, const int& Y_end);
+	static void Sort(int& X_start, int& X_end, int& Y_start, int& Y_end);
 	static int MakeMove(const int& x, const int& y);
 	static int GetPlayerMove(move& move);
 	static int TakePlayerTurn(move& move);
@@ -75,7 +77,7 @@ private:
 	static int PvPRound();
 	static void TogglePlayer();
 	static void SetUpNextTurn();
-	void SetUpBoard(const int& player_index);
+	void SetUpBoard();
 	void SetUpPvE();
 	void SetUpPvP();
 	static void Reset();
