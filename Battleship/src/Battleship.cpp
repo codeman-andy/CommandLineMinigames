@@ -39,7 +39,7 @@ int Battleship::isPossible(const int& X, const int& Y)
 
 int Battleship::XisValid(const int& X)
 {
-	if (X % 1 == 0 && X > 0 && X < 12) return RUNNING;
+	if (X % 1 == 0 && X >= 0 && X < 11) return RUNNING;
 
 	else Log("Your last coordinate was invalid. Please, type the coordinates again.\n");
 	return INVALID_COORDINATE;
@@ -47,7 +47,7 @@ int Battleship::XisValid(const int& X)
 
 int Battleship::YisValid(const int& Y)
 {
-	if (Y % 1 == 0 && Y > 0 && Y < 10) return RUNNING;
+	if (Y % 1 == 0 && Y >= 0 && Y < 9) return RUNNING;
 
 	else Log("Your last coordinate was invalid. Please, type the coordinates again.\n");
 	return INVALID_COORDINATE;
@@ -55,10 +55,10 @@ int Battleship::YisValid(const int& Y)
 
 int Battleship::areValid(const int& X_start, const int& Y_start, const int& X_end, const int& Y_end)
 {
-	if ((X_start % 1 == 0 && X_start >= 1 && X_start <= 9) &&
-		(X_end % 1 == 0 && X_end >= 1 && X_end <= 9) &&
-		(Y_start % 1 == 0 && Y_start >= 1 && Y_start <= 11) &&
-		(Y_end % 1 == 0 && Y_end >= 1 && Y_end <= 11))
+	if ((X_start % 1 == 0 && X_start >= 0 && X_start <= 10) &&
+		(X_end % 1 == 0 && X_end >= 0 && X_end <= 10) &&
+		(Y_start % 1 == 0 && Y_start >= 0 && Y_start <= 8) &&
+		(Y_end % 1 == 0 && Y_end >= 0 && Y_end <= 8))
 		return RUNNING;
 
 	else Log("Your placement is invalid. Please, type your coordinates again.\n");
@@ -168,7 +168,7 @@ void Battleship::SetUpBoard(const int& player_index)
 			PrintBoard();
 			Log("Vessels may be placed either horizontally or vertically.\n");
 			std::cout << "Where do you want to place your " << Vessel::vessel_names[current_type] << "?" << std::endl;
-			Log("Insert four valid values separated by a whitespace (i.e. <4 5 4 8>)\n");
+			Log("Insert four valid values separated by a whitespace <x_1 y_1 x_2 y_2>\n(i.e. <4 5 4 8>)\n");
 
 			std::cin >> x_start >> y_start >> x_end >> y_end;
 		}

@@ -154,19 +154,19 @@ struct Battleship::Board {
 
 	void Print() const
 	{
-		Log("  A B C D E F G H I J K\n");
-		Log("  ---------------------\n");
+		Log("   0 1 2 3 4 5 6 7 8 9 10\n");
+		Log("   ---------------------\n");
 
-		for (int y = 9; y > 0; y--)
+		for (int y = 8; y >= 0; y--)
 		{
-			std::cout << y << "|";
+			std::cout << y << "| ";
 			for (int x = 0; x < 11; x++)
 			{
-				std::cout << this->CharTranslation[this->coordinates[x][y]];
+				std::cout << this->CharTranslation[this->coordinates[x][y]] << " ";
 			}
 			std::cout << "|" << std::endl;
 		}
 
-		Log("  ---------------------\n");
+		Log("   ---------------------\n");
 	}
 };
