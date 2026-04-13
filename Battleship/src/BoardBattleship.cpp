@@ -167,9 +167,4 @@ struct Battleship::Board {
 
 		Log("   ---------------------\n");
 	}
-
-	int GetVesselSize(int v_type) const
-	{
-		return vessels[v_type].size;
-	}
 };

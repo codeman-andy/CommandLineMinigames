@@ -68,11 +68,13 @@ enum difficulty { EASY = 1, MEDIUM, EXPERT };
  * 
  * INVALID_COORDINATE : The user typed-in a value outside of the of the possible range of coordinates
  * INVALID_MOVE       : The user tried to make a move to a position that is currently unavailable
+ * VALIDATED		  : The provided input passed all checks
  * 
  */
 
-#define INVALID_COORDINATE 0
-#define INVALID_MOVE 0
+#define INVALID_COORDINATE 1
+#define INVALID_MOVE 1
+#define VALIDATED 0
 
 
 

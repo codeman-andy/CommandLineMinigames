@@ -9,15 +9,6 @@
 #include "Player.h"
 #include "Human_Player.h"
 
-// TO BE CHANGED
-/*
-#include "../../TicTacToe/src/Log.cpp"
-#include "../../TicTacToe/src/Game.cpp"
-#include "../../TicTacToe/src/Move.cpp"
-#include "../../TicTacToe/src/Player.cpp"
-#include "../../TicTacToe/src/Human_Player.cpp"
-*/
-
 enum vessel_type { CARRIER, BATTLESHIP, DESTROYER, SUBMARINE, PATROL_BOAT };
 
 struct Placement {
@@ -60,14 +51,14 @@ private:
 	static Board player_hits_board[2];
 	static int (*game_loop)();
 	static Player* Players[2];
-	static int current;
+	static int active;
 	static int opponent;
 
 	/* Methods */
 	static int isPossible(const int& X, const int& Y);
 	static int XisValid(const int& X);
 	static int YisValid(const int& Y);
-	static int areValid(const int& vessel_size, const int& X_start, const int& Y_start, const int& X_end, const int& Y_end);
+	static int areInvalid(const int& vessel_size, const int& X_start, const int& Y_start, const int& X_end, const int& Y_end);
 	static void Sort(int& X_start, int& X_end, int& Y_start, int& Y_end);
 	static int MakeMove(const int& x, const int& y);
 	static int GetPlayerMove(move& move);

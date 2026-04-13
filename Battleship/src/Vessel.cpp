@@ -1,7 +1,8 @@
 #include "Battleship.h"
 
 struct Battleship::Vessel {
-	inline static const char* const vessel_names[5] = { "Carrier", "Battleship", "Destroyer", "Submarine", "Patrol Boat" };
+	inline static const char* const Name[5] = { "Carrier", "Battleship", "Destroyer", "Submarine", "Patrol Boat" };
+	inline static const int const Size[5] = { 5, 4, 3, 3, 2 };
 	vessel_type type;
 	int size;
 	int hit_points;
@@ -33,6 +34,16 @@ struct Battleship::Vessel {
 	static Vessel Carrier()
 	{
 		return Vessel(CARRIER, 5);
+	}
+
+	static const char* GetVesselName(const vessel_type& v_type)
+	{
+		return Name[v_type];
+	}
+
+	static const int GetVesselSize(const vessel_type& v_type)
+	{
+		return Size[v_type];
 	}
 
 	void Hit()
