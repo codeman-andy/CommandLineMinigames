@@ -12,12 +12,20 @@
  * Game states for the currently running game.
  * 
  * RUNNING : The game still has not finished
- * WINNER_FOUND : The game ended with a victor
+ * FINISHED : The game ended with a victor
  * DRAW : The game ended and there was no victor
  * 
  */
 
-enum state { WINNER_FOUND, RUNNING, DRAW };
+enum state { RUNNING, FINISHED, DRAW };
+
+
+
+/*
+ * The possible numerical values for each position on the TicTacToe and Battleship boards.
+ */
+
+enum letter { UNOCCUPIED, X, O };
 
 
 
@@ -39,19 +47,6 @@ enum difficulty { EASY = 1, MEDIUM, EXPERT };
 
 
 /*
- * Parameters for the lanes on the board.
- * 
- * EMPTY : There are currently no elements in the lane
- * FULL  : There are no more available spaces in the lane
- * 
- */
-
-#define EMPTY 0
-#define FULL 3
-
-
-
-/*
  * Parameter for the game mode.
  * 
  * PvP   : Player vs. Player
@@ -64,7 +59,7 @@ enum difficulty { EASY = 1, MEDIUM, EXPERT };
 
 
 /*
- * Flags for an invalid user-input move.
+ * Flags for an user-input move.
  * 
  * INVALID_COORDINATE : The user typed-in a value outside of the of the possible range of coordinates
  * INVALID_MOVE       : The user tried to make a move to a position that is currently unavailable
@@ -74,23 +69,50 @@ enum difficulty { EASY = 1, MEDIUM, EXPERT };
 
 #define INVALID_COORDINATE 1
 #define INVALID_MOVE 1
-#define VALIDATED 0
+#define VALID 0
 
 
 
 /*
- * TicTacToe-parameters for which lane to check for a possible recent winning move.
+ * Flags for the outcome of a turn.
+ * 
+ * TURN_END	: The turn ended with no victor
+ * GAME_END : A victor was crowned during the turn
+ * 
  */
+
+#define TURN_END 0
+#define GAME_END 1
+
+
+
+
+
+/*
+ * * * * * * * * * * * * * * * * *
+ * * * * * * TicTacToe * * * * * *
+ * * * * * * * * * * * * * * * * *
+ */
+
+
+ /*
+  * Parameters for the lanes on the board.
+  *
+  * EMPTY : There are currently no elements in the lane
+  * FULL  : There are no more available spaces in the lane
+  *
+  */
+
+#define EMPTY 0
+#define FULL 3
+
+
+
+  /*
+   * TicTacToe-parameters for which lane to check for a possible recent winning move.
+   */
 
 #define CheckForRow 0
 #define CheckForCol 1
 #define CheckForDiagLeft 2
 #define CheckForDiagRight 3
-
-
-
-/*
- * The possible numerical values for each position on the TicTacToe board.
- */
-
-enum letter { UNOCCUPIED, X, O };

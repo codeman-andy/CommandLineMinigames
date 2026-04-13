@@ -60,7 +60,7 @@ private:
 	static int YisValid(const int& Y);
 	static int areInvalid(const int& vessel_size, const int& X_start, const int& Y_start, const int& X_end, const int& Y_end);
 	static void Sort(int& X_start, int& X_end, int& Y_start, int& Y_end);
-	static int MakeMove(const int& x, const int& y);
+	static void MakeMove(const move& move);
 	static int GetPlayerMove(move& move);
 	static int TakePlayerTurn(move& move);
 	static int TakeAITurn(const move& last_move);
