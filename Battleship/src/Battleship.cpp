@@ -12,7 +12,14 @@ Battleship::Battleship() {}
 
 void Battleship::MarkOnBoard(Board& board, const int& x, const int& y)
 {
-	board.coordinates[x][y] = player_home_board[opponent].CheckHit(x, y) ? O : X;
+	if (player_home_board[opponent].CheckHit(x, y) == HIT)
+	{
+		board.MarkHit(x, y);
+
+		player_home_board[opponent].MarkHit(x, y);
+	}
+
+	else board.MarkMiss(x, y);
 }
 
 void Battleship::MakeMove(const move& move)

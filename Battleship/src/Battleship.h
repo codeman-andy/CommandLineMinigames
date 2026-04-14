@@ -25,7 +25,12 @@ struct Placement {
 
 struct Battleship : public Game {
 	/* Specialized Battleship Game Board */
-	struct Board;
+	struct Board {
+		struct Home;
+		struct Moves;
+		inline static const char CharTranslation[3] = { '-', 'X', 'O' };
+		int coordinates[11][9];
+	};
 
 	/* Struct of the different boats in Battleship */
 	struct Vessel;
@@ -47,8 +52,8 @@ struct Battleship : public Game {
 
 private:
 	/* Variables */
-	static Board player_home_board[2];
-	static Board player_hits_board[2];
+	static Board::Home player_home_board[2];
+	static Board::Moves player_hits_board[2];
 	static int (*game_loop)();
 	static Player* Players[2];
 	static int active;
