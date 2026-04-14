@@ -1,7 +1,7 @@
 #include "BoardBattleship.cpp"
 
-Battleship::Board Battleship::player_home_board[2];
-Battleship::Board Battleship::player_hits_board[2];
+Battleship::Board::Home Battleship::player_home_board[2];
+Battleship::Board::Moves Battleship::player_hits_board[2];
 int (*Battleship::game_loop)();
 Player* Battleship::Players[2];
 int Battleship::active = 3;
@@ -24,7 +24,14 @@ void Battleship::MarkOnBoard(Board& board, const int& x, const int& y)
 
 void Battleship::MakeMove(const move& move)
 {
-	MarkOnBoard(player_hits_board[active], move.x, move.y);
+	if (player_home_board[opponent].CheckHit(move.x, move.y) == HIT)
+	{
+		player_home_board[opponent].MarkHit(move.x, move.y);
+
+		player_hits_board[active].MarkHit(move.x, move.y);
+	}
+
+	else player_hits_board[active].MarkMiss(move.x, move.y);
 }
 
 

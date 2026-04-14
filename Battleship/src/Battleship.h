@@ -1,35 +1,64 @@
 #pragma once
 
-#define MISS 0
-#define HIT 1
-
 #include "Log.h"
 #include "Game.h"
 #include "Move.h"
 #include "Player.h"
 #include "Human_Player.h"
 
-enum vessel_type { CARRIER, BATTLESHIP, DESTROYER, SUBMARINE, PATROL_BOAT };
-
-struct Placement {
-	int x_start;
-	int x_end;
-	int y_start;
-	int y_end;
-
-	Placement() : x_start(0), x_end(0), y_start(0), y_end(0) {}
-
-	Placement(int x_start, int x_end, int y_start, int y_end)
-		: x_start(x_start), x_end(x_end), y_start(y_start), y_end(y_end) {}
-};
-
 struct Battleship : public Game {
+	/* Specialized Battleship-struct for Input and Storage of a Vessel's Placement */
+	struct Placement {
+		int x_start;
+		int x_end;
+		int y_start;
+		int y_end;
+
+		Placement() : x_start(0), x_end(0), y_start(0), y_end(0) {}
+
+		Placement(int x_start, int x_end, int y_start, int y_end)
+			: x_start(x_start), x_end(x_end), y_start(y_start), y_end(y_end) {
+		}
+	};
+
 	/* Specialized Battleship Game Board */
 	struct Board {
 		struct Home;
 		struct Moves;
 		inline static const char CharTranslation[3] = { '-', 'X', 'O' };
 		int coordinates[11][9];
+		Board() : coordinates({ UNOCCUPIED }) {};
+		Board(const Board& other)
+		{
+			memcpy(this->coordinates, other.coordinates, sizeof(other.coordinates));
+		};
+		virtual void MarkHit(const int& x, const int& y);
+		void MarkMiss(const int& x, const int& y)
+		{
+			this->coordinates[x][y] = X;
+		};
+		int CheckState()
+		{
+			return 1;
+		};
+		virtual void Reset();
+		void Print() const
+		{
+			Log("   0 1 2 3 4 5 6 7 8 9 10\n");
+			Log("   ---------------------\n");
+
+			for (int y = 8; y >= 0; y--)
+			{
+				std::cout << y << "| ";
+				for (int x = 0; x < 11; x++)
+				{
+					std::cout << this->CharTranslation[this->coordinates[x][y]] << " ";
+				}
+				std::cout << "|" << std::endl;
+			}
+
+			Log("   ---------------------\n");
+		};
 	};
 
 	/* Struct of the different boats in Battleship */

@@ -95,24 +95,50 @@ enum difficulty { EASY = 1, MEDIUM, EXPERT };
  */
 
 
- /*
-  * Parameters for the lanes on the board.
-  *
-  * EMPTY : There are currently no elements in the lane
-  * FULL  : There are no more available spaces in the lane
-  *
-  */
+/*
+ * Parameters for the lanes on the board.
+ *
+ * EMPTY : There are currently no elements in the lane
+ * FULL  : There are no more available spaces in the lane
+ *
+ */
 
 #define EMPTY 0
 #define FULL 3
 
 
 
-  /*
-   * TicTacToe-parameters for which lane to check for a possible recent winning move.
-   */
+/*
+ * TicTacToe-parameters for which lane to check for a possible recent winning move.
+ */
 
 #define CheckForRow 0
 #define CheckForCol 1
 #define CheckForDiagLeft 2
 #define CheckForDiagRight 3
+
+
+
+
+
+ /*
+  * * * * * * * * * * * * * * * * * *
+   * * * * * Battleship * * * * * * *
+  * * * * * * * * * * * * * * * * * *
+  */
+
+
+/*
+ * The five different vessels in a Battleship game board.
+ */
+
+enum vessel_type { CARRIER, BATTLESHIP, DESTROYER, SUBMARINE, PATROL_BOAT };
+
+
+
+/*
+ * Flags for the outcome of a move.
+ */
+
+#define MISS 0
+#define HIT 1
