@@ -89,7 +89,7 @@ private:
 	static int opponent;
 
 	/* Methods */
-	static int isPossible(const int& X, const int& Y);
+	static int isPossible(const move& move);
 	static int XisValid(const int& X);
 	static int YisValid(const int& Y);
 	static int areInvalid(const int& vessel_size, const int& X_start, const int& Y_start, const int& X_end, const int& Y_end);

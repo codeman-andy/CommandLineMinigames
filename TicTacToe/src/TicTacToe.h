@@ -11,8 +11,8 @@
 
 
 /*
-* TicTacToe is a public sub-struct of the Game-struct.
-*/
+ * TicTacToe is a public sub-struct of the Game-struct.
+ */
 
 struct TicTacToe : public Game {
 	/* Specialized Tic-Tac-Toe Game Board */
@@ -35,14 +35,15 @@ private:
 	static Board board;
 	static int (*game_loop)();
 	static Player* Players[2];
-	static Player* current_player;
+	static int active;
+	static int opponent;
 	static letter current_letter;
 
 	/* Methods */
 	static bool CheckForDraw();
-	static int isPossible(move& move);
+	static int isPossible(const move& move);
 	static int isValid(const int& Coord);
-	static int MakeMove(const move& move);
+	static void MakeMove(const move& move);
 	static int GetPlayerMove(move& move);
 	static int TakePlayerTurn(move& move);
 	static int TakeAITurn(const move& last_move);
@@ -63,8 +64,8 @@ private:
 };
 
 
-// Imports the Human_Player-subclass.
+// Imports the Human_Player-subclass
 #include "Human_Player.h"
 
-// Imports the AI-subclass.
+// Imports the AI-subclass
 #include "AI.h"

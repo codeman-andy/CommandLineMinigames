@@ -77,6 +77,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)Library\Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -92,6 +93,7 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)Library\Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -105,6 +107,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)Library\Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -120,6 +123,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)Library\Include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,24 +133,17 @@
   <ItemGroup>
     <ClCompile Include="src\AI.cpp" />
     <ClCompile Include="src\BoardTicTacToe.cpp" />
-    <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\Human_Player.cpp" />
-    <ClCompile Include="src\Log.cpp" />
     <ClCompile Include="src\Main.cpp" />
-    <ClCompile Include="src\Move.cpp" />
-    <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\TicTacToe.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AI.h" />
-    <ClInclude Include="src\Game.h" />
-    <ClInclude Include="src\Human_Player.h" />
-    <ClInclude Include="src\Log.h" />
-    <ClInclude Include="src\Move.h" />
-    <ClInclude Include="src\Player.h" />
-    <ClInclude Include="src\Printable.h" />
-    <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\TicTacToe.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Library\Library.vcxproj">
+      <Project>{5b2c2708-1399-48e1-8e8e-19e76b773a8e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

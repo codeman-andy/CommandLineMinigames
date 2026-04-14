@@ -35,9 +35,9 @@ void Battleship::MakeMove(const move& move)
 }
 
 
-int Battleship::isPossible(const int& X, const int& Y)
+int Battleship::isPossible(const move& move)
 {
-	if (player_hits_board[active].coordinates[X][Y] == UNOCCUPIED) return VALID;
+	if (player_hits_board[active].coordinates[move.x][move.y] == UNOCCUPIED) return VALID;
 
 	else Log("You have already made a hit on that coordinate. Please, pick another.\n");
 	return INVALID_MOVE;
@@ -99,14 +99,14 @@ int Battleship::GetPlayerMove(move& move)
 	std::cin >> move.x >> move.y;
 	if (!XisValid(move.x) || !YisValid(move.y)) return INVALID_COORDINATE;
 
-	return VALID;
+	else return VALID;
 }
 
 int Battleship::TakePlayerTurn(move& move)
 {
 	if (GetPlayerMove(move) == INVALID_COORDINATE) return INVALID_COORDINATE;
 
-	else if (!isPossible(move.x, move.y)) return INVALID_MOVE;
+	else if (!isPossible(move)) return INVALID_MOVE;
 
 	MakeMove(move);
 
@@ -286,7 +286,6 @@ void Battleship::Reset()
 	player_hits_board[1].Reset();
 
 	active = 3;
-	opponent = 3;
 
 	STATE = RUNNING;
 }
