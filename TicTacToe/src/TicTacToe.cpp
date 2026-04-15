@@ -1,10 +1,11 @@
 #include "BoardTicTacToe.cpp"
 
 TicTacToe::Board TicTacToe::board;
-int (*TicTacToe::game_loop)();
-Player* TicTacToe::current_player;
-letter TicTacToe::current_letter;
+void (*TicTacToe::s_Gamemode)();
 Player* TicTacToe::Players[2];
+int TicTacToe::active;
+int TicTacToe::opponent;
+letter TicTacToe::current_letter;
 
 TicTacToe::TicTacToe() {}
 
@@ -13,14 +14,9 @@ letter TicTacToe::GetCurrentLetter()
 	return current_letter;
 }
 
-bool TicTacToe::CheckForDraw()
-{
-	return (board.isFull());
-}
-
 void TicTacToe::MarkOnBoard(Board& board, const int& x, const int& y, const int& letter)
 {
-	board.coordinates[y][x] = letter;
+	board.coordinates[x][y] = letter;
 	board.row_counter[y] += 1;
 	board.col_counter[x] += 1;
 
@@ -33,17 +29,14 @@ void TicTacToe::MarkOnBoard(Board& board, const int& x, const int& y, const int&
 
 void TicTacToe::MakeMove(const move& move)
 {
-	MarkOnBoard(board, move.x, move.y, current_letter);
+	board.Mark(move.x, move.y, current_letter);
 
-	if (board.CheckState(move) == FINISHED)
-	{
-		STATE = FINISHED;
-	}
+	STATE = board.CheckState(move);
 }
 
 int TicTacToe::isPossible(const move& move)
 {
-	if (board.coordinates[move.y][move.x] == UNOCCUPIED) return VALID;
+	if (board.coordinates[move.x][move.y] == UNOCCUPIED) return VALID;
 
 	else Log("The coordinate you tried to mark is already occupied. Please, choose another.\n");
 	return INVALID_MOVE;
@@ -88,17 +81,19 @@ int TicTacToe::TakeAITurn(const move& last_move)
 
 	bot->RemoveFromValidMoves(last_move);
 
-	std::cout << "It's  " << bot->GetName() << "'s turn! ";
+	const char* bot_name = bot->GetName();
+
+	std::cout << "It's  " << bot_name << "'s turn! ";
 
 	move ai_move = bot->MakeMove(board);
 
-	std::cout << bot->GetName() << " chose [" << ai_move.x << ", " << ai_move.y << "]" << std::endl;
+	std::cout << bot_name << " chose [" << ai_move.x << ", " << ai_move.y << "]" << std::endl;
 
-	if (MakeMove(ai_move) == WINNER_FOUND) return WINNER_FOUND;
+	MakeMove(ai_move);
 
 	bot->RemoveFromValidMoves(ai_move);
 
-	return RUNNING;
+	return TURN_END;
 }
 
 void TicTacToe::ToggleLetter()
@@ -115,60 +110,42 @@ void TicTacToe::TogglePlayer()
 
 void TicTacToe::SetUpNextTurn()
 {
-	if (CheckForDraw() == true)
-	{
-		STATE = DRAW;
-		return;
-	}
-
 	TogglePlayer();
 	ToggleLetter();
 }
 
-int TicTacToe::PvERound()
+void TicTacToe::PvERound()
 {
 	PrintBoard();
 
 	move player_move = move();
 
-	int turn_outcome = TakePlayerTurn(player_move);
+	while (TakePlayerTurn(player_move) != TURN_END) {};
 
-	if (turn_outcome != TURN_END) return turn_outcome;
+	if (STATE != RUNNING) return;
 
 	SetUpNextTurn();
 
-	if (CheckForDraw() == true)
-	{
-		STATE = DRAW;
-		return GAME_END;
-	}
-
-	if (TakeAITurn(player_move) == GAME_END) return GAME_END;
-
-	else return TURN_END;
+	TakeAITurn(player_move);
 }
 
-int TicTacToe::PvPRound()
+void TicTacToe::PvPRound()
 {
 	PrintBoard();
 
 	move player_move = move();
 
-	int turn_outcome = TakePlayerTurn(player_move);
-
-	if (turn_outcome != TURN_END) return turn_outcome;
-	
-	else return TURN_END;
+	while (TakePlayerTurn(player_move) != TURN_END) {};
 }
 
-int TicTacToe::TakeTurn()
+void TicTacToe::TakeTurn()
 {
-	return game_loop();
+	return s_Gamemode();
 }
 
 void TicTacToe::SetUpPvE()
 {
-	game_loop = &PvERound;
+	s_Gamemode = &PvERound;
 
 	Players[0] = Human_Player::CreatePlayer();
 
@@ -189,7 +166,7 @@ void TicTacToe::SetUpPvE()
 
 void TicTacToe::SetUpPvP()
 {
-	game_loop = &PvPRound;
+	s_Gamemode = &PvPRound;
 	Players[0] = Human_Player::CreatePlayer();
 	Players[1] = Human_Player::CreatePlayer();
 }
@@ -247,7 +224,7 @@ void TicTacToe::PrintWelcomeMessage()
 
 void TicTacToe::End() const
 {
-	TicTacToe::PrintBoard();
+	PrintBoard();
 
 	if (STATE == DRAW) PrintDrawMessage();
 
@@ -260,7 +237,7 @@ void TicTacToe::Loop()
 	{
 		SetUpNextTurn();
 
-		while (TakeTurn() != TURN_END) {};
+		TakeTurn();
 	}
 }
 

@@ -109,13 +109,13 @@ enum difficulty { EASY = 1, MEDIUM, EXPERT };
 
 
 /*
- * TicTacToe-parameters for which lane to check for a possible recent winning move.
+ * TicTacToe-parameters for which lane to check in for a possible recent winning move.
  */
 
-#define CheckForRow 0
-#define CheckForCol 1
-#define CheckForDiagLeft 2
-#define CheckForDiagRight 3
+#define InRow 0
+#define InCol 1
+#define InDiagLeft 2
+#define InDiagRight 3
 
 
 

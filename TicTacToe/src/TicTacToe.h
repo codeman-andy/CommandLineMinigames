@@ -24,7 +24,6 @@ struct TicTacToe : public Game {
 	/* Interface */
 	static letter GetCurrentLetter();
 	static void MarkOnBoard(Board& board, const int& x, const int& y, const int& letter);
-	static int TakeTurn();
 	static void PrintBoard();
 	void End() const;
 	static void Loop();
@@ -33,22 +32,22 @@ struct TicTacToe : public Game {
 private:
 	/* Variables */
 	static Board board;
-	static int (*game_loop)();
+	static void (*s_Gamemode)();
 	static Player* Players[2];
 	static int active;
 	static int opponent;
 	static letter current_letter;
 
 	/* Methods */
-	static bool CheckForDraw();
 	static int isPossible(const move& move);
 	static int isValid(const int& Coord);
 	static void MakeMove(const move& move);
 	static int GetPlayerMove(move& move);
 	static int TakePlayerTurn(move& move);
 	static int TakeAITurn(const move& last_move);
-	static int PvERound();
-	static int PvPRound();
+	static void PvERound();
+	static void PvPRound();
+	static void TakeTurn();
 	static void ToggleLetter();
 	static void TogglePlayer();
 	static void SetUpNextTurn();

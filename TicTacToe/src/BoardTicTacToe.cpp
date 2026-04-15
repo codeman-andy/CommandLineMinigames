@@ -49,37 +49,52 @@ struct TicTacToe::Board : Printable {
 		return (nr_of_available_moves == 0);
 	}
 
-	int CheckForWinner(const int& index, const int& CheckFor) const
+	int hasWinner(const int& index, const int& Check) const
 	{
-		switch (CheckFor)
+		switch (Check)
 		{
-		case CheckForRow:
-			if (coordinates[index][0] == coordinates[index][1] && coordinates[index][0] == coordinates[index][2]) return WINNER_FOUND;
-			[[fallthrough]];
-		case CheckForCol:
-			if (coordinates[0][index] == coordinates[1][index] && coordinates[0][index] == coordinates[2][index]) return WINNER_FOUND;
-			[[fallthrough]];
-		case CheckForDiagLeft:
-			if (coordinates[0][0] == coordinates[1][1] && coordinates[0][0] == coordinates[2][2]) return WINNER_FOUND;
-			[[fallthrough]];
-		case CheckForDiagRight:
-			if (coordinates[0][2] == coordinates[1][1] && coordinates[0][2] == coordinates[2][0]) return WINNER_FOUND;
+		case InRow:
+			if (coordinates[index][0] == coordinates[index][1] && coordinates[index][0] == coordinates[index][2]) return GAME_END;
+			else break;
+		case InCol:
+			if (coordinates[0][index] == coordinates[1][index] && coordinates[0][index] == coordinates[2][index]) return GAME_END;
+			else break;
+		case InDiagLeft:
+			if (coordinates[0][0] == coordinates[1][1] && coordinates[0][0] == coordinates[2][2]) return GAME_END;
+			else break;
+		case InDiagRight:
+			if (coordinates[0][2] == coordinates[1][1] && coordinates[0][2] == coordinates[2][0]) return GAME_END;
+			else break;
 		}
 
 		return RUNNING;
 	}
 
-	int CheckState(const move& last_move) const
+	state CheckState(const move& last_move) const
 	{
-		if (row_counter[last_move.y] == FULL && CheckForWinner(last_move.y, CheckForRow) == WINNER_FOUND) return WINNER_FOUND;
-		if (col_counter[last_move.x] == FULL && CheckForWinner(last_move.x, CheckForCol) == WINNER_FOUND) return WINNER_FOUND;
+		if ( (row_counter[last_move.y] == FULL && hasWinner(last_move.y, InRow))
+		  || (col_counter[last_move.x] == FULL && hasWinner(last_move.x, InCol))
+		  || (diagonal_counter[0] == FULL && hasWinner(0, InDiagLeft))
+		  || (diagonal_counter[1] == FULL && hasWinner(1, InDiagRight))
+		   ) return FINISHED;
 
-		if (diagonal_counter[0] == FULL && CheckForWinner(0, CheckForDiagLeft) == WINNER_FOUND) return WINNER_FOUND;
-		if (diagonal_counter[1] == FULL && CheckForWinner(1, CheckForDiagRight) == WINNER_FOUND) return WINNER_FOUND;
+		else if (isFull()) return DRAW;
 
-		if (isFull()) return DRAW;
+		else return RUNNING;
+	}
 
-		return RUNNING;
+	void Mark(const int& x, const int& y, const letter& letter)
+	{
+		this->coordinates[x][y] = letter;
+
+		this->row_counter[y] += 1;
+		this->col_counter[x] += 1;
+
+		if (x == y) this->diagonal_counter[0]++;
+
+		if (x + y == 2) this->diagonal_counter[1]++;
+
+		this->nr_of_available_moves--;
 	}
 
 	void Reset()
