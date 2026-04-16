@@ -23,6 +23,7 @@ struct TicTacToe : public Game {
 
 	/* Interface */
 	static letter GetCurrentLetter();
+	static letter GetOpponentLetter();
 	static void MarkOnBoard(Board& board, const int& x, const int& y, const int& letter);
 	static void PrintBoard();
 	void End() const;

@@ -14,6 +14,11 @@ letter TicTacToe::GetCurrentLetter()
 	return current_letter;
 }
 
+letter TicTacToe::GetOpponentLetter()
+{
+	return (current_letter == O) ? X : O;
+}
+
 void TicTacToe::MarkOnBoard(Board& board, const int& x, const int& y, const int& letter)
 {
 	board.coordinates[x][y] = letter;

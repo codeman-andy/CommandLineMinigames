@@ -31,7 +31,7 @@ class AI : public Player {
 	/* Methods */
 	int FindMoveIndex(const move& move) const;
 	void DecrementValidMoves(int index);
-	move MakeRandomMove() const;
+	move& MakeRandomMove() const;
 	static int FindWinningMoveInRows(move& winning_move, const TicTacToe::Board& board, const int& my_letter);
 	static int FindWinningMoveInCols(move& winning_move, const TicTacToe::Board& board, const int& my_letter);
 	static int FindWinningMoveInDiagonals(move& winning_move, const TicTacToe::Board& board, const int& my_letter);
@@ -50,5 +50,5 @@ public:
 	void SetValidMoves(move* const& valid_moves, const int& nr_of_valid_moves);
 	void RemoveFromValidMoves(const move& move);
 	move MakeMove(TicTacToe::Board board) const;
-	static AI* CreatePlayer(const char* const name, const difficulty& difficulty);
+	static AI* CreatePlayer(const char* const& name, const difficulty& difficulty);
 };

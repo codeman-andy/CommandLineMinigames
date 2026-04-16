@@ -119,6 +119,15 @@ enum difficulty { EASY = 1, MEDIUM, EXPERT };
 
 
 
+/*
+ * AI-flag for when it has found a winning move.
+ */
+
+#define WINNER_FOUND 1
+#define NOT_FOUND 0
+
+
+
 
 
  /*
