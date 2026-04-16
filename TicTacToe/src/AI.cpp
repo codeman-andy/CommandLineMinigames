@@ -22,7 +22,11 @@ void AI::SetDifficulty(const difficulty& difficulty)
 int AI::FindMoveIndex(const move& move) const
 {
 	int index = 0;
-	while (m_valid_moves[index] != move) index++;
+	while (m_valid_moves[index] != move)
+	{
+		Log("Lul");
+		index++;
+	}
 	return index;
 }
 
@@ -157,6 +161,17 @@ int AI::FindWinningMove(move& winning_move, const TicTacToe::Board& board, const
 	return NOT_FOUND;
 }
 
+move AI::PreventLoss(const TicTacToe::Board& board) const
+{
+	letter opponent_letter = TicTacToe::GetOpponentLetter();
+
+	move opponent_winning_move(-33, -33);
+
+	FindWinningMove(opponent_winning_move, board, opponent_letter);
+	
+	return opponent_winning_move;
+}
+
 move AI::FindWinOrMakeRandomMove(const TicTacToe::Board& board) const
 {
 	letter my_letter = TicTacToe::GetActiveLetter();
@@ -179,9 +194,9 @@ move AI::FindWinOrPreventLossOrMakeRandomMove(const TicTacToe::Board& board) con
 
 	letter opponent_letter = TicTacToe::GetOpponentLetter();
 
-	move avoid_loss(-33, -33);
+	move opponent_winning_move(-33, -33);
 
-	if (FindWinningMove(avoid_loss, board, opponent_letter) == WINNER_FOUND) return avoid_loss;
+	if (FindWinningMove(opponent_winning_move, board, opponent_letter) == WINNER_FOUND) return opponent_winning_move;
 
 	else return MakeRandomMove();
 }
@@ -286,7 +301,7 @@ move AI::MinMaxMove(const TicTacToe::Board& board) const
 	}
 
 	// If defeat is inevitable (i.e. every move leads to a defeat), then delay it as much as possible
-	if (Max(moves_scores, board.nr_of_available_moves) == -10) return FindWinOrPreventLossOrMakeRandomMove(board);
+	if (Max(moves_scores, board.nr_of_available_moves) == -10) return PreventLoss(board);
 
 	int max_score_index = FindMax(moves_scores, board.nr_of_available_moves);
 

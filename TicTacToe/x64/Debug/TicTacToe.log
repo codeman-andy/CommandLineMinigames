@@ -1,5 +1,6 @@
-﻿  BoardTicTacToe.cpp
-C:\Dev\CPP\CommandLineMinigames\TicTacToe\src\BoardTicTacToe.cpp(5,27): warning C4114: same type qualifier used more than once
-  Human_Player.cpp
+﻿  AI.cpp
+  BoardTicTacToe.cpp
+  Main.cpp
+  TicTacToe.cpp
   Generating Code...
   TicTacToe.vcxproj -> C:\Dev\CPP\CommandLineMinigames\x64\Debug\TicTacToe.exe

@@ -12,7 +12,7 @@ void PlayTicTacToe()
 int main()
 {
 	bool isRunning = true;
-	int ProgramState = isRunning;
+	bool ProgramState = isRunning;
 	while (ProgramState == isRunning)
 	{
 		PlayTicTacToe();

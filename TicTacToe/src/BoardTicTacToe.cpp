@@ -2,7 +2,7 @@
 #include "TicTacToe.h"
 
 struct TicTacToe::Board : Printable {
-	inline static const char const CharTranslation[3] = { '-', 'X', 'O' };
+	inline static const char CharTranslation[3] = { '-', 'X', 'O' };
 	int coordinates[3][3];
 	int row_counter[3];
 	int col_counter[3];

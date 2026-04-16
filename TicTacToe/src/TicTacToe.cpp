@@ -3,7 +3,7 @@
 TicTacToe::Board TicTacToe::s_Board;
 void (*TicTacToe::Gamemode)();
 Player* TicTacToe::Players[2];
-int TicTacToe::Active;
+int TicTacToe::Active = 3;
 int TicTacToe::Opponent;
 letter TicTacToe::ActiveLetter;
 
