@@ -21,16 +21,16 @@ struct TicTacToe::Board : Printable {
 
 	move* GetValidMoves() const
 	{
-		move* valid_moves = (move*) new move[nr_of_available_moves];
+		move* valid_moves = (move*) new move[this->nr_of_available_moves];
 
 		int index = 0;
-		for (int row = 0; row < 3; row++)
+		for (int y = 0; y < 3; y++)
 		{
-			for (int col = 0; col < 3; col++)
+			for (int x = 0; x < 3; x++)
 			{
-				if (coordinates[row][col] == UNOCCUPIED)
+				if (this->coordinates[x][y] == UNOCCUPIED)
 				{
-					valid_moves[index] = move(col, row);
+					valid_moves[index] = move(x, y);
 					index++;
 				}
 			}
@@ -41,12 +41,12 @@ struct TicTacToe::Board : Printable {
 
 	bool isEmpty() const
 	{
-		return (nr_of_available_moves == 9);
+		return (this->nr_of_available_moves == 9);
 	}
 
 	bool isFull() const
 	{
-		return (nr_of_available_moves == 0);
+		return (this->nr_of_available_moves == 0);
 	}
 
 	int hasWinner(const int& index, const int& Check) const
@@ -54,10 +54,10 @@ struct TicTacToe::Board : Printable {
 		switch (Check)
 		{
 		case InRow:
-			if (coordinates[index][0] == coordinates[index][1] && coordinates[index][0] == coordinates[index][2]) return GAME_END;
+			if (coordinates[0][index] == coordinates[1][index] && coordinates[0][index] == coordinates[2][index]) return GAME_END;
 			else break;
 		case InCol:
-			if (coordinates[0][index] == coordinates[1][index] && coordinates[0][index] == coordinates[2][index]) return GAME_END;
+			if (coordinates[index][0] == coordinates[index][1] && coordinates[index][0] == coordinates[index][2]) return GAME_END;
 			else break;
 		case InDiagLeft:
 			if (coordinates[0][0] == coordinates[1][1] && coordinates[0][0] == coordinates[2][2]) return GAME_END;
@@ -72,13 +72,13 @@ struct TicTacToe::Board : Printable {
 
 	state CheckState(const move& last_move) const
 	{
-		if ( (row_counter[last_move.y] == FULL && hasWinner(last_move.y, InRow))
-		  || (col_counter[last_move.x] == FULL && hasWinner(last_move.x, InCol))
-		  || (diagonal_counter[0] == FULL && hasWinner(0, InDiagLeft))
-		  || (diagonal_counter[1] == FULL && hasWinner(1, InDiagRight))
+		if ( (this->row_counter[last_move.y] == FULL && this->hasWinner(last_move.y, InRow))
+		  || (this->col_counter[last_move.x] == FULL && this->hasWinner(last_move.x, InCol))
+		  || (this->diagonal_counter[0] == FULL && this->hasWinner(0, InDiagLeft))
+		  || (this->diagonal_counter[1] == FULL && this->hasWinner(1, InDiagRight))
 		   ) return FINISHED;
 
-		else if (isFull()) return DRAW;
+		else if (this->isFull()) return DRAW;
 
 		else return RUNNING;
 	}
@@ -124,9 +124,9 @@ struct TicTacToe::Board : Printable {
 		Log("  0 1 2\n");
 		Log("  -----\n");
 
-		for (int i = 0; i < 3; i++)
+		for (int y = 0; y < 3; y++)
 		{
-			std::cout << i << "|" << CharTranslation[coordinates[i][0]] << " " << CharTranslation[coordinates[i][1]] << " " << CharTranslation[coordinates[i][2]] << "|" << std::endl;
+			std::cout << y << "|" << CharTranslation[coordinates[0][y]] << " " << CharTranslation[coordinates[1][y]] << " " << CharTranslation[coordinates[2][y]] << "|" << std::endl;
 		}
 
 		Log("  -----\n");

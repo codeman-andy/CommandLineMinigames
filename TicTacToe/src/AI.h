@@ -32,10 +32,10 @@ class AI : public Player {
 	int FindMoveIndex(const move& move) const;
 	void DecrementValidMoves(int index);
 	move& MakeRandomMove() const;
-	static int FindWinningMoveInRows(move& winning_move, const TicTacToe::Board& board, const int& my_letter);
-	static int FindWinningMoveInCols(move& winning_move, const TicTacToe::Board& board, const int& my_letter);
-	static int FindWinningMoveInDiagonals(move& winning_move, const TicTacToe::Board& board, const int& my_letter);
-	static int FindWinningMove(move& winning_move, const TicTacToe::Board& board, const int& my_letter);
+	static int FindWinningMoveInRows(move& winning_move, const TicTacToe::Board& board, const letter& my_letter);
+	static int FindWinningMoveInCols(move& winning_move, const TicTacToe::Board& board, const letter& my_letter);
+	static int FindWinningMoveInDiagonals(move& winning_move, const TicTacToe::Board& board, const letter& my_letter);
+	static int FindWinningMove(move& winning_move, const TicTacToe::Board& board, const letter& my_letter);
 	static int Min(const int* const& scores, const int& length);
 	static int Max(const int* const& scores, const int& length);
 	static int FindMax(const int* const& scores, const int& length);

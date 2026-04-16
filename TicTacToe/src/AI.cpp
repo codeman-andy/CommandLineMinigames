@@ -52,26 +52,25 @@ move& AI::MakeRandomMove() const
 	return m_valid_moves[random_index];
 }
 
-int AI::FindWinningMoveInRows(move& winning_move, const TicTacToe::Board& board, const int& my_letter)
+int AI::FindWinningMoveInRows(move& winning_move, const TicTacToe::Board& board, const letter& my_letter)
 {
 	int my_letter_count;
-	move available_spot = move();
+	move available_move = move();
 
 	for (int row = 0; row < 3; row++)
 	{
 		if (board.row_counter[row] != 2) continue;
 
 		my_letter_count = 0;
-		int col = 0;
-		for (col; col < 3; col++)
+		for (int col = 0; col < 3; col++)
 		{
-			if (board.coordinates[row][col] == my_letter) my_letter_count++;
-			else if (board.coordinates[row][col] == UNOCCUPIED) available_spot = move(col, row);
+			if (board.coordinates[col][row] == my_letter) my_letter_count++;
+			else if (board.coordinates[col][row] == UNOCCUPIED) available_move = move(col, row);
 		}
 
 		if (my_letter_count == 2)
 		{
-			winning_move = available_spot;
+			winning_move = available_move;
 			return WINNER_FOUND;
 		}
 	}
@@ -79,26 +78,25 @@ int AI::FindWinningMoveInRows(move& winning_move, const TicTacToe::Board& board,
 	return NOT_FOUND;
 }
 
-int AI::FindWinningMoveInCols(move& winning_move, const TicTacToe::Board& board, const int& my_letter)
+int AI::FindWinningMoveInCols(move& winning_move, const TicTacToe::Board& board, const letter& my_letter)
 {
 	int my_letter_count;
-	move available_spot = move();
+	move available_move = move();
 
 	for (int col = 0; col < 3; col++)
 	{
 		if (board.col_counter[col] != 2) continue;
 
 		my_letter_count = 0;
-		int row = 0;
-		for (row; row < 3; row++)
+		for (int row = 0; row < 3; row++)
 		{
-			if (board.coordinates[row][col] == my_letter) my_letter_count++;
-			else if (board.coordinates[row][col] == UNOCCUPIED) available_spot = move(col, row);
+			if (board.coordinates[col][row] == my_letter) my_letter_count++;
+			else if (board.coordinates[col][row] == UNOCCUPIED) available_move = move(col, row);
 		}
 
 		if (my_letter_count == 2)
 		{
-			winning_move = available_spot;
+			winning_move = available_move;
 			return WINNER_FOUND;
 		}
 	}
@@ -106,24 +104,23 @@ int AI::FindWinningMoveInCols(move& winning_move, const TicTacToe::Board& board,
 	return NOT_FOUND;
 }
 
-int AI::FindWinningMoveInDiagonals(move& winning_move, const TicTacToe::Board& board, const int& my_letter)
+int AI::FindWinningMoveInDiagonals(move& winning_move, const TicTacToe::Board& board, const letter& my_letter)
 {
 	int my_letter_count;
-	move available_spot = move();
+	move available_move = move();
 
 	if (board.diagonal_counter[0] == 2)
 	{
 		my_letter_count = 0;
-		int equal = 0;
-		for (equal; equal < 3; equal++)
+		for (int equal = 0; equal < 3; equal++)
 		{
 			if (board.coordinates[equal][equal] == my_letter) my_letter_count++;
-			else if (board.coordinates[equal][equal] == UNOCCUPIED) available_spot = move(equal, equal);
+			else if (board.coordinates[equal][equal] == UNOCCUPIED) available_move = move(equal, equal);
 		}
 
 		if (my_letter_count == 2)
 		{
-			winning_move = available_spot;
+			winning_move = available_move;
 			return WINNER_FOUND;
 		}
 	}
@@ -136,12 +133,12 @@ int AI::FindWinningMoveInDiagonals(move& winning_move, const TicTacToe::Board& b
 		for (alternate; alternate < 3; alternate++)
 		{
 			if (board.coordinates[alternate][2 - alternate] == my_letter) my_letter_count++;
-			else if (board.coordinates[alternate][2 - alternate] == UNOCCUPIED) available_spot = move(2 - alternate, alternate);
+			else if (board.coordinates[alternate][2 - alternate] == UNOCCUPIED) available_move = move(alternate, 2 - alternate);
 		}
 
 		if (my_letter_count == 2)
 		{
-			winning_move = available_spot;
+			winning_move = available_move;
 			return WINNER_FOUND;
 		}
 	}
@@ -149,9 +146,8 @@ int AI::FindWinningMoveInDiagonals(move& winning_move, const TicTacToe::Board& b
 	return NOT_FOUND;
 }
 
-int AI::FindWinningMove(move& winning_move, const TicTacToe::Board& board, const int& my_letter)
+int AI::FindWinningMove(move& winning_move, const TicTacToe::Board& board, const letter& my_letter)
 {
-
 	if (FindWinningMoveInRows(winning_move, board, my_letter) == WINNER_FOUND) return WINNER_FOUND;
 
 	if (FindWinningMoveInCols(winning_move, board, my_letter) == WINNER_FOUND) return WINNER_FOUND;
@@ -163,7 +159,7 @@ int AI::FindWinningMove(move& winning_move, const TicTacToe::Board& board, const
 
 move AI::FindWinOrMakeRandomMove(const TicTacToe::Board& board) const
 {
-	int my_letter = TicTacToe::GetCurrentLetter();
+	letter my_letter = TicTacToe::GetActiveLetter();
 
 	move winning_move(-33, -33);
 
@@ -175,13 +171,13 @@ move AI::FindWinOrMakeRandomMove(const TicTacToe::Board& board) const
 
 move AI::FindWinOrPreventLossOrMakeRandomMove(const TicTacToe::Board& board) const
 {
-	int my_letter = TicTacToe::GetCurrentLetter();
+	letter my_letter = TicTacToe::GetActiveLetter();
 
 	move winning_move(-33, -33);
 
 	if (FindWinningMove(winning_move, board, my_letter) == WINNER_FOUND) return winning_move;
 
-	int opponent_letter = TicTacToe::GetOpponentLetter();
+	letter opponent_letter = TicTacToe::GetOpponentLetter();
 
 	move avoid_loss(-33, -33);
 
@@ -230,7 +226,7 @@ int AI::FindMax(const int* const& scores, const int& length)
 
 int AI::MinMaxScore(const move& last_move, const TicTacToe::Board& board, const int& last_letter)
 {
-	int my_letter = TicTacToe::GetCurrentLetter();
+	letter my_letter = TicTacToe::GetActiveLetter();
 
 	if (board.CheckState(last_move) == GAME_END)
 	{
@@ -273,7 +269,7 @@ int AI::MinMaxScore(const move& last_move, const TicTacToe::Board& board, const 
 
 move AI::MinMaxMove(const TicTacToe::Board& board) const
 {
-	letter my_letter = TicTacToe::GetCurrentLetter();
+	letter my_letter = TicTacToe::GetActiveLetter();
 
 	int* moves_scores = new int[board.nr_of_available_moves];
 
