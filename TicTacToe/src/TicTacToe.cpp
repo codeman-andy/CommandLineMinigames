@@ -19,19 +19,6 @@ letter TicTacToe::GetOpponentLetter()
 	return (ActiveLetter == O) ? X : O;
 }
 
-void TicTacToe::MarkOnBoard(Board& board, const int& x, const int& y, const int& letter)
-{
-	board.coordinates[x][y] = letter;
-	board.row_counter[y] += 1;
-	board.col_counter[x] += 1;
-
-	if (x == y) board.diagonal_counter[0]++;
-
-	if (x + y == 2) board.diagonal_counter[1]++;
-
-	board.nr_of_available_moves--;
-}
-
 void TicTacToe::MakeMove(const move& move)
 {
 	s_Board.Mark(move.x, move.y, ActiveLetter);
@@ -70,7 +57,6 @@ int TicTacToe::GetPlayerMove(move& move)
 
 int TicTacToe::TakePlayerTurn(move& move)
 {
-
 	if (GetPlayerMove(move) == INVALID_COORDINATE) return INVALID_COORDINATE;
 
 	else if (!isPossible(move)) return INVALID_MOVE;
@@ -170,7 +156,9 @@ void TicTacToe::SetUpPvE()
 void TicTacToe::SetUpPvP()
 {
 	Gamemode = &PvPRound;
+
 	Players[0] = Human_Player::CreatePlayer();
+
 	Players[1] = Human_Player::CreatePlayer();
 }
 

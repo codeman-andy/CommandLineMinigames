@@ -19,6 +19,40 @@ struct Battleship : public Game {
 		Placement(int x_start, int x_end, int y_start, int y_end)
 			: x_start(x_start), x_end(x_end), y_start(y_start), y_end(y_end) {
 		}
+
+		void Sort()
+		{
+			int sorted[4];
+			sorted[0] = (this->x_end >= this->x_start) ? this->x_start : this->x_end;
+			sorted[1] = (sorted[0] == this->x_start) ? this->x_end : this->x_start;
+			sorted[2] = (this->y_end >= this->y_start) ? this->y_start : this->y_end;
+			sorted[3] = (sorted[2] == this->y_start) ? this->y_end : this->y_start;
+
+			this->x_start = sorted[0];
+			this->x_end = sorted[1];
+			this->y_start = sorted[2];
+			this->y_end = sorted[3];
+		}
+
+		bool isValid(const int& vessel_size) const
+		{
+			if ((this->x_start % 1 != 0 && this->x_start < 0 && this->x_start > 10) &&
+				(this->x_end % 1 != 0 && this->x_end < 0 && this->x_end > 10) &&
+				(this->y_start % 1 != 0 && this->y_start < 0 && this->y_start > 8) &&
+				(this->y_end % 1 != 0 && this->y_end < 0 && this->y_end > 8))
+			{
+				Log("\nYou tried to place outside the board. Please, type your coordinates again.\n\n");
+				return INVALID_PLACEMENT;
+			}
+
+			else if ((this->x_end - this->x_start) + (this->y_end - this->y_start) != (vessel_size - 1))
+			{
+				Log("\nYour placement did not respect the vessel's size. Please, type your coordinates again.\n\n");
+				return INVALID_PLACEMENT;
+			}
+
+			else return VALID;
+		}
 	};
 
 	/* Specialized Battleship Game Board */
@@ -68,42 +102,42 @@ struct Battleship : public Game {
 	Battleship();
 
 	/* Interface */
-	static void MarkOnBoard(Board& board, const int& x, const int& y);
-	static int TakeTurn();
 	void SetUpGame();
 	static void PrintBoard();
 	static void PrintBoards();
-	void PrintVictoryMessage() const;
-	static void PrintWelcomeMessage();
 	void End() const;
 	static void Loop();
 	static Battleship& Start();
 
 private:
 	/* Variables */
-	static Board::Home player_home_board[2];
-	static Board::Moves player_hits_board[2];
-	static int (*game_loop)();
+	static Board::Home PlayerHomeBoard[2];
+	static Board::Moves PlayerMovesBoard[2];
+	static void (*Gamemode)();
 	static Player* Players[2];
-	static int active;
-	static int opponent;
+	static int Active;
+	static int Opponent;
 
 	/* Methods */
 	static int isPossible(const move& move);
 	static int XisValid(const int& X);
 	static int YisValid(const int& Y);
-	static int areInvalid(const int& vessel_size, const int& X_start, const int& Y_start, const int& X_end, const int& Y_end);
-	static void Sort(int& X_start, int& X_end, int& Y_start, int& Y_end);
 	static void MakeMove(const move& move);
 	static int GetPlayerMove(move& move);
 	static int TakePlayerTurn(move& move);
 	static int TakeAITurn(const move& last_move);
-	static int PvERound();
-	static int PvPRound();
+	static void PvERound();
+	static void PvPRound();
+	static void TakeTurn();
 	static void TogglePlayer();
 	static void SetUpNextTurn();
 	void SetUpBoard();
 	void SetUpPvE();
 	void SetUpPvP();
 	static void Reset();
+
+	/* Logging */
+
+	void PrintVictoryMessage() const;
+	static void PrintWelcomeMessage();
 };

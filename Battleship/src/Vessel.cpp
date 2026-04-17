@@ -36,14 +36,14 @@ struct Battleship::Vessel {
 		return Vessel(CARRIER, 5);
 	}
 
-	static const char* GetVesselName(const vessel_type& v_type)
+	static const char* GetVesselName(const vessel_type& type)
 	{
-		return Name[v_type];
+		return Name[type];
 	}
 
-	static const int GetVesselSize(const vessel_type& v_type)
+	static const int GetVesselSize(const vessel_type& type)
 	{
-		return Size[v_type];
+		return Size[type];
 	}
 
 	void Hit()

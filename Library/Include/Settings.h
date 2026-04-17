@@ -69,6 +69,7 @@ enum difficulty { EASY = 1, MEDIUM, EXPERT };
 
 #define INVALID_COORDINATE 0
 #define INVALID_MOVE 0
+#define INVALID_PLACEMENT 0
 #define VALID 1
 
 

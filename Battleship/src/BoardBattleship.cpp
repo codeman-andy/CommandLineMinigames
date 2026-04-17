@@ -47,7 +47,7 @@ struct Battleship::Board::Home : public Battleship::Board {
 		}
 	}
 
-	void PlaceVessel(const int& vessel_type, const Placement& placement)
+	void PlaceVessel(const vessel_type& vessel_type, const Placement& placement)
 	{
 		this->placements[vessel_type] = placement;
 
@@ -56,28 +56,28 @@ struct Battleship::Board::Home : public Battleship::Board {
 		else PlaceHorizontally(placement.x_start, placement.x_end, placement.y_start);
 	}
 
-	int IdentifyVessel(const int& x, const int& y) const
+	vessel_type IdentifyVessel(const int& x, const int& y) const
 	{
-		int v_type = 0;
-		while ((x < this->placements[v_type].x_start || x > this->placements[v_type].x_end)
-			|| (y < this->placements[v_type].y_start || y > this->placements[v_type].y_end))
+		int type = 0;
+		while ((x < this->placements[type].x_start || x > this->placements[type].x_end)
+			|| (y < this->placements[type].y_start || y > this->placements[type].y_end))
 		{
-			v_type++;
+			type++;
 		}
-		return v_type;
+		return static_cast<vessel_type>(type);
 	}
 
 	void MarkHit(const int& x, const int& y) override
 	{
-		int v_type = IdentifyVessel(x, y);
-
-		this->vessels[v_type].Hit();
-
 		this->coordinates[x][y] = O;
 
-		if (this->vessels[v_type].hit_points == 0)
+		vessel_type type = IdentifyVessel(x, y);
+
+		this->vessels[type].Hit();
+
+		if (this->vessels[type].hit_points == 0)
 		{
-			std::cout << "The " << Vessel::Name[v_type] << " has been destroyed!\n";
+			std::cout << "The " << Vessel::Name[type] << " has been destroyed!\n";
 
 			this->nr_of_vessels--;
 
