@@ -1,2 +1,6 @@
 ﻿  Battleship.cpp
+  BoardBattleship.cpp
+  Main.cpp
+  Vessel.cpp
+  Generating Code...
   Battleship.vcxproj -> C:\Dev\CPP\CommandLineMinigames\x64\Debug\Battleship.exe

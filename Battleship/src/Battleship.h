@@ -3,8 +3,8 @@
 #include "Log.h"
 #include "Game.h"
 #include "Move.h"
-#include "Player.h"
 #include "Human_Player.h"
+
 
 struct Battleship : public Game {
 	/* Specialized Battleship-struct for Input and Storage of a Vessel's Placement */
@@ -66,7 +66,7 @@ struct Battleship : public Game {
 		{
 			memcpy(this->coordinates, other.coordinates, sizeof(other.coordinates));
 		};
-		virtual void MarkHit(const int& x, const int& y);
+		virtual void MarkHit(const int& x, const int& y) = 0;
 		void MarkMiss(const int& x, const int& y)
 		{
 			this->coordinates[x][y] = X;
@@ -75,7 +75,7 @@ struct Battleship : public Game {
 		{
 			return 1;
 		};
-		virtual void Reset();
+		virtual void Reset() = 0;
 		void Print() const
 		{
 			Log("   0 1 2 3 4 5 6 7 8 9 10\n");
@@ -86,7 +86,7 @@ struct Battleship : public Game {
 				std::cout << y << "| ";
 				for (int x = 0; x < 11; x++)
 				{
-					std::cout << this->CharTranslation[this->coordinates[x][y]] << " ";
+					std::cout << CharTranslation[this->coordinates[x][y]] << " ";
 				}
 				std::cout << "|" << std::endl;
 			}
@@ -113,10 +113,6 @@ private:
 	/* Variables */
 	static Board::Home PlayerHomeBoard[2];
 	static Board::Moves PlayerMovesBoard[2];
-	static void (*Gamemode)();
-	static Player* Players[2];
-	static int Active;
-	static int Opponent;
 
 	/* Methods */
 	static int isPossible(const move& move);

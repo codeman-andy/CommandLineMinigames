@@ -19,6 +19,12 @@
 
 enum state { RUNNING, FINISHED, DRAW };
 
+/*
+ * Flag for when the Active and Opponent Game-struct-members are uninitialized.
+ */
+
+#define UNASSIGNED 3
+
 
 
 /*

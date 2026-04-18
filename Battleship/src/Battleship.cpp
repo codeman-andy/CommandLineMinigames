@@ -2,11 +2,6 @@
 
 Battleship::Board::Home Battleship::PlayerHomeBoard[2];
 Battleship::Board::Moves Battleship::PlayerMovesBoard[2];
-void (*Battleship::Gamemode)();
-Player* Battleship::Players[2];
-int Battleship::Active = 3;
-int Battleship::Opponent;
-
 
 Battleship::Battleship() {}
 
@@ -144,6 +139,8 @@ void Battleship::TakeTurn()
 
 void Battleship::SetUpBoard()
 {
+	std::cout << Players[Active]->GetName() << ", let's set up your board..." << std::endl << std::endl;
+
 	for (int type = CARRIER; type < PATROL_BOAT; type++)
 	{
 		vessel_type current_type = static_cast<vessel_type>(type);
@@ -207,10 +204,11 @@ void Battleship::SetUpPvP()
 	Gamemode = &PvPRound;
 
 	Players[0] = Human_Player::CreatePlayer();
+	Players[1] = Human_Player::CreatePlayer();
+
 	TogglePlayer();
 	SetUpBoard();
 
-	Players[1] = Human_Player::CreatePlayer();
 	TogglePlayer();
 	SetUpBoard();
 }

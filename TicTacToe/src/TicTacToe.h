@@ -6,9 +6,6 @@
 // Imports Move-struct which will store a single TicTacToe move
 #include "Move.h"
 
-// Imports Player-class
-#include "Player.h"
-
 
 /*
  * TicTacToe is a public sub-struct of the Game-struct.
@@ -32,10 +29,6 @@ struct TicTacToe : public Game {
 private:
 	/* Variables */
 	static Board s_Board;
-	static void (*Gamemode)();
-	static Player* Players[2];
-	static int Active;
-	static int Opponent;
 	static letter ActiveLetter;
 
 	/* Methods */

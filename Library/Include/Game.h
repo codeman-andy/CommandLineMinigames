@@ -3,6 +3,9 @@
 // Imports the game settings
 #include "Settings.h"
 
+// Imports Player-class
+#include "Player.h"
+
 
 /*
  * The Game-superclass that all minigames will inherit
@@ -13,6 +16,10 @@
 struct Game {
 	/* Variables */
 	static state STATE;
+	static void (*Gamemode)();
+	static Player* Players[2];
+	static int Active;
+	static int Opponent;
 
 	/* Constructor*/
 	Game();

@@ -24,7 +24,6 @@ int AI::FindMoveIndex(const move& move) const
 	int index = 0;
 	while (m_valid_moves[index] != move)
 	{
-		Log("Lul");
 		index++;
 	}
 	return index;

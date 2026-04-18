@@ -2,7 +2,7 @@
 
 struct Battleship::Vessel {
 	inline static const char* const Name[5] = { "Carrier", "Battleship", "Destroyer", "Submarine", "Patrol Boat" };
-	inline static const int const Size[5] = { 5, 4, 3, 3, 2 };
+	inline static const int Size[5] = { 5, 4, 3, 3, 2 };
 	vessel_type type;
 	int size;
 	int hit_points;
