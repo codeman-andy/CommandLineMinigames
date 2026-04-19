@@ -1,5 +1,6 @@
 #pragma once
 
 class Printable {
-	virtual void Print() = 0;
+public:
+	virtual void Print() const = 0;
 };

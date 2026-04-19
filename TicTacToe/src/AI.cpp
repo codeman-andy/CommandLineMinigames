@@ -1,6 +1,6 @@
 #include "AI.h"
 
-#include "BoardTicTacToe.cpp"
+#include "TicTacToeBoard.cpp"
 
 AI::AI(const char* const& name, const difficulty& difficulty)
 {

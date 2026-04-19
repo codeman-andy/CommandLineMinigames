@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\Board.h" />
     <ClInclude Include="Include\Game.h" />
     <ClInclude Include="Include\Human_Player.h" />
     <ClInclude Include="Include\Log.h" />

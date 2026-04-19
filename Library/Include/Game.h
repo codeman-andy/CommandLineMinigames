@@ -6,6 +6,8 @@
 // Imports Player-class
 #include "Player.h"
 
+// Imports Printable-interface
+#include "Printable.h"
 
 /*
  * The Game-superclass that all minigames will inherit
@@ -14,6 +16,10 @@
  */
 
 struct Game {
+	/* Gameboard */
+	template <unsigned int x, unsigned int y>
+	struct Board;
+
 	/* Variables */
 	static state STATE;
 	static void (*Gamemode)();
@@ -26,5 +32,5 @@ struct Game {
 
 	/* Interface */
 	virtual void PrintVictoryMessage() const = 0;
-	static void PrintWelcomeMessage();
+	virtual void PrintWelcomeMessage() const = 0;
 };

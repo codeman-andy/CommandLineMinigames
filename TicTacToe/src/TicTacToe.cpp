@@ -1,4 +1,4 @@
-#include "BoardTicTacToe.cpp"
+#include "TicTacToeBoard.cpp"
 
 TicTacToe::Board TicTacToe::s_Board;
 letter TicTacToe::ActiveLetter;
@@ -125,7 +125,7 @@ void TicTacToe::PvPRound()
 
 void TicTacToe::TakeTurn()
 {
-	return Gamemode();
+	Gamemode();
 }
 
 void TicTacToe::SetUpPvE()
@@ -140,7 +140,9 @@ void TicTacToe::SetUpPvE()
 
 	difficulty chosen_difficulty = static_cast<difficulty>(input);
 
-	const char* bot_name = (chosen_difficulty == EASY) ? "Pam" : (chosen_difficulty == MEDIUM) ? "Donald J. Trump" : "Peter Thiel";
+	const char* bot_name = (chosen_difficulty == EASY) ? "Pam"
+						 : (chosen_difficulty == MEDIUM) ? "Donald J. Trump"
+						 : "Peter Thiel";
 
 	AI* bot = AI::CreatePlayer(bot_name, chosen_difficulty);
 
@@ -173,7 +175,7 @@ void TicTacToe::Reset()
 {
 	s_Board.Reset();
 
-	Active = 3;
+	Active = UNASSIGNED;
 
 	ActiveLetter = UNOCCUPIED;
 
@@ -200,7 +202,7 @@ void TicTacToe::PrintVictoryMessage() const
 	std::cout << "Congratulations, " << winner << "! You won!" << std::endl;
 }
 
-void TicTacToe::PrintWelcomeMessage()
+void TicTacToe::PrintWelcomeMessage() const
 {
 	Log("Let's play a game of Tic-Tac-Toe!\n");
 }
@@ -232,9 +234,9 @@ TicTacToe& TicTacToe::Start()
 {
 	if (STATE != RUNNING) Reset();
 
-	PrintWelcomeMessage();
-
 	static TicTacToe tictactoe = TicTacToe();
+
+	tictactoe.PrintWelcomeMessage();
 
 	tictactoe.SetUpGame();
 

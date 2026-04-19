@@ -1,22 +1,22 @@
-#include "BoardBattleship.cpp"
+#include "BattleshipBoard.cpp"
 
-Battleship::Board::Home Battleship::PlayerHomeBoard[2];
-Battleship::Board::Moves Battleship::PlayerMovesBoard[2];
+Battleship::Homeboard Battleship::PlayerHomeboard[2];
+Battleship::Hitsboard Battleship::PlayerHitsboard[2];
 
 Battleship::Battleship() {}
 
 void Battleship::MakeMove(const move& move)
 {
-	if (PlayerHomeBoard[Opponent].CheckHit(move.x, move.y) == HIT)
+	if (PlayerHomeboard[Opponent].CheckHit(move.x, move.y) == HIT)
 	{
-		PlayerHomeBoard[Opponent].MarkHit(move.x, move.y);
+		PlayerHomeboard[Opponent].MarkHit(move.x, move.y);
 
-		PlayerMovesBoard[Active].MarkHit(move.x, move.y);
+		PlayerHitsboard[Active].MarkHit(move.x, move.y);
 	}
 
 	else
 	{
-		PlayerMovesBoard[Active].MarkMiss(move.x, move.y);
+		PlayerHitsboard[Active].MarkMiss(move.x, move.y);
 	}
 
 	clear_buffer();
@@ -26,7 +26,7 @@ void Battleship::MakeMove(const move& move)
 
 int Battleship::isPossible(const move& move)
 {
-	if (PlayerMovesBoard[Active].coordinates[move.x][move.y] == UNOCCUPIED) return VALID;
+	if (PlayerHitsboard[Active].coordinates[move.x][move.y] == UNOCCUPIED) return VALID;
 
 	else Log("You have already made a hit on that coordinate. Please, pick another.\n");
 	return INVALID_MOVE;
@@ -164,7 +164,7 @@ void Battleship::SetUpBoard()
 		}
 		while (!placement.isValid(vessel_size));
 
-		PlayerHomeBoard[Active].PlaceVessel(current_type, placement);
+		PlayerHomeboard[Active].PlaceVessel(current_type, placement);
 
 		ClearScreen();
 	}
@@ -227,13 +227,13 @@ void Battleship::SetUpGame()
 
 void Battleship::Reset()
 {
-	PlayerHomeBoard[0].Reset();
-	PlayerMovesBoard[0].Reset();
+	PlayerHomeboard[0].Reset();
+	PlayerHitsboard[0].Reset();
 
-	PlayerHomeBoard[1].Reset();
-	PlayerMovesBoard[1].Reset();
+	PlayerHomeboard[1].Reset();
+	PlayerHitsboard[1].Reset();
 
-	Active = 3;
+	Active = UNASSIGNED;
 
 	STATE = RUNNING;
 }
@@ -244,14 +244,14 @@ void Battleship::Reset()
 
 void Battleship::PrintBoard()
 {
-	PlayerHomeBoard[Active].Print();
+	PlayerHomeboard[Active].Print();
 }
 
 void Battleship::PrintBoards()
 {
-	PlayerMovesBoard[Active].Print();
+	PlayerHitsboard[Active].Print();
 	Log("   ----HITS----BOARD----\n\n");
-	PlayerHomeBoard[Active].Print();
+	PlayerHomeboard[Active].Print();
 	Log("   ----HOME----BOARD----\n\n");
 }
 
@@ -261,7 +261,7 @@ void Battleship::PrintVictoryMessage() const
 	std::cout << "Congratulations, " << winner << "! You won!" << std::endl;
 }
 
-void Battleship::PrintWelcomeMessage()
+void Battleship::PrintWelcomeMessage() const
 {
 	Log("Let's play a game of Battleship!\n");
 }
@@ -291,9 +291,9 @@ Battleship& Battleship::Start()
 {
 	if (STATE != RUNNING) Reset();
 
-	PrintWelcomeMessage();
-
 	static Battleship battleship = Battleship();
+
+	battleship.PrintWelcomeMessage();
 
 	battleship.SetUpGame();
 

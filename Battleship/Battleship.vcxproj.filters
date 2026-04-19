@@ -21,10 +21,13 @@
     <ClCompile Include="src\Battleship.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\BoardBattleship.cpp">
+    <ClCompile Include="src\BattleshipBoard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Vessel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Placement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3,6 +3,8 @@
 // Imports Game-struct and the game settings
 #include "Game.h"
 
+#include "Board.h"
+
 // Imports Move-struct which will store a single TicTacToe move
 #include "Move.h"
 
@@ -51,8 +53,8 @@ private:
 
 	/* Logging */
 	static void PrintDrawMessage();
-	void PrintVictoryMessage() const;
-	static void PrintWelcomeMessage();
+	void PrintVictoryMessage() const override;
+	void PrintWelcomeMessage() const override;
 };
 
 

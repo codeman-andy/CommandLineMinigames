@@ -144,8 +144,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Battleship.cpp" />
-    <ClCompile Include="src\BoardBattleship.cpp" />
+    <ClCompile Include="src\BattleshipBoard.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Placement.cpp" />
     <ClCompile Include="src\Vessel.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,8 @@
 #pragma once
 
+// Imports <iostream> to be able to accept user-input
+#include "Log.h"
+
 
 /*
  * The Player-superclass that all player-variants will inherit.
@@ -14,6 +17,9 @@ public:
 	/* Constructors */
 	Player();
 	Player(const char* const& name);
+
+	/* Methods */
+	static const char* GetPlayerNameFromInput();
 
 	/* Interface */
 	const char* GetName() const;

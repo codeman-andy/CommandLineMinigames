@@ -132,7 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\AI.cpp" />
-    <ClCompile Include="src\BoardTicTacToe.cpp" />
+    <ClCompile Include="src\TicTacToeBoard.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\TicTacToe.cpp" />
   </ItemGroup>

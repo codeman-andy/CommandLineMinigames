@@ -1,15 +1,12 @@
-#include "Printable.h"
 #include "TicTacToe.h"
 
-struct TicTacToe::Board : Printable {
-	inline static const char CharTranslation[3] = { '-', 'X', 'O' };
-	int coordinates[3][3];
+struct TicTacToe::Board : public Game::Board<3,3> {
 	int row_counter[3];
 	int col_counter[3];
 	int diagonal_counter[2];
 	int nr_of_available_moves;
 
-	Board() : coordinates({ UNOCCUPIED }), row_counter({ EMPTY }), col_counter({ EMPTY }), diagonal_counter({ EMPTY }), nr_of_available_moves(9) {}
+	Board() : row_counter({ EMPTY }), col_counter({ EMPTY }), diagonal_counter({ EMPTY }), nr_of_available_moves(9) {}
 
 	Board(const Board& other) : nr_of_available_moves(other.nr_of_available_moves)
 	{
@@ -97,7 +94,7 @@ struct TicTacToe::Board : Printable {
 		this->nr_of_available_moves--;
 	}
 
-	void Reset()
+	void Reset() override
 	{
 		for (int row = 0; row < 3; row++)
 		{
@@ -119,7 +116,7 @@ struct TicTacToe::Board : Printable {
 		this->nr_of_available_moves = 9;
 	}
 
-	void Print()
+	void Print() const override
 	{
 		Log("  0 1 2\n");
 		Log("  -----\n");

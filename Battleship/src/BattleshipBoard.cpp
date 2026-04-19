@@ -1,11 +1,12 @@
+#include "Placement.cpp"
 #include "Vessel.cpp"
 
-struct Battleship::Board::Home : public Battleship::Board {
+struct Battleship::Homeboard : public Game::Board<11,9> {
 	int nr_of_vessels;
 	Vessel vessels[5];
 	Placement placements[5];
 
-	Home() : Board(), nr_of_vessels(5), placements()
+	Homeboard() : nr_of_vessels(5), placements()
 	{
 		vessels[CARRIER] = Vessel::Carrier();
 		vessels[BATTLESHIP] = Vessel::Battleship();
@@ -14,7 +15,7 @@ struct Battleship::Board::Home : public Battleship::Board {
 		vessels[PATROL_BOAT] = Vessel::PatrolBoat();
 	}
 
-	Home(const Board::Home& other) : nr_of_vessels(other.nr_of_vessels)
+	Homeboard(const Homeboard& other) : nr_of_vessels(other.nr_of_vessels)
 	{
 		memcpy(this->coordinates, other.coordinates, sizeof(other.coordinates));
 		memcpy(this->vessels, other.vessels, sizeof(other.vessels));
@@ -67,7 +68,7 @@ struct Battleship::Board::Home : public Battleship::Board {
 		return static_cast<vessel_type>(type);
 	}
 
-	void MarkHit(const int& x, const int& y) override
+	void MarkHit(const int& x, const int& y)
 	{
 		this->coordinates[x][y] = O;
 
@@ -83,6 +84,11 @@ struct Battleship::Board::Home : public Battleship::Board {
 
 			if (this->nr_of_vessels == 0) STATE = FINISHED;
 		}
+	}
+
+	void MarkMiss(const int& x, const int& y)
+	{
+		this->coordinates[x][y] = X;
 	}
 
 	int CheckHit(const int& x, const int& y) const
@@ -117,25 +123,55 @@ struct Battleship::Board::Home : public Battleship::Board {
 
 		this->nr_of_vessels = 5;
 	}
+
+	void Print() const override
+	{
+		Log("   0 1 2 3 4 5 6 7 8 9 10\n");
+		Log("   ---------------------\n");
+
+		for (int y = 8; y >= 0; y--)
+		{
+			std::cout << y << "| ";
+			for (int x = 0; x < 11; x++)
+			{
+				std::cout << CharTranslation[this->coordinates[x][y]] << " ";
+			}
+			std::cout << "|" << std::endl;
+		}
+
+		Log("   ---------------------\n");
+	}
 };
 
 
 
-struct Battleship::Board::Moves : Battleship::Board {
+struct Battleship::Hitsboard : Game::Board<11,9> {
 
-	void MarkHit(const int& x, const int& y) override
+	void MarkHit(const int& x, const int& y)
 	{
 		this->coordinates[x][y] = O;
 	}
 
-	void Reset() override
+	void MarkMiss(const int& x, const int& y)
 	{
-		for (int x = 0; x < 11; x++)
+		this->coordinates[x][y] = X;
+	}
+
+	void Print() const override
+	{
+		Log("   0 1 2 3 4 5 6 7 8 9 10\n");
+		Log("   ---------------------\n");
+
+		for (int y = 8; y >= 0; y--)
 		{
-			for (int y = 0; y < 9; y++)
+			std::cout << y << "| ";
+			for (int x = 0; x < 11; x++)
 			{
-				this->coordinates[x][y] = UNOCCUPIED;
+				std::cout << CharTranslation[this->coordinates[x][y]] << " ";
 			}
+			std::cout << "|" << std::endl;
 		}
+
+		Log("   ---------------------\n");
 	}
 };
