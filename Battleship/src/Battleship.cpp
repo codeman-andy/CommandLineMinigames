@@ -9,7 +9,11 @@ void Battleship::MakeMove(const move& move)
 {
 	if (PlayerHomeboard[Opponent].CheckHit(move.x, move.y) == HIT)
 	{
-		PlayerHomeboard[Opponent].MarkHit(move.x, move.y);
+		if (PlayerHomeboard[Opponent].MarkHit(move.x, move.y) == true
+			&& PlayerHomeboard[Opponent].CheckState() == GAME_END)
+		{
+			STATE = FINISHED;
+		}
 
 		PlayerHitsboard[Active].MarkHit(move.x, move.y);
 	}
@@ -23,70 +27,31 @@ void Battleship::MakeMove(const move& move)
 	std::cin.get();
 }
 
-
-int Battleship::isPossible(const move& move)
-{
-	if (PlayerHitsboard[Active].coordinates[move.x][move.y] == UNOCCUPIED) return VALID;
-
-	else Log("You have already made a hit on that coordinate. Please, pick another.\n");
-	return INVALID_MOVE;
-}
-
-int Battleship::XisValid(const int& X)
-{
-	if (X % 1 == 0 && X >= 0 && X < 11) return VALID;
-
-	else Log("Your last coordinate was invalid. Please, type the coordinates again.\n");
-	return INVALID_COORDINATE;
-}
-
-int Battleship::YisValid(const int& Y)
-{
-	if (Y % 1 == 0 && Y >= 0 && Y < 9) return VALID;
-
-	else Log("Your last coordinate was invalid. Please, type the coordinates again.\n");
-	return INVALID_COORDINATE;
-}
-
-int Battleship::GetPlayerMove(move& move)
+bool Battleship::GetPlayerMove(move& move) const
 {
 	Log("Where do you wish to make a hit? (X Y)\n");
 	std::cin >> move.x >> move.y;
-	if (!XisValid(move.x) || !YisValid(move.y)) return INVALID_COORDINATE;
+	if (!PlayerHitsboard[Active].XisValid(move.x) || !PlayerHitsboard[Active].YisValid(move.y)) return INVALID_COORDINATE;
 
 	else return VALID;
 }
 
-int Battleship::TakePlayerTurn(move& move)
+bool Battleship::TakePlayerTurn(move& move)
 {
 	if (GetPlayerMove(move) == INVALID_COORDINATE) return INVALID_COORDINATE;
 
-	else if (!isPossible(move)) return INVALID_MOVE;
+	else if (!PlayerHitsboard[Active].isPossible(move)) return INVALID_MOVE;
 
 	MakeMove(move);
 
 	return TURN_END;
 }
 
-/* TO BE REFACTORED LATER
-int Battleship::TakeAITurn(const move& last_move) {
-	AI* bot = (AI*)current_player;
-
-	bot->RemoveFromValidMoves(last_move);
-
-	std::cout << "It's  " << bot->GetName() << "'s turn! ";
-
-	move ai_move = bot->MakeMove(board);
-
-	std::cout << bot->GetName() << " chose [" << ai_move.x << ", " << ai_move.y << "]" << std::endl;
-
-	if (MakeMove(ai_move.x, ai_move.y) == WINNER_FOUND) return WINNER_FOUND;
-
-	bot->RemoveFromValidMoves(ai_move);
-
-	return RUNNING;
+/* TO BE REFACTORED LATER */
+void Battleship::TakeAITurn(const move& last_move)
+{
+	// Lorem ipsum
 }
-*/
 
 void Battleship::TogglePlayer()
 {
@@ -102,26 +67,11 @@ void Battleship::SetUpNextTurn()
 	TogglePlayer();
 }
 
-/*
-int Battleship::PvERound()
+/* TO BE REFACTORED LATER */
+void Battleship::PvERound()
 {
-	PrintBoard();
-
-	move player_move = move();
-
-	int outcome = TakePlayerTurn(player_move);
-
-	if (!outcome) return outcome;
-
-	SetUpNextTurn();
-
-	if (TakeAITurn(player_move) == WINNER_FOUND) return WINNER_FOUND;
-
-	SetUpNextTurn();
-
-	return RUNNING;
+	// Lorem ipsum
 }
-*/
 
 void Battleship::PvPRound()
 {
@@ -176,32 +126,15 @@ void Battleship::SetUpBoard()
 	std::cin.get();
 }
 
-/* TO BE REFACTORED LATER
+/* TO BE REFACTORED LATER */
 void Battleship::SetUpPvE()
 {
-	Gamemode = &PvERound;
-
-	Players[0] = Human_Player::CreatePlayer();
-
-	Log("Choose Difficulty:\n1. Easy  2. Medium  3. Expert\n");
-	int input;
-	std::cin >> input;
-
-	difficulty chosen_difficulty = static_cast<difficulty>(input);
-
-	const char* name = (chosen_difficulty == EASY) ? "Pam" : (chosen_difficulty == MEDIUM) ? "Donald J. Trump" : "Peter Thiel";
-
-	AI* bot_player = AI::CreatePlayer(name, chosen_difficulty);
-
-	bot_player->SetValidMoves(board.GetValidMoves(), board.nr_of_available_moves);
-
-	Players[1] = bot_player;
+	// Lorem ipsum
 }
-*/
 
 void Battleship::SetUpPvP()
 {
-	Gamemode = &PvPRound;
+	m_Gamemode = static_cast<Gamemode>(&Battleship::PvPRound);
 
 	Players[0] = Human_Player::CreatePlayer();
 	Players[1] = Human_Player::CreatePlayer();
@@ -242,12 +175,12 @@ void Battleship::Reset()
 
 /*	LOGGING MEMBERS  */
 
-void Battleship::PrintBoard()
+void Battleship::PrintBoard() const
 {
 	PlayerHomeboard[Active].Print();
 }
 
-void Battleship::PrintBoards()
+void Battleship::PrintBoards() const
 {
 	PlayerHitsboard[Active].Print();
 	Log("   ----HITS----BOARD----\n\n");
@@ -289,9 +222,9 @@ void Battleship::Loop()
 
 Battleship& Battleship::Start()
 {
-	if (STATE != RUNNING) Reset();
-
 	static Battleship battleship = Battleship();
+
+	if (battleship.STATE != RUNNING) battleship.Reset();
 
 	battleship.PrintWelcomeMessage();
 

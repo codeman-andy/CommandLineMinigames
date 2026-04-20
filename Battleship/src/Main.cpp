@@ -4,7 +4,7 @@ void PlayBattleship()
 {
 	Battleship GAME = Battleship::Start();
 
-	Battleship::Loop();
+	GAME.Loop();
 
 	GAME.End();
 }

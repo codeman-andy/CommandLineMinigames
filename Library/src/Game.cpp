@@ -1,9 +1,3 @@
 #include "Game.h"
 
-state Game::STATE = RUNNING;
-void (*Game::Gamemode)();
-Player* Game::Players[2];
-int Game::Active = UNASSIGNED;
-int Game::Opponent = UNASSIGNED;
-
-Game::Game() {};
+Game::Game() : STATE(RUNNING), m_Gamemode(nullptr), Players({ nullptr }), Active(UNASSIGNED), Opponent(UNASSIGNED) {}

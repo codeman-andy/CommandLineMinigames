@@ -70,6 +70,7 @@ enum difficulty { EASY = 1, MEDIUM, EXPERT };
  * INVALID_COORDINATE : The user typed-in a value outside of the of the possible range of coordinates
  * INVALID_MOVE       : The user tried to make a move to a position that is currently unavailable
  * VALIDATED		  : The provided input passed all checks
+ * TURN_END			  : The turn ended successfully
  * 
  */
 
@@ -77,18 +78,14 @@ enum difficulty { EASY = 1, MEDIUM, EXPERT };
 #define INVALID_MOVE 0
 #define INVALID_PLACEMENT 0
 #define VALID 1
+#define TURN_END 1
 
 
 
 /*
- * Flags for the outcome of a turn.
- * 
- * TURN_END	: The turn ended with no victor
- * GAME_END : A victor was crowned during the turn
- * 
+ * Flag for when the game has reached a terminal state.
  */
 
-#define TURN_END 0
 #define GAME_END 1
 
 
@@ -158,3 +155,5 @@ enum vessel_type { CARRIER, BATTLESHIP, DESTROYER, SUBMARINE, PATROL_BOAT };
 
 #define MISS 0
 #define HIT 1
+#define VESSEL_SURVIVED 0
+#define VESSEL_DESTROYED 1

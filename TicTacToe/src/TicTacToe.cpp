@@ -22,40 +22,24 @@ void TicTacToe::MakeMove(const move& move)
 	STATE = s_Board.CheckState(move);
 }
 
-int TicTacToe::isPossible(const move& move)
-{
-	if (s_Board.coordinates[move.x][move.y] == UNOCCUPIED) return VALID;
-
-	else Log("The coordinate you picked is already occupied. Please, choose another.\n");
-	return INVALID_MOVE;
-}
-
-int TicTacToe::isValid(const int& Coord)
-{
-	if (Coord % 1 == 0 && Coord >= 0 && Coord <= 2) return VALID;
-
-	else Log("Your last coordinate was invalid. Please, type your coordinates again.\n");
-	return INVALID_COORDINATE;
-}
-
-int TicTacToe::GetPlayerMove(move& move)
+bool TicTacToe::GetPlayerMove(move& move) const
 {
 	Log("Where do you wish to place? (vertically)\n");
 	std::cin >> move.y;
-	if (!isValid(move.y)) return INVALID_COORDINATE;
+	if (!s_Board.YisValid(move.y)) return INVALID_COORDINATE;
 
 	Log("Where do you wish to place? (horizontally)\n");
 	std::cin >> move.x;
-	if (!isValid(move.x)) return INVALID_COORDINATE;
+	if (!s_Board.XisValid(move.x)) return INVALID_COORDINATE;
 
 	else return VALID;
 }
 
-int TicTacToe::TakePlayerTurn(move& move)
+bool TicTacToe::TakePlayerTurn(move& move)
 {
 	if (GetPlayerMove(move) == INVALID_COORDINATE) return INVALID_COORDINATE;
 
-	else if (!isPossible(move)) return INVALID_MOVE;
+	else if (!s_Board.isPossible(move)) return INVALID_MOVE;
 
 	MakeMove(move);
 
@@ -125,12 +109,12 @@ void TicTacToe::PvPRound()
 
 void TicTacToe::TakeTurn()
 {
-	Gamemode();
+	(this->*m_Gamemode)();
 }
 
 void TicTacToe::SetUpPvE()
 {
-	Gamemode = &PvERound;
+	m_Gamemode = static_cast<Gamemode>(&TicTacToe::PvERound);
 
 	Players[0] = Human_Player::CreatePlayer();
 
@@ -153,7 +137,7 @@ void TicTacToe::SetUpPvE()
 
 void TicTacToe::SetUpPvP()
 {
-	Gamemode = &PvPRound;
+	m_Gamemode = static_cast<Gamemode>(&TicTacToe::PvPRound);
 
 	Players[0] = Human_Player::CreatePlayer();
 
@@ -186,12 +170,12 @@ void TicTacToe::Reset()
 
 /*	LOGGING MEMBERS  */
 
-void TicTacToe::PrintBoard()
+void TicTacToe::PrintBoard() const
 {
 	s_Board.Print();
 }
 
-void TicTacToe::PrintDrawMessage()
+void TicTacToe::PrintDrawMessage() const
 {
 	Log("The game ended with no victor...\n");
 }
@@ -232,9 +216,9 @@ void TicTacToe::Loop()
 
 TicTacToe& TicTacToe::Start()
 {
-	if (STATE != RUNNING) Reset();
-
 	static TicTacToe tictactoe = TicTacToe();
+
+	if (tictactoe.STATE != RUNNING) tictactoe.Reset();
 
 	tictactoe.PrintWelcomeMessage();
 

@@ -5,9 +5,6 @@
 
 #include "Board.h"
 
-// Imports Move-struct which will store a single TicTacToe move
-#include "Move.h"
-
 
 /*
  * TicTacToe is a public sub-struct of the Game-struct.
@@ -23,9 +20,9 @@ struct TicTacToe : public Game {
 	/* Interface */
 	static letter GetActiveLetter();
 	static letter GetOpponentLetter();
-	static void PrintBoard();
-	void End() const;
-	static void Loop();
+	void PrintBoard() const override;
+	void End() const override;
+	void Loop();
 	static TicTacToe& Start();
 
 private:
@@ -34,25 +31,23 @@ private:
 	static letter ActiveLetter;
 
 	/* Methods */
-	static int isPossible(const move& move);
-	static int isValid(const int& Coord);
-	static void MakeMove(const move& move);
-	static int GetPlayerMove(move& move);
-	static int TakePlayerTurn(move& move);
-	static void TakeAITurn(const move& last_move);
-	static void PvERound();
-	static void PvPRound();
-	static void TakeTurn();
-	static void ToggleLetter();
-	static void TogglePlayer();
-	static void SetUpNextTurn();
-	void SetUpPvE();
-	void SetUpPvP();
-	static void Reset();
-	void SetUpGame();
+	void MakeMove(const move& move) override;
+	bool GetPlayerMove(move& move) const override;
+	bool TakePlayerTurn(move& move) override;
+	void TakeAITurn(const move& last_move) override;
+	void PvERound() override;
+	void PvPRound() override;
+	void TakeTurn();
+	void ToggleLetter();
+	void TogglePlayer();
+	void SetUpNextTurn();
+	void SetUpPvE() override;
+	void SetUpPvP() override;
+	void SetUpGame() override;
+	void Reset() override;
 
 	/* Logging */
-	static void PrintDrawMessage();
+	void PrintDrawMessage() const;
 	void PrintVictoryMessage() const override;
 	void PrintWelcomeMessage() const override;
 };

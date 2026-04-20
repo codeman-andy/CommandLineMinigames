@@ -32,6 +32,13 @@ struct Battleship::Homeboard : public Game::Board<11,9> {
 		return (this->nr_of_vessels == 5);
 	}
 
+	state CheckState() const
+	{
+		if (this->isEmpty()) return FINISHED;
+
+		else return RUNNING;
+	}
+
 	void PlaceHorizontally(const int& x_start, const int& x_end, const int& y)
 	{
 		for (int x = x_start; x <= x_end; x++)
@@ -68,7 +75,7 @@ struct Battleship::Homeboard : public Game::Board<11,9> {
 		return static_cast<vessel_type>(type);
 	}
 
-	void MarkHit(const int& x, const int& y)
+	bool MarkHit(const int& x, const int& y)
 	{
 		this->coordinates[x][y] = O;
 
@@ -82,8 +89,10 @@ struct Battleship::Homeboard : public Game::Board<11,9> {
 
 			this->nr_of_vessels--;
 
-			if (this->nr_of_vessels == 0) STATE = FINISHED;
+			return VESSEL_DESTROYED;
 		}
+
+		else return VESSEL_SURVIVED;
 	}
 
 	void MarkMiss(const int& x, const int& y)

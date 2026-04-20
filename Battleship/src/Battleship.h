@@ -3,7 +3,6 @@
 #include "Log.h"
 #include "Game.h"
 #include "Board.h"
-#include "Move.h"
 #include "Human_Player.h"
 
 
@@ -22,11 +21,10 @@ struct Battleship : public Game {
 	Battleship();
 
 	/* Interface */
-	void SetUpGame();
-	static void PrintBoard();
-	static void PrintBoards();
-	void End() const;
-	static void Loop();
+	void PrintBoards() const;
+	void PrintBoard() const override;
+	void End() const override;
+	void Loop();
 	static Battleship& Start();
 
 private:
@@ -35,22 +33,20 @@ private:
 	static Hitsboard PlayerHitsboard[2];
 
 	/* Methods */
-	static int isPossible(const move& move);
-	static int XisValid(const int& X);
-	static int YisValid(const int& Y);
-	static void MakeMove(const move& move);
-	static int GetPlayerMove(move& move);
-	static int TakePlayerTurn(move& move);
-	static int TakeAITurn(const move& last_move);
-	static void PvERound();
-	static void PvPRound();
-	static void TakeTurn();
-	static void TogglePlayer();
-	static void SetUpNextTurn();
+	void MakeMove(const move& move) override;
+	bool GetPlayerMove(move& move) const override;
+	bool TakePlayerTurn(move& move) override;
+	void TakeAITurn(const move& last_move) override;
+	void PvERound() override;
+	void PvPRound() override;
+	void TakeTurn();
+	void TogglePlayer();
+	void SetUpNextTurn();
 	void SetUpBoard();
-	void SetUpPvE();
-	void SetUpPvP();
-	static void Reset();
+	void SetUpPvE() override;
+	void SetUpPvP() override;
+	void SetUpGame() override;
+	void Reset() override;
 
 	/* Logging */
 	void PrintVictoryMessage() const override;

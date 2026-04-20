@@ -6,6 +6,9 @@
 // Imports Player-class
 #include "Player.h"
 
+// Imports Move-struct which will store a single TicTacToe move
+#include "Move.h"
+
 // Imports Printable-interface
 #include "Printable.h"
 
@@ -20,17 +23,34 @@ struct Game {
 	template <unsigned int x, unsigned int y>
 	struct Board;
 
+	typedef void (Game::*Gamemode)();
+
 	/* Variables */
-	static state STATE;
-	static void (*Gamemode)();
-	static Player* Players[2];
-	static int Active;
-	static int Opponent;
+	state STATE;
+	Gamemode m_Gamemode;
+	Player* Players[2];
+	int Active;
+	int Opponent;
 
 	/* Constructor*/
 	Game();
 
-	/* Interface */
+	/* Methods */
+	virtual void MakeMove(const move& move) = 0;
+	virtual bool GetPlayerMove(move& move) const = 0;
+	virtual bool TakePlayerTurn(move& move) = 0;
+	virtual void TakeAITurn(const move& last_move) = 0;
+	virtual void PvERound() = 0;
+	virtual void PvPRound() = 0;
+	virtual void SetUpPvE() = 0;
+	virtual void SetUpPvP() = 0;
+	virtual void SetUpGame() = 0;
+	virtual void Reset() = 0;
 	virtual void PrintVictoryMessage() const = 0;
 	virtual void PrintWelcomeMessage() const = 0;
+
+	/* Interface */
+	virtual void PrintBoard() const = 0;
+	virtual void End() const = 0;
+	static void Loop();
 };

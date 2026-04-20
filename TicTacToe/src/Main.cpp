@@ -4,7 +4,7 @@ void PlayTicTacToe()
 {
 	TicTacToe GAME = TicTacToe::Start();
 
-	TicTacToe::Loop();
+	GAME.Loop();
 
 	GAME.End();
 }
