@@ -232,3 +232,9 @@ Battleship& Battleship::Start()
 
 	return battleship;
 }
+
+
+
+/* DESTRUCTOR */
+
+Battleship::~Battleship() {}

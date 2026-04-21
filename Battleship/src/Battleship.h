@@ -6,7 +6,8 @@
 #include "Human_Player.h"
 
 
-struct Battleship : public Game {
+class Battleship : public Game {
+public:
 	/* Specialized Battleship-struct for Input and Storage of a Vessel's Placement */
 	struct Placement;
 
@@ -21,6 +22,9 @@ struct Battleship : public Game {
 	void End() const override;
 	void Loop() override;
 	static Battleship& Start();
+
+	/* Destructor */
+	~Battleship();
 
 private:
 	/* Variables */

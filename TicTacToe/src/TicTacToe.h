@@ -11,7 +11,8 @@
  * TicTacToe is a public sub-struct of the Game-struct.
  */
 
-struct TicTacToe : public Game {
+class TicTacToe : public Game {
+public:
 	/* Specialized Tic-Tac-Toe Game Board */
 	struct Board;
 
@@ -21,6 +22,9 @@ struct TicTacToe : public Game {
 	void End() const override;
 	void Loop() override;
 	static TicTacToe& Start();
+
+	/* Destructor */
+	~TicTacToe();
 
 private:
 	/* Variables */

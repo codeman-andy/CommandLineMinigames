@@ -134,6 +134,7 @@
     <ClInclude Include="Include\Board.h" />
     <ClInclude Include="Include\Game.h" />
     <ClInclude Include="Include\Human_Player.h" />
+    <ClInclude Include="Include\IGame.h" />
     <ClInclude Include="Include\Log.h" />
     <ClInclude Include="Include\Move.h" />
     <ClInclude Include="Include\Player.h" />

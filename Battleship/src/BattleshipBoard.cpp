@@ -150,6 +150,8 @@ struct Battleship::Homeboard : public Game::Board<11,9> {
 
 		Log("   ---------------------\n");
 	}
+
+	~Homeboard() {}
 };
 
 
@@ -183,4 +185,6 @@ struct Battleship::Hitsboard : Game::Board<11,9> {
 
 		Log("   ---------------------\n");
 	}
+
+	~Hitsboard() {}
 };

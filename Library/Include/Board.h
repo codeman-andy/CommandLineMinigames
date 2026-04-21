@@ -48,4 +48,6 @@ struct Game::Board : public Printable {
 		else Log("Your last coordinate was invalid. Please, type your coordinates again.\n");
 		return INVALID_COORDINATE;
 	}
+
+	virtual ~Board() {}
 };

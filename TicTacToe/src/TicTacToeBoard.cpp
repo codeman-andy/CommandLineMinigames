@@ -128,4 +128,6 @@ struct TicTacToe::Board : public Game::Board<3,3> {
 
 		Log("  -----\n");
 	}
+
+	~Board() {}
 };

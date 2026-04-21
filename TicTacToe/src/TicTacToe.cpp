@@ -226,3 +226,9 @@ TicTacToe& TicTacToe::Start()
 
 	return tictactoe;
 }
+
+
+
+/* DESTRUCTOR */
+
+TicTacToe::~TicTacToe() {}
