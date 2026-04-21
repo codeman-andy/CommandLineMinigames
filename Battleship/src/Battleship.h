@@ -17,14 +17,9 @@ struct Battleship : public Game {
 	/* Struct of the different boats in Battleship */
 	struct Vessel;
 
-	/* Constructor */
-	Battleship();
-
-	/* Interface */
-	void PrintBoards() const;
-	void PrintBoard() const override;
+	/* API */
 	void End() const override;
-	void Loop();
+	void Loop() override;
 	static Battleship& Start();
 
 private:
@@ -32,23 +27,32 @@ private:
 	static Homeboard PlayerHomeboard[2];
 	static Hitsboard PlayerHitsboard[2];
 
-	/* Methods */
+	/* Constructor */
+	Battleship();
+
+	/* Override Methods */
 	void MakeMove(const move& move) override;
 	bool GetPlayerMove(move& move) const override;
 	bool TakePlayerTurn(move& move) override;
 	void TakeAITurn(const move& last_move) override;
 	void PvERound() override;
 	void PvPRound() override;
-	void TakeTurn();
-	void TogglePlayer();
-	void SetUpNextTurn();
-	void SetUpBoard();
+	void TakeTurn() override;
+	void TogglePlayer() override;
+	void SetUpNextTurn() override;
 	void SetUpPvE() override;
 	void SetUpPvP() override;
 	void SetUpGame() override;
 	void Reset() override;
 
+	/* Additional Methods */
+	void SetUpBoard();
+
 	/* Logging */
+	void PrintBoard() const override;
 	void PrintVictoryMessage() const override;
 	void PrintWelcomeMessage() const override;
+
+	/* Additional Logging */
+	void PrintBoards() const;
 };

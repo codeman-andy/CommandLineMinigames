@@ -42,6 +42,9 @@ struct Game {
 	virtual void TakeAITurn(const move& last_move) = 0;
 	virtual void PvERound() = 0;
 	virtual void PvPRound() = 0;
+	virtual void TakeTurn() = 0;
+	virtual void TogglePlayer() = 0;
+	virtual void SetUpNextTurn() = 0;
 	virtual void SetUpPvE() = 0;
 	virtual void SetUpPvP() = 0;
 	virtual void SetUpGame() = 0;
@@ -52,5 +55,5 @@ struct Game {
 	/* Interface */
 	virtual void PrintBoard() const = 0;
 	virtual void End() const = 0;
-	static void Loop();
+	virtual void Loop() = 0;
 };
