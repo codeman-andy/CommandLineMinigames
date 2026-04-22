@@ -3,7 +3,7 @@ c:\dev\cpp\commandlineminigames\x64\debug\library.idb
 c:\dev\cpp\commandlineminigames\library\x64\debug\player.obj
 c:\dev\cpp\commandlineminigames\library\x64\debug\move.obj
 c:\dev\cpp\commandlineminigames\library\x64\debug\log.obj
-c:\dev\cpp\commandlineminigames\library\x64\debug\human_player.obj
+c:\dev\cpp\commandlineminigames\library\x64\debug\humanplayer.obj
 c:\dev\cpp\commandlineminigames\library\x64\debug\game.obj
 c:\dev\cpp\commandlineminigames\x64\debug\library.lib
 c:\dev\cpp\commandlineminigames\library\x64\debug\library.tlog\cl.command.1.tlog

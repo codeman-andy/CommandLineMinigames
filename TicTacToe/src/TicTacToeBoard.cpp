@@ -16,9 +16,9 @@ struct TicTacToe::Board : public Game::Board<3,3> {
 		memcpy(this->diagonal_counter, other.diagonal_counter, sizeof(other.diagonal_counter));
 	}
 
-	move* GetValidMoves() const
+	Move* GetValidMoves() const
 	{
-		move* valid_moves = (move*) new move[this->nr_of_available_moves];
+		Move* valid_moves = (Move*) new Move[this->nr_of_available_moves];
 
 		int index = 0;
 		for (int y = 0; y < 3; y++)
@@ -27,7 +27,7 @@ struct TicTacToe::Board : public Game::Board<3,3> {
 			{
 				if (this->coordinates[x][y] == UNOCCUPIED)
 				{
-					valid_moves[index] = move(x, y);
+					valid_moves[index] = Move(x, y);
 					index++;
 				}
 			}
@@ -67,7 +67,7 @@ struct TicTacToe::Board : public Game::Board<3,3> {
 		return RUNNING;
 	}
 
-	state CheckState(const move& last_move) const
+	State CheckState(const Move& last_move) const
 	{
 		if ( (this->row_counter[last_move.y] == FULL && this->hasWinner(last_move.y, InRow))
 		  || (this->col_counter[last_move.x] == FULL && this->hasWinner(last_move.x, InCol))
@@ -80,9 +80,9 @@ struct TicTacToe::Board : public Game::Board<3,3> {
 		else return RUNNING;
 	}
 
-	void Mark(const int& x, const int& y, const letter& letter)
+	void Mark(const int& x, const int& y, const Letter& Letter)
 	{
-		this->coordinates[x][y] = letter;
+		this->coordinates[x][y] = Letter;
 
 		this->row_counter[y] += 1;
 		this->col_counter[x] += 1;

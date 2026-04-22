@@ -3,7 +3,7 @@
 #include "Game.h"
 
 template <unsigned int x, unsigned int y>
-struct Game::Board : public Printable {
+struct Game::Board : public IPrintable {
 	inline static const char CharTranslation[3] = { '-', 'X', 'O' };
 	int coordinates[x][y];
 
@@ -25,9 +25,9 @@ struct Game::Board : public Printable {
 		}
 	}
 
-	bool isPossible(const move& move) const
+	bool isPossible(const Move& Move) const
 	{
-		if (this->coordinates[move.x][move.y] == UNOCCUPIED) return VALID;
+		if (this->coordinates[Move.x][Move.y] == UNOCCUPIED) return VALID;
 
 		else Log("The coordinate you picked is already occupied. Please, choose another.\n");
 		return INVALID_MOVE;

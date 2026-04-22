@@ -15,31 +15,31 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\Game.h">
+    <ClInclude Include="include\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Human_Player.h">
+    <ClInclude Include="include\HumanPlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Log.h">
+    <ClInclude Include="include\Log.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Move.h">
+    <ClInclude Include="include\Move.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Settings.h">
+    <ClInclude Include="include\Settings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Printable.h">
+    <ClInclude Include="include\IPrintable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Player.h">
+    <ClInclude Include="include\Player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Board.h">
+    <ClInclude Include="include\Board.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Include\IGame.h">
+    <ClInclude Include="include\IGame.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -47,7 +47,7 @@
     <ClCompile Include="src\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Human_Player.cpp">
+    <ClCompile Include="src\HumanPlayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Log.cpp">

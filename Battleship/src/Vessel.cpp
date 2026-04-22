@@ -3,13 +3,13 @@
 struct Battleship::Vessel {
 	inline static const char* const Name[5] = { "Carrier", "Battleship", "Destroyer", "Submarine", "Patrol Boat" };
 	inline static const int Size[5] = { 5, 4, 3, 3, 2 };
-	vessel_type type;
+	VesselType type;
 	int size;
 	int hit_points;
 
 	Vessel() : type(BATTLESHIP), size(32), hit_points(32) {}
 
-	Vessel(vessel_type type, int size) : type(type), size(size), hit_points(size) {}
+	Vessel(VesselType type, int size) : type(type), size(size), hit_points(size) {}
 
 	static Vessel PatrolBoat()
 	{
@@ -36,12 +36,12 @@ struct Battleship::Vessel {
 		return Vessel(CARRIER, 5);
 	}
 
-	static const char* GetVesselName(const vessel_type& type)
+	static const char* GetVesselName(const VesselType& type)
 	{
 		return Name[type];
 	}
 
-	static const int GetVesselSize(const vessel_type& type)
+	static const int GetVesselSize(const VesselType& type)
 	{
 		return Size[type];
 	}

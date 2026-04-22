@@ -1,6 +1,6 @@
 #pragma once
 
-class Printable {
+class IPrintable {
 public:
 	virtual void Print() const = 0;
 };

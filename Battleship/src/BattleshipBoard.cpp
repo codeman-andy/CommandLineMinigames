@@ -32,7 +32,7 @@ struct Battleship::Homeboard : public Game::Board<11,9> {
 		return (this->nr_of_vessels == 5);
 	}
 
-	state CheckState() const
+	State CheckState() const
 	{
 		if (this->isEmpty()) return FINISHED;
 
@@ -55,16 +55,16 @@ struct Battleship::Homeboard : public Game::Board<11,9> {
 		}
 	}
 
-	void PlaceVessel(const vessel_type& vessel_type, const Placement& placement)
+	void PlaceVessel(const VesselType& VesselType, const Placement& placement)
 	{
-		this->placements[vessel_type] = placement;
+		this->placements[VesselType] = placement;
 
 		if (placement.x_start == placement.x_end) PlaceVertically(placement.x_start, placement.y_start, placement.y_end);
 
 		else PlaceHorizontally(placement.x_start, placement.x_end, placement.y_start);
 	}
 
-	vessel_type IdentifyVessel(const int& x, const int& y) const
+	VesselType IdentifyVessel(const int& x, const int& y) const
 	{
 		int type = 0;
 		while ((x < this->placements[type].x_start || x > this->placements[type].x_end)
@@ -72,14 +72,14 @@ struct Battleship::Homeboard : public Game::Board<11,9> {
 		{
 			type++;
 		}
-		return static_cast<vessel_type>(type);
+		return static_cast<VesselType>(type);
 	}
 
 	bool MarkHit(const int& x, const int& y)
 	{
 		this->coordinates[x][y] = O;
 
-		vessel_type type = IdentifyVessel(x, y);
+		VesselType type = IdentifyVessel(x, y);
 
 		this->vessels[type].Hit();
 

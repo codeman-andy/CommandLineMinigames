@@ -5,50 +5,50 @@ Battleship::Hitsboard Battleship::PlayerHitsboard[2];
 
 Battleship::Battleship() {}
 
-void Battleship::MakeMove(const move& move)
+void Battleship::MakeMove(const Move& Move)
 {
-	if (PlayerHomeboard[Opponent].CheckHit(move.x, move.y) == HIT)
+	if (PlayerHomeboard[Opponent].CheckHit(Move.x, Move.y) == HIT)
 	{
-		if (PlayerHomeboard[Opponent].MarkHit(move.x, move.y) == true
+		if (PlayerHomeboard[Opponent].MarkHit(Move.x, Move.y) == true
 			&& PlayerHomeboard[Opponent].CheckState() == GAME_END)
 		{
-			STATE = FINISHED;
+			m_State = FINISHED;
 		}
 
-		PlayerHitsboard[Active].MarkHit(move.x, move.y);
+		PlayerHitsboard[Active].MarkHit(Move.x, Move.y);
 	}
 
 	else
 	{
-		PlayerHitsboard[Active].MarkMiss(move.x, move.y);
+		PlayerHitsboard[Active].MarkMiss(Move.x, Move.y);
 	}
 
 	clear_buffer();
 	std::cin.get();
 }
 
-bool Battleship::GetPlayerMove(move& move) const
+bool Battleship::GetPlayerMove(Move& Move) const
 {
 	Log("Where do you wish to make a hit? (X Y)\n");
-	std::cin >> move.x >> move.y;
-	if (!PlayerHitsboard[Active].XisValid(move.x) || !PlayerHitsboard[Active].YisValid(move.y)) return INVALID_COORDINATE;
+	std::cin >> Move.x >> Move.y;
+	if (!PlayerHitsboard[Active].XisValid(Move.x) || !PlayerHitsboard[Active].YisValid(Move.y)) return INVALID_COORDINATE;
 
 	else return VALID;
 }
 
-bool Battleship::TakePlayerTurn(move& move)
+bool Battleship::TakePlayerTurn(Move& Move)
 {
-	if (GetPlayerMove(move) == INVALID_COORDINATE) return INVALID_COORDINATE;
+	if (GetPlayerMove(Move) == INVALID_COORDINATE) return INVALID_COORDINATE;
 
-	else if (!PlayerHitsboard[Active].isPossible(move)) return INVALID_MOVE;
+	else if (!PlayerHitsboard[Active].isPossible(Move)) return INVALID_MOVE;
 
-	MakeMove(move);
+	MakeMove(Move);
 
 	return TURN_END;
 }
 
 /* TO BE REFACTORED LATER */
-void Battleship::TakeAITurn(const move& last_move)
+void Battleship::TakeAITurn(const Move& last_move)
 {
 	// Lorem ipsum
 }
@@ -77,7 +77,7 @@ void Battleship::PvPRound()
 {
 	PrintBoards();
 
-	move player_move = move();
+	Move player_move = Move();
 
 	while (TakePlayerTurn(player_move) != TURN_END) {};
 }
@@ -93,7 +93,7 @@ void Battleship::SetUpBoard()
 
 	for (int type = CARRIER; type < PATROL_BOAT; type++)
 	{
-		vessel_type current_type = static_cast<vessel_type>(type);
+		VesselType current_type = static_cast<VesselType>(type);
 
 		PrintBoard();
 
@@ -136,8 +136,8 @@ void Battleship::SetUpPvP()
 {
 	m_Gamemode = static_cast<Gamemode>(&Battleship::PvPRound);
 
-	Players[0] = Human_Player::CreatePlayer();
-	Players[1] = Human_Player::CreatePlayer();
+	Players[0] = HumanPlayer::CreatePlayer();
+	Players[1] = HumanPlayer::CreatePlayer();
 
 	TogglePlayer();
 	SetUpBoard();
@@ -168,7 +168,7 @@ void Battleship::Reset()
 
 	Active = UNASSIGNED;
 
-	STATE = RUNNING;
+	m_State = RUNNING;
 }
 
 
@@ -212,7 +212,7 @@ void Battleship::End() const
 
 void Battleship::Loop()
 {
-	while (STATE == RUNNING)
+	while (m_State == RUNNING)
 	{
 		SetUpNextTurn();
 
@@ -224,7 +224,7 @@ Battleship& Battleship::Start()
 {
 	static Battleship battleship = Battleship();
 
-	if (battleship.STATE != RUNNING) battleship.Reset();
+	if (battleship.m_State != RUNNING) battleship.Reset();
 
 	battleship.PrintWelcomeMessage();
 

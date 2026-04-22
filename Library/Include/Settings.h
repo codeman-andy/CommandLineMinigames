@@ -17,7 +17,7 @@
  * 
  */
 
-enum state { RUNNING, FINISHED, DRAW };
+enum State { RUNNING, FINISHED, DRAW };
 
 /*
  * Flag for when the Active and Opponent Game-struct-members are uninitialized.
@@ -31,24 +31,24 @@ enum state { RUNNING, FINISHED, DRAW };
  * The possible numerical values for each position on the TicTacToe and Battleship boards.
  */
 
-enum letter { UNOCCUPIED, X, O };
+enum Letter { UNOCCUPIED, X, O };
 
 
 
 /*
- * AI-difficulty levels.
+ * AI-Difficulty levels.
  * 
  * EASY :
- *   TicTacToe : The AI will make a winning move, otherwise a random move
+ *   TicTacToe : The AI will make a winning Move, otherwise a random Move
  * MEDIUM :
- *   TicTacToe : The AI will make a winning move, otherwise prevent the opponent to win, otherwise a random move
+ *   TicTacToe : The AI will make a winning Move, otherwise prevent the opponent to win, otherwise a random Move
  * EXPERT :
- *   TicTacToe : The AI applies a minmax-algorithm to choose its next move
- *               (if there are no good moves left, it will prevent the opponent to win or otherwise make a random move)
+ *   TicTacToe : The AI applies a minmax-algorithm to choose its next Move
+ *               (if there are no good moves left, it will prevent the opponent to win or otherwise make a random Move)
  * 
  */
 
-enum difficulty { EASY = 1, MEDIUM, EXPERT };
+enum Difficulty { EASY = 1, MEDIUM, EXPERT };
 
 
 
@@ -65,10 +65,10 @@ enum difficulty { EASY = 1, MEDIUM, EXPERT };
 
 
 /*
- * Flags for an user-input move.
+ * Flags for an user-input Move.
  * 
  * INVALID_COORDINATE : The user typed-in a value outside of the of the possible range of coordinates
- * INVALID_MOVE       : The user tried to make a move to a position that is currently unavailable
+ * INVALID_MOVE       : The user tried to make a Move to a position that is currently unavailable
  * VALIDATED		  : The provided input passed all checks
  * TURN_END			  : The turn ended successfully
  * 
@@ -83,7 +83,7 @@ enum difficulty { EASY = 1, MEDIUM, EXPERT };
 
 
 /*
- * Flag for when the game has reached a terminal state.
+ * Flag for when the game has reached a terminal State.
  */
 
 #define GAME_END 1
@@ -113,7 +113,7 @@ enum difficulty { EASY = 1, MEDIUM, EXPERT };
 
 
 /*
- * TicTacToe-parameters for which lane to check in for a possible recent winning move.
+ * TicTacToe-parameters for which lane to check in for a possible recent winning Move.
  */
 
 #define InRow 0
@@ -124,7 +124,7 @@ enum difficulty { EASY = 1, MEDIUM, EXPERT };
 
 
 /*
- * AI-flag for when it has found a winning move.
+ * AI-flag for when it has found a winning Move.
  */
 
 #define WINNER_FOUND 1
@@ -145,12 +145,12 @@ enum difficulty { EASY = 1, MEDIUM, EXPERT };
  * The five different vessels in a Battleship game board.
  */
 
-enum vessel_type { CARRIER, BATTLESHIP, DESTROYER, SUBMARINE, PATROL_BOAT };
+enum VesselType { CARRIER, BATTLESHIP, DESTROYER, SUBMARINE, PATROL_BOAT };
 
 
 
 /*
- * Flags for the outcome of a move.
+ * Flags for the outcome of a Move.
  */
 
 #define MISS 0

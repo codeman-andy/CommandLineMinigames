@@ -3,7 +3,7 @@
 #include "Log.h"
 #include "Game.h"
 #include "Board.h"
-#include "Human_Player.h"
+#include "HumanPlayer.h"
 
 
 class Battleship : public Game {
@@ -35,10 +35,10 @@ private:
 	Battleship();
 
 	/* Override Methods */
-	void MakeMove(const move& move) override;
-	bool GetPlayerMove(move& move) const override;
-	bool TakePlayerTurn(move& move) override;
-	void TakeAITurn(const move& last_move) override;
+	void MakeMove(const Move& Move) override;
+	bool GetPlayerMove(Move& Move) const override;
+	bool TakePlayerTurn(Move& Move) override;
+	void TakeAITurn(const Move& last_move) override;
 	void PvERound() override;
 	void PvPRound() override;
 	void TakeTurn() override;

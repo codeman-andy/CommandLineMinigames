@@ -9,13 +9,13 @@
 // Imports Player-class
 #include "Player.h"
 
-// Imports Printable-interface
-#include "Printable.h"
+// Imports IPrintable-interface
+#include "IPrintable.h"
 
 /*
  * The Game-superclass that all minigames will inherit
  * There will always only be one Game-instance at any given moment
- * Each game will present a state between RUNNING, WINNER_FOUND, or DRAW
+ * Each game will present a State between RUNNING, WINNER_FOUND, or DRAW
  */
 
 class Game : public IGame {
@@ -27,7 +27,7 @@ public:
 	typedef void (Game::*Gamemode)();
 
 	/* Variables */
-	state STATE;
+	State m_State;
 	Gamemode m_Gamemode;
 	Player* Players[2];
 	int Active;

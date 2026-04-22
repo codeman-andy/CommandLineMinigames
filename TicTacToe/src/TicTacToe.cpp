@@ -1,52 +1,52 @@
 #include "TicTacToeBoard.cpp"
 
 TicTacToe::Board TicTacToe::s_Board;
-letter TicTacToe::ActiveLetter;
+Letter TicTacToe::ActiveLetter;
 
 TicTacToe::TicTacToe() {}
 
-letter TicTacToe::GetActiveLetter()
+Letter TicTacToe::GetActiveLetter()
 {
 	return ActiveLetter;
 }
 
-letter TicTacToe::GetOpponentLetter()
+Letter TicTacToe::GetOpponentLetter()
 {
 	return (ActiveLetter == O) ? X : O;
 }
 
-void TicTacToe::MakeMove(const move& move)
+void TicTacToe::MakeMove(const Move& Move)
 {
-	s_Board.Mark(move.x, move.y, ActiveLetter);
+	s_Board.Mark(Move.x, Move.y, ActiveLetter);
 
-	STATE = s_Board.CheckState(move);
+	m_State = s_Board.CheckState(Move);
 }
 
-bool TicTacToe::GetPlayerMove(move& move) const
+bool TicTacToe::GetPlayerMove(Move& Move) const
 {
 	Log("Where do you wish to place? (vertically)\n");
-	std::cin >> move.y;
-	if (!s_Board.YisValid(move.y)) return INVALID_COORDINATE;
+	std::cin >> Move.y;
+	if (!s_Board.YisValid(Move.y)) return INVALID_COORDINATE;
 
 	Log("Where do you wish to place? (horizontally)\n");
-	std::cin >> move.x;
-	if (!s_Board.XisValid(move.x)) return INVALID_COORDINATE;
+	std::cin >> Move.x;
+	if (!s_Board.XisValid(Move.x)) return INVALID_COORDINATE;
 
 	else return VALID;
 }
 
-bool TicTacToe::TakePlayerTurn(move& move)
+bool TicTacToe::TakePlayerTurn(Move& Move)
 {
-	if (GetPlayerMove(move) == INVALID_COORDINATE) return INVALID_COORDINATE;
+	if (GetPlayerMove(Move) == INVALID_COORDINATE) return INVALID_COORDINATE;
 
-	else if (!s_Board.isPossible(move)) return INVALID_MOVE;
+	else if (!s_Board.isPossible(Move)) return INVALID_MOVE;
 
-	MakeMove(move);
+	MakeMove(Move);
 
 	return TURN_END;
 }
 
-void TicTacToe::TakeAITurn(const move& last_move)
+void TicTacToe::TakeAITurn(const Move& last_move)
 {
 	AI* bot = (AI*) Players[Active];
 
@@ -56,7 +56,7 @@ void TicTacToe::TakeAITurn(const move& last_move)
 
 	std::cout << "It's  " << bot_name << "'s turn! ";
 
-	move ai_move = bot->MakeMove(s_Board);
+	Move ai_move = bot->MakeMove(s_Board);
 
 	std::cout << bot_name << " picked [" << ai_move.x << ", " << ai_move.y << "]" << std::endl;
 
@@ -87,11 +87,11 @@ void TicTacToe::PvERound()
 {
 	PrintBoard();
 
-	move player_move = move();
+	Move player_move = Move();
 
 	while (TakePlayerTurn(player_move) != TURN_END) {};
 
-	if (STATE != RUNNING) return;
+	if (m_State != RUNNING) return;
 
 	else SetUpNextTurn();
 
@@ -102,7 +102,7 @@ void TicTacToe::PvPRound()
 {
 	PrintBoard();
 
-	move player_move = move();
+	Move player_move = Move();
 
 	while (TakePlayerTurn(player_move) != TURN_END) {};
 }
@@ -116,19 +116,15 @@ void TicTacToe::SetUpPvE()
 {
 	m_Gamemode = static_cast<Gamemode>(&TicTacToe::PvERound);
 
-	Players[0] = Human_Player::CreatePlayer();
+	Players[0] = HumanPlayer::CreatePlayer();
 
 	Log("Choose Difficulty:\n1. Easy  2. Medium  3. Expert\n");
 	int input;
 	std::cin >> input;
 
-	difficulty chosen_difficulty = static_cast<difficulty>(input);
+	Difficulty chosen_difficulty = static_cast<Difficulty>(input);
 
-	const char* bot_name = (chosen_difficulty == EASY) ? "Pam"
-						 : (chosen_difficulty == MEDIUM) ? "Donald J. Trump"
-						 : "Peter Thiel";
-
-	AI* bot = AI::CreatePlayer(bot_name, chosen_difficulty);
+	AI* bot = AI::CreatePlayer(chosen_difficulty);
 
 	bot->SetValidMoves(s_Board.GetValidMoves(), s_Board.nr_of_available_moves);
 
@@ -139,9 +135,9 @@ void TicTacToe::SetUpPvP()
 {
 	m_Gamemode = static_cast<Gamemode>(&TicTacToe::PvPRound);
 
-	Players[0] = Human_Player::CreatePlayer();
+	Players[0] = HumanPlayer::CreatePlayer();
 
-	Players[1] = Human_Player::CreatePlayer();
+	Players[1] = HumanPlayer::CreatePlayer();
 }
 
 void TicTacToe::SetUpGame()
@@ -163,7 +159,7 @@ void TicTacToe::Reset()
 
 	ActiveLetter = UNOCCUPIED;
 
-	STATE = RUNNING;
+	m_State = RUNNING;
 }
 
 
@@ -199,14 +195,14 @@ void TicTacToe::End() const
 {
 	PrintBoard();
 
-	if (STATE == DRAW) PrintDrawMessage();
+	if (m_State == DRAW) PrintDrawMessage();
 
 	else PrintVictoryMessage();
 }
 
 void TicTacToe::Loop()
 {
-	while (STATE == RUNNING)
+	while (m_State == RUNNING)
 	{
 		SetUpNextTurn();
 
@@ -218,7 +214,7 @@ TicTacToe& TicTacToe::Start()
 {
 	static TicTacToe tictactoe = TicTacToe();
 
-	if (tictactoe.STATE != RUNNING) tictactoe.Reset();
+	if (tictactoe.m_State != RUNNING) tictactoe.Reset();
 
 	tictactoe.PrintWelcomeMessage();
 

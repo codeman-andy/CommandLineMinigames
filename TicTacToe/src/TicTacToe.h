@@ -17,8 +17,8 @@ public:
 	struct Board;
 
 	/* API */
-	static letter GetActiveLetter();
-	static letter GetOpponentLetter();
+	static Letter GetActiveLetter();
+	static Letter GetOpponentLetter();
 	void End() const override;
 	void Loop() override;
 	static TicTacToe& Start();
@@ -29,16 +29,16 @@ public:
 private:
 	/* Variables */
 	static Board s_Board;
-	static letter ActiveLetter;
+	static Letter ActiveLetter;
 
 	/* Constructor */
 	TicTacToe();
 
 	/* Override Methods */
-	void MakeMove(const move& move) override;
-	bool GetPlayerMove(move& move) const override;
-	bool TakePlayerTurn(move& move) override;
-	void TakeAITurn(const move& last_move) override;
+	void MakeMove(const Move& Move) override;
+	bool GetPlayerMove(Move& Move) const override;
+	bool TakePlayerTurn(Move& Move) override;
+	void TakeAITurn(const Move& last_move) override;
 	void PvERound() override;
 	void PvPRound() override;
 	void TakeTurn() override;
@@ -63,7 +63,7 @@ private:
 
 
 // Imports the Human_Player-subclass
-#include "Human_Player.h"
+#include "HumanPlayer.h"
 
 // Imports the AI-subclass
 #include "AI.h"

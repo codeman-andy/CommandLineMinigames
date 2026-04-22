@@ -9,8 +9,8 @@
  * The main feature of this class is that its name is user-input designated
  */
 
-class Human_Player : public Player {
+class HumanPlayer : public Player {
 public:
-	/* Interface */
-	static Human_Player* CreatePlayer();
+	/* API */
+	static HumanPlayer* CreatePlayer();
 };

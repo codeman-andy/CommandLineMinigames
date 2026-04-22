@@ -2,19 +2,19 @@
 
 
 /*
- * A simple struct which stores a single TicTacToe move.
+ * A simple struct which stores a single TicTacToe Move.
  */
 
-struct move {
+struct Move {
 	/* Variables */
 	int x;
 	int y;
 
 	/* Constructors */
-	move();
-	move(const int& X, const int& Y);
+	Move();
+	Move(const int& X, const int& Y);
 
 	/* Operator-Overloads */
-	bool operator==(const move& other);
-	bool operator!=(const move& other);
+	bool operator==(const Move& other);
+	bool operator!=(const Move& other);
 };

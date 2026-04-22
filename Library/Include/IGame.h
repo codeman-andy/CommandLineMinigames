@@ -1,14 +1,14 @@
 #pragma once
 
-// Imports Move-struct which will store a single TicTacToe move
+// Imports Move-struct which will store a single TicTacToe Move
 #include "Move.h"
 
 class IGame {
 	/* Methods */
-	virtual void MakeMove(const move& move) = 0;
-	virtual bool GetPlayerMove(move& move) const = 0;
-	virtual bool TakePlayerTurn(move& move) = 0;
-	virtual void TakeAITurn(const move& last_move) = 0;
+	virtual void MakeMove(const Move& Move) = 0;
+	virtual bool GetPlayerMove(Move& Move) const = 0;
+	virtual bool TakePlayerTurn(Move& Move) = 0;
+	virtual void TakeAITurn(const Move& last_move) = 0;
 	virtual void PvERound() = 0;
 	virtual void PvPRound() = 0;
 	virtual void TakeTurn() = 0;

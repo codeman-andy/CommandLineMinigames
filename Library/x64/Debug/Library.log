@@ -1,5 +1,5 @@
 ﻿  Game.cpp
-  Human_Player.cpp
+  HumanPlayer.cpp
   Log.cpp
   Move.cpp
   Player.cpp
