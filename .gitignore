@@ -38,10 +38,15 @@
 *.app
 
 # Directories
-\.vs
 .vs/
 .vs\
-/.vs/
+/.vs
+\.vs
+bin/
+obj/
+
+# Files
+*.user
 
 # debug information files
 *.dwo
