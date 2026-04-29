@@ -25,4 +25,5 @@ class IGame {
 	virtual void PrintBoard() const = 0;
 	virtual void End() const = 0;
 	virtual void Loop() = 0;
+	virtual void Start() = 0;
 };

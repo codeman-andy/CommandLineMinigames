@@ -1,7 +1,5 @@
 #include "AI.h"
 
-#include "TicTacToeBoard.cpp"
-
 AI::AI(const Difficulty& difficulty) : m_valid_moves(nullptr), m_nr_of_valid_moves(NULL), m_difficulty(difficulty)
 {
 	m_name = (m_difficulty == EASY) ? "Pam"
@@ -161,7 +159,7 @@ int AI::FindWinningMove(Move& winning_move, const TicTacToe::Board& board, const
 
 Move AI::PreventLoss(const TicTacToe::Board& board) const
 {
-	Letter opponent_letter = TicTacToe::GetOpponentLetter();
+	Letter opponent_letter = TicTacToe::GetInstance()->GetOpponentLetter();
 
 	Move opponent_winning_move(-33, -33);
 
@@ -172,7 +170,7 @@ Move AI::PreventLoss(const TicTacToe::Board& board) const
 
 Move AI::FindWinOrMakeRandomMove(const TicTacToe::Board& board) const
 {
-	Letter my_letter = TicTacToe::GetActiveLetter();
+	Letter my_letter = TicTacToe::GetInstance()->GetActiveLetter();
 
 	Move winning_move(-33, -33);
 
@@ -184,13 +182,13 @@ Move AI::FindWinOrMakeRandomMove(const TicTacToe::Board& board) const
 
 Move AI::FindWinOrPreventLossOrMakeRandomMove(const TicTacToe::Board& board) const
 {
-	Letter my_letter = TicTacToe::GetActiveLetter();
+	Letter my_letter = TicTacToe::GetInstance()->GetActiveLetter();
 
 	Move winning_move(-33, -33);
 
 	if (FindWinningMove(winning_move, board, my_letter) == WINNER_FOUND) return winning_move;
 
-	Letter opponent_letter = TicTacToe::GetOpponentLetter();
+	Letter opponent_letter = TicTacToe::GetInstance()->GetOpponentLetter();
 
 	Move opponent_winning_move(-33, -33);
 
@@ -239,7 +237,7 @@ int AI::FindMax(const int* const& scores, const int& length)
 
 int AI::MinMaxScore(const Move& last_move, const TicTacToe::Board& board, const int& last_letter)
 {
-	Letter my_letter = TicTacToe::GetActiveLetter();
+	Letter my_letter = TicTacToe::GetInstance()->GetActiveLetter();
 
 	if (board.CheckState(last_move) == GAME_END)
 	{
@@ -282,7 +280,7 @@ int AI::MinMaxScore(const Move& last_move, const TicTacToe::Board& board, const 
 
 Move AI::MinMaxMove(const TicTacToe::Board& board) const
 {
-	Letter my_letter = TicTacToe::GetActiveLetter();
+	Letter my_letter = TicTacToe::GetInstance()->GetActiveLetter();
 
 	int* moves_scores = new int[board.nr_of_available_moves];
 

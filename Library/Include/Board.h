@@ -1,15 +1,15 @@
 #pragma once
 
-#include "Game.h"
+#include "IPrintable.h"
 
 template <unsigned int x, unsigned int y>
-struct Game::Board : public IPrintable {
+struct Gameboard : public IPrintable {
 	inline static const char CharTranslation[3] = { '-', 'X', 'O' };
 	int coordinates[x][y];
 
-	Board() : coordinates({ UNOCCUPIED }) {};
+	Gameboard() : coordinates({ UNOCCUPIED }) {};
 
-	Board(const Board& other)
+	Gameboard(const Gameboard& other)
 	{
 		memcpy(this->coordinates, other.coordinates, sizeof(other.coordinates));
 	}
@@ -49,5 +49,5 @@ struct Game::Board : public IPrintable {
 		return INVALID_COORDINATE;
 	}
 
-	virtual ~Board() {}
+	virtual ~Gameboard() {}
 };

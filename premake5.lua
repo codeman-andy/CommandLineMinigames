@@ -42,8 +42,6 @@ workspace "CommandLineMinigames"
 			
 			cppdialect "C++20"
 
-			staticruntime "On"
-
 			systemversion "latest"
 			
 			defines
@@ -95,8 +93,6 @@ workspace "CommandLineMinigames"
 			
 			cppdialect "C++20"
 
-			staticruntime "On"
-
 			systemversion "latest"
 			
 			defines
@@ -146,8 +142,6 @@ workspace "CommandLineMinigames"
 		filter "system:windows"
 			
 			cppdialect "C++20"
-
-			staticruntime "On"
 
 			systemversion "latest"
 			

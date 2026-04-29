@@ -19,11 +19,7 @@
  */
 
 class Game : public IGame {
-public:
-	/* Gameboard */
-	template <unsigned int x, unsigned int y>
-	struct Board;
-
+protected:
 	typedef void (Game::*Gamemode)();
 
 	/* Variables */

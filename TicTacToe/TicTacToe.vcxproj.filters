@@ -24,9 +24,6 @@
     <ClCompile Include="src\AI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\TicTacToeBoard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\TicTacToe.h">

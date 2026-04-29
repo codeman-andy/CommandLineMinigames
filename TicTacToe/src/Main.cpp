@@ -2,11 +2,13 @@
 
 void PlayTicTacToe()
 {
-	TicTacToe GAME = TicTacToe::Start();
+	TicTacToe* GAME = TicTacToe::GetInstance();
 
-	GAME.Loop();
+	GAME->Start();
 
-	GAME.End();
+	GAME->Loop();
+
+	GAME->End();
 }
 
 int main()
