@@ -2,11 +2,13 @@
 
 void PlayBattleship()
 {
-	Battleship GAME = Battleship::Start();
+	Battleship* GAME = Battleship::GetInstance();
 
-	GAME.Loop();
+	GAME->Start();
 
-	GAME.End();
+	GAME->Loop();
+
+	GAME->End();
 }
 
 int main()

@@ -1,26 +1,25 @@
-#include "BattleshipBoard.cpp"
+#include "Battleship.h"
 
-Battleship::Homeboard Battleship::PlayerHomeboard[2];
-Battleship::Hitsboard Battleship::PlayerHitsboard[2];
+Battleship* Battleship::s_Instance;
 
-Battleship::Battleship() {}
+Battleship::Battleship() : Game(), m_PlayerHomeboard({ Homeboard() }), m_PlayerHitsboard({ Hitsboard() }) {}
 
 void Battleship::MakeMove(const Move& Move)
 {
-	if (PlayerHomeboard[Opponent].CheckHit(Move.x, Move.y) == HIT)
+	if (m_PlayerHomeboard[Opponent].CheckHit(Move.x, Move.y) == HIT)
 	{
-		if (PlayerHomeboard[Opponent].MarkHit(Move.x, Move.y) == true
-			&& PlayerHomeboard[Opponent].CheckState() == GAME_END)
+		if (m_PlayerHomeboard[Opponent].MarkHit(Move.x, Move.y) == true
+			&& m_PlayerHomeboard[Opponent].CheckState() == GAME_END)
 		{
 			m_State = FINISHED;
 		}
 
-		PlayerHitsboard[Active].MarkHit(Move.x, Move.y);
+		m_PlayerHitsboard[Active].MarkHit(Move.x, Move.y);
 	}
 
 	else
 	{
-		PlayerHitsboard[Active].MarkMiss(Move.x, Move.y);
+		m_PlayerHitsboard[Active].MarkMiss(Move.x, Move.y);
 	}
 
 	clear_buffer();
@@ -31,7 +30,7 @@ bool Battleship::GetPlayerMove(Move& Move) const
 {
 	Log("Where do you wish to make a hit? (X Y)\n");
 	std::cin >> Move.x >> Move.y;
-	if (!PlayerHitsboard[Active].XisValid(Move.x) || !PlayerHitsboard[Active].YisValid(Move.y)) return INVALID_COORDINATE;
+	if (!m_PlayerHitsboard[Active].XisValid(Move.x) || !m_PlayerHitsboard[Active].YisValid(Move.y)) return INVALID_COORDINATE;
 
 	else return VALID;
 }
@@ -40,7 +39,7 @@ bool Battleship::TakePlayerTurn(Move& Move)
 {
 	if (GetPlayerMove(Move) == INVALID_COORDINATE) return INVALID_COORDINATE;
 
-	else if (!PlayerHitsboard[Active].isPossible(Move)) return INVALID_MOVE;
+	else if (!m_PlayerHitsboard[Active].isPossible(Move)) return INVALID_MOVE;
 
 	MakeMove(Move);
 
@@ -112,9 +111,9 @@ void Battleship::SetUpBoard()
 
 			placement.Sort();
 		}
-		while (!placement.isValid(vessel_size));
+		while (!placement.isValid(vessel_size) || !m_PlayerHomeboard[Active].isPossible(placement));
 
-		PlayerHomeboard[Active].PlaceVessel(current_type, placement);
+		m_PlayerHomeboard[Active].PlaceVessel(current_type, placement);
 
 		ClearScreen();
 	}
@@ -160,11 +159,13 @@ void Battleship::SetUpGame()
 
 void Battleship::Reset()
 {
-	PlayerHomeboard[0].Reset();
-	PlayerHitsboard[0].Reset();
+	if (m_State != RUNNING) Reset();
 
-	PlayerHomeboard[1].Reset();
-	PlayerHitsboard[1].Reset();
+	m_PlayerHomeboard[0].Reset();
+	m_PlayerHitsboard[0].Reset();
+
+	m_PlayerHomeboard[1].Reset();
+	m_PlayerHitsboard[1].Reset();
 
 	Active = UNASSIGNED;
 
@@ -177,14 +178,14 @@ void Battleship::Reset()
 
 void Battleship::PrintBoard() const
 {
-	PlayerHomeboard[Active].Print();
+	m_PlayerHomeboard[Active].Print();
 }
 
 void Battleship::PrintBoards() const
 {
-	PlayerHitsboard[Active].Print();
+	m_PlayerHitsboard[Active].Print();
 	Log("   ----HITS----BOARD----\n\n");
-	PlayerHomeboard[Active].Print();
+	m_PlayerHomeboard[Active].Print();
 	Log("   ----HOME----BOARD----\n\n");
 }
 
@@ -220,21 +221,25 @@ void Battleship::Loop()
 	}
 }
 
-Battleship& Battleship::Start()
+void Battleship::Start()
 {
-	static Battleship battleship = Battleship();
+	PrintWelcomeMessage();
 
-	if (battleship.m_State != RUNNING) battleship.Reset();
+	SetUpGame();
+}
 
-	battleship.PrintWelcomeMessage();
+Battleship* Battleship::GetInstance()
+{
+	if (s_Instance == nullptr)
+	{
+		s_Instance = new Battleship();
+	}
 
-	battleship.SetUpGame();
-
-	return battleship;
+	return s_Instance;
 }
 
 
 
 /* DESTRUCTOR */
 
-Battleship::~Battleship() {}
+Battleship::~Battleship() { delete s_Instance; }

@@ -6,6 +6,9 @@
 // Imports Board abstract struct
 #include "Board.h"
 
+// Imports the Human_Player-subclass
+#include "HumanPlayer.h"
+
 
 /*
  * TicTacToe is a sub-class of the Game-abstract class.
@@ -153,11 +156,14 @@ public:
 	void Loop() override;
 	void Start() override;
 
+	/* Get singleton-instance */
 	static TicTacToe* GetInstance();
 
 private:
-	/* Variables */
+	/* Singleton-instance */
 	static TicTacToe* s_Instance;
+
+	/* Variables */
 	Board m_Board;
 	Letter m_ActiveLetter;
 
@@ -195,8 +201,5 @@ private:
 };
 
 
-// Imports the Human_Player-subclass
-#include "HumanPlayer.h"
-
-// Imports the AI-subclass
+// Imports the AI-subclass (has to be at the bottom to avoid circular includes)
 #include "AI.h"

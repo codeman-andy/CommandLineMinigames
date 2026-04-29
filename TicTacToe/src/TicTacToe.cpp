@@ -17,8 +17,7 @@ Letter TicTacToe::GetOpponentLetter() const
 void TicTacToe::MakeMove(const Move& Move)
 {
 	m_Board.Mark(Move.x, Move.y, m_ActiveLetter);
-	static int counter = 0;
-	counter++;
+
 	m_State = m_Board.CheckState(Move);
 }
 
