@@ -21,7 +21,8 @@ class IGame {
 	virtual void PrintVictoryMessage() const = 0;
 	virtual void PrintWelcomeMessage() const = 0;
 
-	/* Interface */
+public:
+	/* API */
 	virtual void PrintBoard() const = 0;
 	virtual void End() const = 0;
 	virtual void Loop() = 0;

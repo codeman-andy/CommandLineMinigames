@@ -160,9 +160,6 @@ public:
 	static TicTacToe* GetInstance();
 
 private:
-	/* Singleton-instance */
-	static TicTacToe* s_Instance;
-
 	/* Variables */
 	Board m_Board;
 	Letter m_ActiveLetter;

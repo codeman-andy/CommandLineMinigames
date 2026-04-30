@@ -2,7 +2,7 @@
 
 void PlayBattleship()
 {
-	Battleship* GAME = Battleship::GetInstance();
+	Game* GAME = Battleship::GetInstance();
 
 	GAME->Start();
 

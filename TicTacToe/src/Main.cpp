@@ -2,7 +2,7 @@
 
 void PlayTicTacToe()
 {
-	TicTacToe* GAME = TicTacToe::GetInstance();
+	Game* GAME = TicTacToe::GetInstance();
 
 	GAME->Start();
 

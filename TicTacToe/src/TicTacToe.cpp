@@ -1,7 +1,5 @@
 #include "TicTacToe.h"
 
-TicTacToe* TicTacToe::s_Instance;
-
 TicTacToe::TicTacToe() : Game(), m_Board(Board()), m_ActiveLetter(UNOCCUPIED) {}
 
 Letter TicTacToe::GetActiveLetter() const
@@ -225,11 +223,11 @@ TicTacToe* TicTacToe::GetInstance()
 		s_Instance = new TicTacToe();
 	}
 
-	return s_Instance;
+	return static_cast<TicTacToe*>(s_Instance);
 }
 
 
 
 /* DESTRUCTOR */
 
-TicTacToe::~TicTacToe() { delete s_Instance; }
+TicTacToe::~TicTacToe() {}

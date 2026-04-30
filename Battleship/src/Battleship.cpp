@@ -1,7 +1,5 @@
 #include "Battleship.h"
 
-Battleship* Battleship::s_Instance;
-
 Battleship::Battleship() : Game(), m_PlayerHomeboard({ Homeboard() }), m_PlayerHitsboard({ Hitsboard() }) {}
 
 void Battleship::MakeMove(const Move& Move)
@@ -235,11 +233,11 @@ Battleship* Battleship::GetInstance()
 		s_Instance = new Battleship();
 	}
 
-	return s_Instance;
+	return static_cast<Battleship*>(s_Instance);
 }
 
 
 
 /* DESTRUCTOR */
 
-Battleship::~Battleship() { delete s_Instance; }
+Battleship::~Battleship() {}

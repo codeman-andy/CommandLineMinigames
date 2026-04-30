@@ -20,7 +20,11 @@
 
 class Game : public IGame {
 protected:
+	/* Function-pointer to either the PvP or the PvE gamemode */
 	typedef void (Game::*Gamemode)();
+
+	/* Singleton-instance */
+	static Game* s_Instance;
 
 	/* Variables */
 	State m_State;

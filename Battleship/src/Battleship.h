@@ -335,9 +335,6 @@ public:
 	static Battleship* GetInstance();
 
 private:
-	/* Singleton-instance */
-	static Battleship* s_Instance;
-
 	/* Variables */
 	Homeboard m_PlayerHomeboard[2];
 	Hitsboard m_PlayerHitsboard[2];
