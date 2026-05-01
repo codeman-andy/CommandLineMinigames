@@ -52,7 +52,7 @@ Move& AI::MakeRandomMove() const
 	return m_valid_moves[random_index];
 }
 
-int AI::FindWinningMoveInRows(Move& winning_move, const TicTacToe::Board& board, const Letter& my_letter)
+int AI::FindWinningMoveInRows(Move& winning_move, const Board& board, const Letter& my_letter)
 {
 	int my_letter_count;
 	Move available_move = Move();
@@ -78,7 +78,7 @@ int AI::FindWinningMoveInRows(Move& winning_move, const TicTacToe::Board& board,
 	return NOT_FOUND;
 }
 
-int AI::FindWinningMoveInCols(Move& winning_move, const TicTacToe::Board& board, const Letter& my_letter)
+int AI::FindWinningMoveInCols(Move& winning_move, const Board& board, const Letter& my_letter)
 {
 	int my_letter_count;
 	Move available_move = Move();
@@ -104,7 +104,7 @@ int AI::FindWinningMoveInCols(Move& winning_move, const TicTacToe::Board& board,
 	return NOT_FOUND;
 }
 
-int AI::FindWinningMoveInDiagonals(Move& winning_move, const TicTacToe::Board& board, const Letter& my_letter)
+int AI::FindWinningMoveInDiagonals(Move& winning_move, const Board& board, const Letter& my_letter)
 {
 	int my_letter_count;
 	Move available_move = Move();
@@ -146,7 +146,7 @@ int AI::FindWinningMoveInDiagonals(Move& winning_move, const TicTacToe::Board& b
 	return NOT_FOUND;
 }
 
-int AI::FindWinningMove(Move& winning_move, const TicTacToe::Board& board, const Letter& my_letter)
+int AI::FindWinningMove(Move& winning_move, const Board& board, const Letter& my_letter)
 {
 	if (FindWinningMoveInRows(winning_move, board, my_letter) == WINNER_FOUND) return WINNER_FOUND;
 
@@ -157,7 +157,7 @@ int AI::FindWinningMove(Move& winning_move, const TicTacToe::Board& board, const
 	return NOT_FOUND;
 }
 
-Move AI::PreventLoss(const TicTacToe::Board& board) const
+Move AI::PreventLoss(const Board& board) const
 {
 	Letter opponent_letter = TicTacToe::GetInstance()->GetOpponentLetter();
 
@@ -168,7 +168,7 @@ Move AI::PreventLoss(const TicTacToe::Board& board) const
 	return opponent_winning_move;
 }
 
-Move AI::FindWinOrMakeRandomMove(const TicTacToe::Board& board) const
+Move AI::FindWinOrMakeRandomMove(const Board& board) const
 {
 	Letter my_letter = TicTacToe::GetInstance()->GetActiveLetter();
 
@@ -180,7 +180,7 @@ Move AI::FindWinOrMakeRandomMove(const TicTacToe::Board& board) const
 }
 
 
-Move AI::FindWinOrPreventLossOrMakeRandomMove(const TicTacToe::Board& board) const
+Move AI::FindWinOrPreventLossOrMakeRandomMove(const Board& board) const
 {
 	Letter my_letter = TicTacToe::GetInstance()->GetActiveLetter();
 
@@ -235,7 +235,7 @@ int AI::FindMax(const int* const& scores, const int& length)
 	return max_index;
 }
 
-int AI::MinMaxScore(const Move& last_move, const TicTacToe::Board& board, const int& last_letter)
+int AI::MinMaxScore(const Move& last_move, const Board& board, const int& last_letter)
 {
 	Letter my_letter = TicTacToe::GetInstance()->GetActiveLetter();
 
@@ -256,7 +256,7 @@ int AI::MinMaxScore(const Move& last_move, const TicTacToe::Board& board, const 
 	// Get scores of available moves
 	for (int index = 0; index < board.nr_of_available_moves; index++)
 	{
-		TicTacToe::Board new_board = board;
+		Board new_board = board;
 
 		new_board.Mark(valid_moves[index].x, valid_moves[index].y, this_letter);
 
@@ -278,7 +278,7 @@ int AI::MinMaxScore(const Move& last_move, const TicTacToe::Board& board, const 
 	return best_score;
 }
 
-Move AI::MinMaxMove(const TicTacToe::Board& board) const
+Move AI::MinMaxMove(const Board& board) const
 {
 	Letter my_letter = TicTacToe::GetInstance()->GetActiveLetter();
 
@@ -287,7 +287,7 @@ Move AI::MinMaxMove(const TicTacToe::Board& board) const
 	// Get scores of available moves
 	for (int index = 0; index < board.nr_of_available_moves; index++)
 	{
-		TicTacToe::Board new_board = board;
+		Board new_board = board;
 
 		new_board.Mark(m_valid_moves[index].x, m_valid_moves[index].y, my_letter);
 
@@ -306,7 +306,7 @@ Move AI::MinMaxMove(const TicTacToe::Board& board) const
 	return m_valid_moves[max_score_index];
 }
 
-Move AI::MakeMove(TicTacToe::Board board) const
+Move AI::MakeMove(Board board) const
 {
 	return (this->*m_algorithm)(board);
 }

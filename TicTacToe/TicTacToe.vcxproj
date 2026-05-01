@@ -137,11 +137,9 @@
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\AI.h" />
     <ClInclude Include="src\TicTacToe.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\AI.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\TicTacToe.cpp" />
   </ItemGroup>

@@ -7,14 +7,20 @@
 
 struct Move {
 	/* Variables */
-	int x;
-	int y;
+	int x, y;
 
 	/* Constructors */
-	Move();
-	Move(const int& X, const int& Y);
+	Move() : x(0), y(0) {}
+	Move(const int& X, const int& Y) : x(X), y(Y) {}
 
 	/* Operator-Overloads */
-	bool operator==(const Move& other);
-	bool operator!=(const Move& other);
+	bool operator==(const Move& other)
+	{
+		return (this->x == other.x && this->y == other.y);
+	}
+
+	bool operator!=(const Move& other)
+	{
+		return (this->x != other.x || this->y != other.y);
+	}
 };

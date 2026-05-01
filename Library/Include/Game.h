@@ -27,15 +27,26 @@ protected:
 	static Game* s_Instance;
 
 	/* Variables */
-	State m_State;
-	Gamemode m_Gamemode;
-	Player* Players[2];
-	int Active;
-	int Opponent;
+	State a_State;
+	Gamemode a_Gamemode;
+	Player* a_Players[2];
+	int a_Active;
+	int a_Opponent;
 
 	/* Constructor*/
-	Game();
+	Game() : a_State(RUNNING),
+			 a_Gamemode(nullptr),
+			 a_Players({ nullptr }),
+			 a_Active(UNASSIGNED),
+			 a_Opponent(UNASSIGNED)
+	{}
 
 	/* Destructor */
-	virtual ~Game();
+	virtual ~Game()
+	{
+		delete s_Instance;
+
+		delete a_Players[0];
+		delete a_Players[1];
+	}
 };

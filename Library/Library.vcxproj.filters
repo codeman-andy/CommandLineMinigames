@@ -36,22 +36,19 @@
     <ClInclude Include="include\Settings.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\PlayerFactory.h" />
+    <ClInclude Include="include\HPFactory.h" />
+    <ClInclude Include="include\AI.h" />
+    <ClInclude Include="include\AIFactory.h" />
+    <ClInclude Include="include\BoardTicTacToe.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\HumanPlayer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\Log.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Move.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Player.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
+    <ClCompile Include="src\AI.cpp" />
   </ItemGroup>
 </Project>

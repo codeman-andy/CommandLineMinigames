@@ -11,6 +11,7 @@
 
 class HumanPlayer : public Player {
 public:
-	/* API */
-	static HumanPlayer* CreatePlayer();
+	/* Constructor */
+	HumanPlayer(const char* name) : Player(name)
+	{}
 };

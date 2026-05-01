@@ -146,22 +146,25 @@ copy /B /Y ..\bin\windows-x86_64-Dist\Library\Library.lib ..\bin\windows-x86_64-
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="include\AIFactory.h" />
     <ClInclude Include="include\Board.h" />
+    <ClInclude Include="include\BoardTicTacToe.h" />
     <ClInclude Include="include\Game.h" />
+    <ClInclude Include="include\HPFactory.h" />
     <ClInclude Include="include\HumanPlayer.h" />
     <ClInclude Include="include\IGame.h" />
     <ClInclude Include="include\IPrintable.h" />
     <ClInclude Include="include\Log.h" />
     <ClInclude Include="include\Move.h" />
     <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\PlayerFactory.h" />
     <ClInclude Include="include\Settings.h" />
+    <ClInclude Include="include\AI.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\AI.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\HumanPlayer.cpp" />
     <ClCompile Include="src\Log.cpp" />
-    <ClCompile Include="src\Move.cpp" />
-    <ClCompile Include="src\Player.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

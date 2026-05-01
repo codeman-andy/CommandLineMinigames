@@ -4,20 +4,20 @@ Battleship::Battleship() : Game(), m_PlayerHomeboard({ Homeboard() }), m_PlayerH
 
 void Battleship::MakeMove(const Move& Move)
 {
-	if (m_PlayerHomeboard[Opponent].CheckHit(Move.x, Move.y) == HIT)
+	if (m_PlayerHomeboard[a_Opponent].CheckHit(Move.x, Move.y) == HIT)
 	{
-		if (m_PlayerHomeboard[Opponent].MarkHit(Move.x, Move.y) == true
-			&& m_PlayerHomeboard[Opponent].CheckState() == GAME_END)
+		if (m_PlayerHomeboard[a_Opponent].MarkHit(Move.x, Move.y) == true
+			&& m_PlayerHomeboard[a_Opponent].CheckState() == GAME_END)
 		{
-			m_State = FINISHED;
+			a_State = FINISHED;
 		}
 
-		m_PlayerHitsboard[Active].MarkHit(Move.x, Move.y);
+		m_PlayerHitsboard[a_Active].MarkHit(Move.x, Move.y);
 	}
 
 	else
 	{
-		m_PlayerHitsboard[Active].MarkMiss(Move.x, Move.y);
+		m_PlayerHitsboard[a_Active].MarkMiss(Move.x, Move.y);
 	}
 
 	clear_buffer();
@@ -28,7 +28,7 @@ bool Battleship::GetPlayerMove(Move& Move) const
 {
 	Log("Where do you wish to make a hit? (X Y)\n");
 	std::cin >> Move.x >> Move.y;
-	if (!m_PlayerHitsboard[Active].XisValid(Move.x) || !m_PlayerHitsboard[Active].YisValid(Move.y)) return INVALID_COORDINATE;
+	if (!m_PlayerHitsboard[a_Active].XisValid(Move.x) || !m_PlayerHitsboard[a_Active].YisValid(Move.y)) return INVALID_COORDINATE;
 
 	else return VALID;
 }
@@ -37,7 +37,7 @@ bool Battleship::TakePlayerTurn(Move& Move)
 {
 	if (GetPlayerMove(Move) == INVALID_COORDINATE) return INVALID_COORDINATE;
 
-	else if (!m_PlayerHitsboard[Active].isPossible(Move)) return INVALID_MOVE;
+	else if (!m_PlayerHitsboard[a_Active].isPossible(Move)) return INVALID_MOVE;
 
 	MakeMove(Move);
 
@@ -52,9 +52,9 @@ void Battleship::TakeAITurn(const Move& last_move)
 
 void Battleship::TogglePlayer()
 {
-	Active = (Active == 0) ? 1 : 0;
+	a_Active = (a_Active == 0) ? 1 : 0;
 
-	Opponent = (Active == 1) ? 0 : 1;
+	a_Opponent = (a_Active == 1) ? 0 : 1;
 }
 
 void Battleship::SetUpNextTurn()
@@ -86,7 +86,7 @@ void Battleship::TakeTurn()
 
 void Battleship::SetUpBoard()
 {
-	std::cout << Players[Active]->GetName() << ", let's set up your board..." << std::endl << std::endl;
+	std::cout << a_Players[a_Active]->GetName() << ", let's set up your board..." << std::endl << std::endl;
 
 	for (int type = CARRIER; type < PATROL_BOAT; type++)
 	{
@@ -109,9 +109,9 @@ void Battleship::SetUpBoard()
 
 			placement.Sort();
 		}
-		while (!placement.isValid(vessel_size) || !m_PlayerHomeboard[Active].isPossible(placement));
+		while (!placement.isValid(vessel_size) || !m_PlayerHomeboard[a_Active].isPossible(placement));
 
-		m_PlayerHomeboard[Active].PlaceVessel(current_type, placement);
+		m_PlayerHomeboard[a_Active].PlaceVessel(current_type, placement);
 
 		ClearScreen();
 	}
@@ -131,10 +131,10 @@ void Battleship::SetUpPvE()
 
 void Battleship::SetUpPvP()
 {
-	m_Gamemode = static_cast<Gamemode>(&Battleship::PvPRound);
+	a_Gamemode = static_cast<Gamemode>(&Battleship::PvPRound);
 
-	Players[0] = HumanPlayer::CreatePlayer();
-	Players[1] = HumanPlayer::CreatePlayer();
+	a_Players[0] = HumanPlayer::CreatePlayer();
+	a_Players[1] = HumanPlayer::CreatePlayer();
 
 	TogglePlayer();
 	SetUpBoard();
@@ -157,7 +157,7 @@ void Battleship::SetUpGame()
 
 void Battleship::Reset()
 {
-	if (m_State != RUNNING) Reset();
+	if (a_State != RUNNING) Reset();
 
 	m_PlayerHomeboard[0].Reset();
 	m_PlayerHitsboard[0].Reset();
@@ -165,9 +165,9 @@ void Battleship::Reset()
 	m_PlayerHomeboard[1].Reset();
 	m_PlayerHitsboard[1].Reset();
 
-	Active = UNASSIGNED;
+	a_Active = UNASSIGNED;
 
-	m_State = RUNNING;
+	a_State = RUNNING;
 }
 
 
@@ -176,20 +176,20 @@ void Battleship::Reset()
 
 void Battleship::PrintBoard() const
 {
-	m_PlayerHomeboard[Active].Print();
+	m_PlayerHomeboard[a_Active].Print();
 }
 
 void Battleship::PrintBoards() const
 {
-	m_PlayerHitsboard[Active].Print();
+	m_PlayerHitsboard[a_Active].Print();
 	Log("   ----HITS----BOARD----\n\n");
-	m_PlayerHomeboard[Active].Print();
+	m_PlayerHomeboard[a_Active].Print();
 	Log("   ----HOME----BOARD----\n\n");
 }
 
 void Battleship::PrintVictoryMessage() const
 {
-	const char* winner = Players[Active]->GetName();
+	const char* winner = a_Players[a_Active]->GetName();
 	std::cout << "Congratulations, " << winner << "! You won!" << std::endl;
 }
 
@@ -211,7 +211,7 @@ void Battleship::End() const
 
 void Battleship::Loop()
 {
-	while (m_State == RUNNING)
+	while (a_State == RUNNING)
 	{
 		SetUpNextTurn();
 

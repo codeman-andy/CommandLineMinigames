@@ -10,18 +10,17 @@
  */
 
 class Player {
-public:
+protected:
 	/* Variables */
 	const char* m_name;
 
 	/* Constructors */
-	Player();
-	Player(const char* const& name);
+	Player() : m_name(nullptr)
+	{}
+	Player(const char* const& name) : m_name(name)
+	{}
 
-	/* Methods */
-	static const char* GetPlayerNameFromInput();
-
+public:
 	/* Interface */
-	const char* GetName() const;
-	static Player* CreatePlayer(const char* name);
+	const char* GetName() const	{ return m_name; }
 };

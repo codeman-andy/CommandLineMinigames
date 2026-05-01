@@ -16,7 +16,7 @@ void TicTacToe::MakeMove(const Move& Move)
 {
 	m_Board.Mark(Move.x, Move.y, m_ActiveLetter);
 
-	m_State = m_Board.CheckState(Move);
+	a_State = m_Board.CheckState(Move);
 }
 
 bool TicTacToe::GetPlayerMove(Move& Move) const
@@ -45,7 +45,7 @@ bool TicTacToe::TakePlayerTurn(Move& Move)
 
 void TicTacToe::TakeAITurn(const Move& last_move)
 {
-	AI* bot = (AI*) Players[Active];
+	AI* bot = (AI*) a_Players[a_Active];
 
 	bot->RemoveFromValidMoves(last_move);
 
@@ -69,9 +69,9 @@ void TicTacToe::ToggleLetter()
 
 void TicTacToe::TogglePlayer()
 {
-	Active = (Active == 0) ? 1 : 0;
+	a_Active = (a_Active == 0) ? 1 : 0;
 
-	Opponent = (Active == 1) ? 0 : 1;
+	a_Opponent = (a_Active == 1) ? 0 : 1;
 }
 
 void TicTacToe::SetUpNextTurn()
@@ -88,7 +88,7 @@ void TicTacToe::PvERound()
 
 	while (TakePlayerTurn(player_move) != TURN_END) {};
 
-	if (m_State != RUNNING) return;
+	if (a_State != RUNNING) return;
 
 	else SetUpNextTurn();
 
@@ -106,14 +106,14 @@ void TicTacToe::PvPRound()
 
 void TicTacToe::TakeTurn()
 {
-	(this->*m_Gamemode)();
+	(this->*a_Gamemode)();
 }
 
 void TicTacToe::SetUpPvE()
 {
-	m_Gamemode = static_cast<Gamemode>(&TicTacToe::PvERound);
+	a_Gamemode = static_cast<Gamemode>(&TicTacToe::PvERound);
 
-	Players[0] = HumanPlayer::CreatePlayer();
+	a_Players[0] = HumanPlayer::CreatePlayer();
 
 	Log("Choose Difficulty:\n1. Easy  2. Medium  3. Expert\n");
 	int input;
@@ -125,21 +125,21 @@ void TicTacToe::SetUpPvE()
 
 	bot->SetValidMoves(m_Board.GetValidMoves(), m_Board.nr_of_available_moves);
 
-	Players[1] = bot;
+	a_Players[1] = bot;
 }
 
 void TicTacToe::SetUpPvP()
 {
-	m_Gamemode = static_cast<Gamemode>(&TicTacToe::PvPRound);
+	a_Gamemode = static_cast<Gamemode>(&TicTacToe::PvPRound);
 
-	Players[0] = HumanPlayer::CreatePlayer();
+	a_Players[0] = HumanPlayer::CreatePlayer();
 
-	Players[1] = HumanPlayer::CreatePlayer();
+	a_Players[1] = HumanPlayer::CreatePlayer();
 }
 
 void TicTacToe::SetUpGame()
 {
-	if (m_State != RUNNING) Reset();
+	if (a_State != RUNNING) Reset();
 
 	Log("Select a match:\n1. Player vs. Player\n2. Player vs. AI\n");
 	int input;
@@ -152,9 +152,9 @@ void TicTacToe::SetUpGame()
 
 void TicTacToe::Reset()
 {
-	m_State = RUNNING;
+	a_State = RUNNING;
 
-	Active = UNASSIGNED;
+	a_Active = UNASSIGNED;
 
 	m_Board.Reset();
 
@@ -177,7 +177,7 @@ void TicTacToe::PrintDrawMessage() const
 
 void TicTacToe::PrintVictoryMessage() const
 {
-	const char* winner = Players[Active]->GetName();
+	const char* winner = a_Players[a_Active]->GetName();
 	std::cout << "Congratulations, " << winner << "! You won!" << std::endl;
 }
 
@@ -194,14 +194,14 @@ void TicTacToe::End() const
 {
 	PrintBoard();
 
-	if (m_State == DRAW) PrintDrawMessage();
+	if (a_State == DRAW) PrintDrawMessage();
 
 	else PrintVictoryMessage();
 }
 
 void TicTacToe::Loop()
 {
-	while (m_State == RUNNING)
+	while (a_State == RUNNING)
 	{
 		SetUpNextTurn();
 
