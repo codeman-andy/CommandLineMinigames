@@ -113,15 +113,9 @@ void TicTacToe::SetUpPvE()
 {
 	a_Gamemode = static_cast<Gamemode>(&TicTacToe::PvERound);
 
-	a_Players[0] = HumanPlayer::CreatePlayer();
+	a_Players[0] = HumanPlayerFactory().CreatePlayer();
 
-	Log("Choose Difficulty:\n1. Easy  2. Medium  3. Expert\n");
-	int input;
-	std::cin >> input;
-
-	Difficulty chosen_difficulty = static_cast<Difficulty>(input);
-
-	AI* bot = AI::CreatePlayer(chosen_difficulty);
+	AI* bot = static_cast<AI*>(AIFactory().CreatePlayer());
 
 	bot->SetValidMoves(m_Board.GetValidMoves(), m_Board.nr_of_available_moves);
 
@@ -132,9 +126,9 @@ void TicTacToe::SetUpPvP()
 {
 	a_Gamemode = static_cast<Gamemode>(&TicTacToe::PvPRound);
 
-	a_Players[0] = HumanPlayer::CreatePlayer();
+	a_Players[0] = HumanPlayerFactory().CreatePlayer();
 
-	a_Players[1] = HumanPlayer::CreatePlayer();
+	a_Players[1] = HumanPlayerFactory().CreatePlayer();
 }
 
 void TicTacToe::SetUpGame()

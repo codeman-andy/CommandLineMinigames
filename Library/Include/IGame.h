@@ -3,6 +3,8 @@
 // Imports Move-struct which will store a single TicTacToe Move
 #include "Move.h"
 
+#include "Settings.h"
+
 class IGame {
 	/* Methods */
 	virtual void MakeMove(const Move& Move) = 0;
@@ -23,6 +25,8 @@ class IGame {
 
 public:
 	/* API */
+	virtual Letter GetActiveLetter() const = 0;
+	virtual Letter GetOpponentLetter() const = 0;
 	virtual void PrintBoard() const = 0;
 	virtual void End() const = 0;
 	virtual void Loop() = 0;

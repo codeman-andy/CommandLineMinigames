@@ -2,6 +2,12 @@
 
 #include "IPrintable.h"
 
+#include "Log.h"
+
+#include "Move.h"
+
+#include "Settings.h"
+
 template <unsigned int x, unsigned int y>
 struct Gameboard : public IPrintable {
 	inline static const char CharTranslation[3] = { '-', 'X', 'O' };

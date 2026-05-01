@@ -8,6 +8,7 @@
 
 
 class AIFactory : PlayerFactory {
+public:
 	Player* CreatePlayer() override
 	{
 		Log("Choose Difficulty:\n1. Easy  2. Medium  3. Expert\n");

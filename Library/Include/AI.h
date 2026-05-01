@@ -4,6 +4,8 @@
 
 #include "Move.h"
 
+#include "Game.h"
+
 #include "Player.h"
 
 #include "Settings.h"

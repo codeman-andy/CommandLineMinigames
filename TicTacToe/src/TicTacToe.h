@@ -7,7 +7,7 @@
 #include "BoardTicTacToe.h"
 
 // Imports the Human_Player-subclass
-#include "HumanPlayer.h"
+#include "HPFactory.h"
 
 
 /*
@@ -66,4 +66,6 @@ private:
 
 
 // Imports the AI-subclass (has to be at the bottom to avoid circular includes)
+#include "AIFactory.h"
+
 #include "AI.h"

@@ -19,6 +19,10 @@
  */
 
 class Game : public IGame {
+public:
+	/* Get singleton-instance */
+	static Game* GetInstance();
+
 protected:
 	/* Function-pointer to either the PvP or the PvE gamemode */
 	typedef void (Game::*Gamemode)();

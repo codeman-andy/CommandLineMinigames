@@ -159,7 +159,7 @@ int AI::FindWinningMove(Move& winning_move, const Board& board, const Letter& my
 
 Move AI::PreventLoss(const Board& board) const
 {
-	Letter opponent_letter = TicTacToe::GetInstance()->GetOpponentLetter();
+	Letter opponent_letter = Game::GetInstance()->GetOpponentLetter();
 
 	Move opponent_winning_move(-33, -33);
 
@@ -170,7 +170,7 @@ Move AI::PreventLoss(const Board& board) const
 
 Move AI::FindWinOrMakeRandomMove(const Board& board) const
 {
-	Letter my_letter = TicTacToe::GetInstance()->GetActiveLetter();
+	Letter my_letter = Game::GetInstance()->GetActiveLetter();
 
 	Move winning_move(-33, -33);
 
@@ -182,13 +182,13 @@ Move AI::FindWinOrMakeRandomMove(const Board& board) const
 
 Move AI::FindWinOrPreventLossOrMakeRandomMove(const Board& board) const
 {
-	Letter my_letter = TicTacToe::GetInstance()->GetActiveLetter();
+	Letter my_letter = Game::GetInstance()->GetActiveLetter();
 
 	Move winning_move(-33, -33);
 
 	if (FindWinningMove(winning_move, board, my_letter) == WINNER_FOUND) return winning_move;
 
-	Letter opponent_letter = TicTacToe::GetInstance()->GetOpponentLetter();
+	Letter opponent_letter = Game::GetInstance()->GetOpponentLetter();
 
 	Move opponent_winning_move(-33, -33);
 
@@ -237,7 +237,7 @@ int AI::FindMax(const int* const& scores, const int& length)
 
 int AI::MinMaxScore(const Move& last_move, const Board& board, const int& last_letter)
 {
-	Letter my_letter = TicTacToe::GetInstance()->GetActiveLetter();
+	Letter my_letter = Game::GetInstance()->GetActiveLetter();
 
 	if (board.CheckState(last_move) == GAME_END)
 	{
@@ -280,7 +280,7 @@ int AI::MinMaxScore(const Move& last_move, const Board& board, const int& last_l
 
 Move AI::MinMaxMove(const Board& board) const
 {
-	Letter my_letter = TicTacToe::GetInstance()->GetActiveLetter();
+	Letter my_letter = Game::GetInstance()->GetActiveLetter();
 
 	int* moves_scores = new int[board.nr_of_available_moves];
 
