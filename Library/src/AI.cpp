@@ -1,57 +1,5 @@
 #include "AI.h"
 
-AI::AI(const Difficulty& difficulty) : m_valid_moves(nullptr), m_nr_of_valid_moves(NULL), m_difficulty(difficulty)
-{
-	m_name = (m_difficulty == EASY) ? "Pam"
-		   : (m_difficulty == MEDIUM) ? "Donald J. Trump"
-		   : "Peter Thiel";
-
-	m_algorithm = (m_difficulty == EASY) ? &AI::FindWinOrMakeRandomMove
-			   : (m_difficulty == MEDIUM) ? &AI::FindWinOrPreventLossOrMakeRandomMove
-			   : &AI::MinMaxMove;
-}
-
-void AI::SetDifficulty(const Difficulty& difficulty)
-{
-	m_difficulty = difficulty;
-}
-
-unsigned int AI::FindMoveIndex(const Move& move) const
-{
-	unsigned int index = 0;
-	while (m_valid_moves[index] != move)
-	{
-		index++;
-	}
-	return index;
-}
-
-void AI::DecrementValidMoves(unsigned int index)
-{
-	m_nr_of_valid_moves--;
-
-	for (index; index < m_nr_of_valid_moves; index++) m_valid_moves[index] = m_valid_moves[index + 1];
-}
-
-void AI::SetValidMoves(Move* const& valid_moves, const int& nr_of_valid_moves)
-{
-	m_valid_moves = valid_moves;
-	m_nr_of_valid_moves = nr_of_valid_moves;
-}
-
-void AI::RemoveFromValidMoves(const Move& move)
-{
-	unsigned int index = FindMoveIndex(move);
-
-	DecrementValidMoves(index);
-}
-
-Move& AI::MakeRandomMove() const
-{
-	int random_index = rand() % (m_nr_of_valid_moves - 1);
-	return m_valid_moves[random_index];
-}
-
 int AI::FindWinningMoveInRows(Move& winning_move, const Board& board, const Letter& my_letter)
 {
 	int my_letter_count;
@@ -157,46 +105,6 @@ int AI::FindWinningMove(Move& winning_move, const Board& board, const Letter& my
 	return NOT_FOUND;
 }
 
-Move AI::PreventLoss(const Board& board) const
-{
-	Letter opponent_letter = Game::GetInstance()->GetOpponentLetter();
-
-	Move opponent_winning_move(-33, -33);
-
-	FindWinningMove(opponent_winning_move, board, opponent_letter);
-	
-	return opponent_winning_move;
-}
-
-Move AI::FindWinOrMakeRandomMove(const Board& board) const
-{
-	Letter my_letter = Game::GetInstance()->GetActiveLetter();
-
-	Move winning_move(-33, -33);
-
-	if (FindWinningMove(winning_move, board, my_letter) == WINNER_FOUND) return winning_move;
-
-	else return MakeRandomMove();
-}
-
-
-Move AI::FindWinOrPreventLossOrMakeRandomMove(const Board& board) const
-{
-	Letter my_letter = Game::GetInstance()->GetActiveLetter();
-
-	Move winning_move(-33, -33);
-
-	if (FindWinningMove(winning_move, board, my_letter) == WINNER_FOUND) return winning_move;
-
-	Letter opponent_letter = Game::GetInstance()->GetOpponentLetter();
-
-	Move opponent_winning_move(-33, -33);
-
-	if (FindWinningMove(opponent_winning_move, board, opponent_letter) == WINNER_FOUND) return opponent_winning_move;
-
-	else return MakeRandomMove();
-}
-
 int AI::Min(const int* const& scores, const int& length)
 {
 	int min_value = 10;
@@ -276,44 +184,6 @@ int AI::MinMaxScore(const Move& last_move, const Board& board, const int& last_l
 	delete[] moves_scores;
 
 	return best_score;
-}
-
-Move AI::MinMaxMove(const Board& board) const
-{
-	Letter my_letter = Game::GetInstance()->GetActiveLetter();
-
-	int* moves_scores = new int[board.nr_of_available_moves];
-
-	// Get scores of available moves
-	for (int index = 0; index < board.nr_of_available_moves; index++)
-	{
-		Board new_board = board;
-
-		new_board.Mark(m_valid_moves[index].x, m_valid_moves[index].y, my_letter);
-
-		int score = MinMaxScore(m_valid_moves[index], new_board, my_letter);
-
-		moves_scores[index] = score;
-	}
-
-	// If defeat is inevitable (i.e. every Move leads to a defeat), then delay it as much as possible
-	if (Max(moves_scores, board.nr_of_available_moves) == -10) return PreventLoss(board);
-
-	int max_score_index = FindMax(moves_scores, board.nr_of_available_moves);
-
-	delete[] moves_scores;
-
-	return m_valid_moves[max_score_index];
-}
-
-Move AI::MakeMove(Board board) const
-{
-	return (this->*m_algorithm)(board);
-}
-
-AI* AI::CreatePlayer(const Difficulty& difficulty)
-{
-	return new AI(difficulty);
 }
 
 /* VERY PRIMITIVE, PROOF OF CONCEPT ATTEMPT AT AI

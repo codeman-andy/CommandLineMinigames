@@ -164,7 +164,6 @@ copy /B /Y ..\bin\windows-x86_64-Dist\Library\Library.lib ..\bin\windows-x86_64-
   <ItemGroup>
     <ClCompile Include="src\AI.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\Log.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

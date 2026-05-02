@@ -33,4 +33,7 @@ private:
 
 		return name;
 	}
+
+	/* Destructor */
+	~HumanPlayerFactory() {}
 };

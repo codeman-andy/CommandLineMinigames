@@ -18,4 +18,8 @@ public:
 		Difficulty chosen_difficulty = static_cast<Difficulty>(input);
 		return new AI(chosen_difficulty);
 	}
+
+protected:
+	/* Destructor */
+	~AIFactory() {}
 };
