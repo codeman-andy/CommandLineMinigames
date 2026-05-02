@@ -14,6 +14,9 @@ public:
 		return new HumanPlayer(name);
 	}
 
+	/* Destructor */
+	~HumanPlayerFactory() {}
+
 private:
 	const char* GetPlayerNameFromInput()
 	{
@@ -33,7 +36,4 @@ private:
 
 		return name;
 	}
-
-	/* Destructor */
-	~HumanPlayerFactory() {}
 };

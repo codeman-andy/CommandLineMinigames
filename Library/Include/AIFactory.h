@@ -19,7 +19,6 @@ public:
 		return new AI(chosen_difficulty);
 	}
 
-protected:
 	/* Destructor */
 	~AIFactory() {}
 };
