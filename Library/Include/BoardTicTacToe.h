@@ -2,6 +2,7 @@
 
 #include "Board.h"
 
+
 /* Specialized Tic-Tac-Toe Game Board */
 struct Board : public Gameboard<3, 3> {
 	int row_counter[3];

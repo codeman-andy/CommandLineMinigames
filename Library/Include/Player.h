@@ -21,6 +21,6 @@ protected:
 	{}
 
 public:
-	/* Interface */
+	/* API */
 	const char* GetName() const	{ return m_name; }
 };

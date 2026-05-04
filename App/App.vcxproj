@@ -141,7 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Battleship\Battleship.vcxproj">
-      <Project>{55BF1756-4177-59A3-AA7E-32FF9655F493}</Project>
+      <Project>{55bf1756-4177-59a3-aa7e-32ff9655f493}</Project>
     </ProjectReference>
     <ProjectReference Include="..\TicTacToe\TicTacToe.vcxproj">
       <Project>{25C9BBA1-9133-7018-DA71-21BE461B4E6D}</Project>

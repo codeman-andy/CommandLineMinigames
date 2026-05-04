@@ -59,5 +59,6 @@
     <ClCompile Include="src\Game.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Log.cpp" />
   </ItemGroup>
 </Project>

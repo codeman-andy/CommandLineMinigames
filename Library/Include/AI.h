@@ -2,13 +2,8 @@
 
 #include "BoardTicTacToe.h"
 
-#include "Move.h"
-
 #include "Game.h"
 
-#include "Player.h"
-
-#include "Settings.h"
 
 /*
  * AI is a public sub-class of the Player-class.

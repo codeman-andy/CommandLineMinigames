@@ -3,7 +3,9 @@
 // Imports Move-struct which will store a single TicTacToe Move
 #include "Move.h"
 
+// Imports the game settings
 #include "Settings.h"
+
 
 class IGame {
 	/* Methods */
@@ -28,7 +30,7 @@ public:
 	virtual Letter GetActiveLetter() const = 0;
 	virtual Letter GetOpponentLetter() const = 0;
 	virtual void PrintBoard() const = 0;
-	virtual void End() const = 0;
+	virtual void End() = 0;
 	virtual void Loop() = 0;
 	virtual void Start() = 0;
 };

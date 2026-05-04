@@ -6,32 +6,23 @@
 // Imports screen-clear method
 #include <stdlib.h>
 
+
 /*
  * Clears in-stream buffer from artifact characters (i.e. the '\n'-character).
  */
 
-void clear_buffer()
-{
-	int c;
-	while ((c = getchar()) != '\n' && c != EOF) {}
-}
+void clear_buffer();
 
 
 /*
  * Clears the console-screen.
  */
 
-void ClearScreen()
-{
-	system("cls");
-}
+void ClearScreen();
 
 
 /*
  * Logs a message out to the console.
  */
 
-void Log(const char* const& message)
-{
-	std::cout << message;
-}
+void Log(const char* const& message);

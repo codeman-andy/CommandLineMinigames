@@ -20,17 +20,19 @@
 class TicTacToe : public Game {
 public:
 	/* API */
-	Letter GetActiveLetter() const { return m_ActiveLetter; }
+	Letter GetActiveLetter() const override { return m_ActiveLetter; }
 
-	Letter GetOpponentLetter() const { return (m_ActiveLetter == O) ? X : O; }
+	Letter GetOpponentLetter() const override { return (m_ActiveLetter == O) ? X : O; }
 
-	void End() const override
+	void End() override
 	{
 		PrintBoard();
 
 		if (a_State == DRAW) PrintDrawMessage();
 
 		else PrintVictoryMessage();
+
+		Shutdown();
 	}
 
 	void Loop() override
@@ -51,7 +53,7 @@ public:
 	}
 
 	/* Get singleton-instance */
-	static TicTacToe* GetInstance();
+	static Game* GetInstance();
 
 private:
 	/* Variables */

@@ -1,12 +1,11 @@
 #include "Battleship.h"
 
-
-Battleship* Battleship::GetInstance()
+Game* Battleship::GetInstance()
 {
 	if (s_Instance == nullptr)
 	{
 		s_Instance = new Battleship();
 	}
 
-	return static_cast<Battleship*>(s_Instance);
+	return s_Instance;
 }

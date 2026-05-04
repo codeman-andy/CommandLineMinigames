@@ -10,6 +10,10 @@
 #include "HPFactory.h"
 
 
+/*
+ * Battleship is a sub-class of the Game-abstract class.
+ */
+
 class Battleship : public Game {
 public:
 	/* Specialized Battleship-struct for Input and Storage of a Vessel's Placement */
@@ -327,11 +331,13 @@ public:
 	};
 
 	/* API */
-	void End() const override
+	void End() override
 	{
 		PrintBoards();
 
 		PrintVictoryMessage();
+
+		Shutdown();
 	}
 
 	void Loop() override
@@ -352,7 +358,7 @@ public:
 	}
 
 	/* Get singleton-instance */
-	static Battleship* GetInstance();
+	static Game* GetInstance();
 
 private:
 	/* Variables */

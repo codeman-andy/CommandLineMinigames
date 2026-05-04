@@ -3,14 +3,9 @@
 // Imports the Game-interface
 #include "IGame.h"
 
-// Imports the game settings
-#include "Settings.h"
-
 // Imports Player-class
 #include "Player.h"
 
-// Imports IPrintable-interface
-#include "IPrintable.h"
 
 /*
  * The Game-superclass that all minigames will inherit
@@ -45,12 +40,18 @@ protected:
 			 a_Opponent(UNASSIGNED)
 	{}
 
+	/* Called at the end of a game, or on program exit */
+	void Shutdown()
+	{
+		delete a_Players[0];
+		delete a_Players[1];
+
+		delete s_Instance;
+		s_Instance = nullptr;
+	}
+
 	/* Destructor */
 	virtual ~Game()
 	{
-		delete s_Instance;
-
-		delete a_Players[0];
-		delete a_Players[1];
 	}
 };

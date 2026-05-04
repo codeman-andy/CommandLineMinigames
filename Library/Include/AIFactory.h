@@ -4,8 +4,6 @@
 
 #include "AI.h"
 
-#include "Settings.h"
-
 
 class AIFactory : PlayerFactory {
 public:
