@@ -560,6 +560,6 @@ private:
 	{}
 
 	/* Unused Override Members */
-	Letter GetActiveLetter() const override {}
-	Letter GetOpponentLetter() const override {}
+	Letter GetActiveLetter() const override { return O; }
+	Letter GetOpponentLetter() const override { return O; }
 };

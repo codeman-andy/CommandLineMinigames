@@ -9,6 +9,9 @@
 // Imports the Human_Player-subclass factory
 #include "HPFactory.h"
 
+// Imports the AI-subclass (has to be at the bottom to avoid circular includes)
+#include "AIFactory.h"
+
 
 /*
  * TicTacToe is a sub-class of the Game-abstract class.
@@ -222,9 +225,3 @@ private:
 	~TicTacToe()
 	{}
 };
-
-
-// Imports the AI-subclass (has to be at the bottom to avoid circular includes)
-#include "AIFactory.h"
-
-#include "AI.h"

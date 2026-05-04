@@ -2,6 +2,8 @@ workspace "CommandLineMinigames"
 	
 	architecture "x64"
 
+	startproject "App"
+
 	configurations
 	{
 		"Debug",
@@ -11,11 +13,64 @@ workspace "CommandLineMinigames"
 
 	outputdir = "%{cfg.system}-%{cfg.architecture}-%{cfg.buildcfg}"
 
+	project "App"
+		
+		location "App"
+
+		kind "ConsoleApp"
+
+		language "C++"
+
+		targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+		objdir    ("obj/" .. outputdir .. "/%{prj.name}")
+
+		files
+		{
+			"%{prj.name}/src/**.h",
+			"%{prj.name}/src/**.cpp"
+		}
+
+		includedirs
+		{
+			"Battleship/src",
+			"Library/include",
+			"TicTacToe/src"
+		}
+
+		links
+		{
+			"Battleship",
+			"TicTacToe"
+		}
+
+		filter "system:windows"
+			
+			cppdialect "C++20"
+
+			systemversion "latest"
+			
+			defines
+			{
+				"HZ_PLATFORM_WINDOWS"
+			}
+
+			filter "configurations:Debug"
+				defines "CLG_DEBUG"
+				symbols "On"
+			
+			filter "configurations:Release"
+				defines "CLG_RELEASE"
+				optimize "On"
+			
+			filter "configurations:Dist"
+				defines "CLG_DIST"
+				optimize "On"
+
 	project "Battleship"
 
 		location "Battleship"
 
-		kind "ConsoleApp"
+		kind "StaticLib"
 
 		language "C++"
 
@@ -36,6 +91,11 @@ workspace "CommandLineMinigames"
 		links
 		{
 			"Library"
+		}
+
+		postbuildcommands
+		{
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/App")
 		}
 
 		filter "system:windows"
@@ -85,6 +145,7 @@ workspace "CommandLineMinigames"
 
 		postbuildcommands
 		{
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/App"),
 			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Battleship"),
 			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/TicTacToe")
 		}
@@ -116,7 +177,7 @@ workspace "CommandLineMinigames"
 		
 		location "TicTacToe"
 
-		kind "ConsoleApp"
+		kind "StaticLib"
 
 		language "C++"
 
@@ -137,6 +198,11 @@ workspace "CommandLineMinigames"
 		links
 		{
 			"Library"
+		}
+
+		postbuildcommands
+		{
+			("{COPYFILE} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/App")
 		}
 
 		filter "system:windows"

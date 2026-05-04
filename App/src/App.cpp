@@ -1,8 +1,8 @@
-#include "Battleship.h"
+extern TicTacToe* TicTacToe::GetInstance();
 
-void PlayBattleship()
+void PlayTicTacToe()
 {
-	Game* GAME = Battleship::GetInstance();
+	Game* GAME = TicTacToe::GetInstance();
 
 	GAME->Start();
 
@@ -17,7 +17,7 @@ int main()
 	bool ProgramState = isRunning;
 	while (ProgramState == isRunning)
 	{
-		PlayBattleship();
+		PlayTicTacToe();
 		clear_buffer();
 
 		Log("Would you like to play again?\n");

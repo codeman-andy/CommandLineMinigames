@@ -9,10 +9,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\AI.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AIFactory.h">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="include\Board.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\BoardTicTacToe.h">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="include\Game.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\HPFactory.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="include\HumanPlayer.h">
@@ -33,19 +45,19 @@
     <ClInclude Include="include\Player.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="include\PlayerFactory.h">
+      <Filter>include</Filter>
+    </ClInclude>
     <ClInclude Include="include\Settings.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\PlayerFactory.h" />
-    <ClInclude Include="include\HPFactory.h" />
-    <ClInclude Include="include\AI.h" />
-    <ClInclude Include="include\AIFactory.h" />
-    <ClInclude Include="include\BoardTicTacToe.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\AI.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="src\Game.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\AI.cpp" />
   </ItemGroup>
 </Project>
