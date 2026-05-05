@@ -4,13 +4,13 @@
 #include "Game.h"
 
 // Imports TicTacToeBoard struct
-#include "BoardTicTacToe.h"
+#include "Board/TicTacToe.h"
 
 // Imports the Human_Player-subclass factory
-#include "HPFactory.h"
+#include "Factory/HumanFactory.h"
 
 // Imports the AI-subclass (has to be at the bottom to avoid circular includes)
-#include "AIFactory.h"
+#include "Factory/AIFactory.h"
 
 
 /*

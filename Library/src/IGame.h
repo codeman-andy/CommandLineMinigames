@@ -4,7 +4,7 @@
 #include "Move.h"
 
 // Imports the game settings
-#include "Settings.h"
+#include "Game/Settings.h"
 
 
 class IGame {

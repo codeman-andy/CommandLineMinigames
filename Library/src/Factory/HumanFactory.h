@@ -1,8 +1,8 @@
 #pragma once
 
-#include "PlayerFactory.h"
+#include "Player/Factory.h"
 
-#include "HumanPlayer.h"
+#include "Player/Human.h"
 
 
 class HumanPlayerFactory : PlayerFactory {

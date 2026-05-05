@@ -1,4 +1,4 @@
-#include "Battleship.h"
+#include "Game/Battleship.h"
 
 Game* Battleship::GetInstance()
 {

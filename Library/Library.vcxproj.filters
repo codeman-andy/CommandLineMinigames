@@ -1,64 +1,91 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="include">
-      <UniqueIdentifier>{89AF369E-F58E-B539-FEA6-40106A051C9B}</UniqueIdentifier>
+    <Filter Include="Board">
+      <UniqueIdentifier>{2DDBE70C-99EF-0FBE-6271-B31DCE440CEF}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src">
-      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    <Filter Include="Board\Battleship">
+      <UniqueIdentifier>{0C8C9F36-F884-BE88-21B7-A30D0D0F9E94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Factory">
+      <UniqueIdentifier>{5D9CB1F9-C97B-3095-D293-BB6B3EF296F6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{7FA9857C-6BE0-860D-14CD-6C1000E3020F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Battleship">
+      <UniqueIdentifier>{1E83340D-8A0E-A2D1-931F-25C6FF29FED1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\TicTacToe">
+      <UniqueIdentifier>{CEB7FA70-BA85-EE76-A319-5F9D8F86CADB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{724E55CA-5EF0-7FA0-47AB-93F433EC06F1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{F68B420E-62A0-6ABF-2B22-0E1F97F566F0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\AI.h">
-      <Filter>include</Filter>
+    <ClInclude Include="src\Board.h" />
+    <ClInclude Include="src\Board\Battleship.h">
+      <Filter>Board</Filter>
     </ClInclude>
-    <ClInclude Include="include\AIFactory.h">
-      <Filter>include</Filter>
+    <ClInclude Include="src\Board\Battleship\Placement.h">
+      <Filter>Board\Battleship</Filter>
     </ClInclude>
-    <ClInclude Include="include\Board.h">
-      <Filter>include</Filter>
+    <ClInclude Include="src\Board\Battleship\Vessel.h">
+      <Filter>Board\Battleship</Filter>
     </ClInclude>
-    <ClInclude Include="include\BoardTicTacToe.h">
-      <Filter>include</Filter>
+    <ClInclude Include="src\Board\TicTacToe.h">
+      <Filter>Board</Filter>
     </ClInclude>
-    <ClInclude Include="include\Game.h">
-      <Filter>include</Filter>
+    <ClInclude Include="src\Factory\AIFactory.h">
+      <Filter>Factory</Filter>
     </ClInclude>
-    <ClInclude Include="include\HPFactory.h">
-      <Filter>include</Filter>
+    <ClInclude Include="src\Factory\HumanFactory.h">
+      <Filter>Factory</Filter>
     </ClInclude>
-    <ClInclude Include="include\HumanPlayer.h">
-      <Filter>include</Filter>
+    <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\Game\Battleship.h">
+      <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="include\IGame.h">
-      <Filter>include</Filter>
+    <ClInclude Include="src\Game\Settings.h">
+      <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="include\IPrintable.h">
-      <Filter>include</Filter>
+    <ClInclude Include="src\Game\TicTacToe.h">
+      <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="include\Log.h">
-      <Filter>include</Filter>
+    <ClInclude Include="src\IGame.h" />
+    <ClInclude Include="src\IPrintable.h" />
+    <ClInclude Include="src\Move.h" />
+    <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\Player\AI.h">
+      <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="include\Move.h">
-      <Filter>include</Filter>
+    <ClInclude Include="src\Player\Factory.h">
+      <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="include\Player.h">
-      <Filter>include</Filter>
+    <ClInclude Include="src\Player\Human.h">
+      <Filter>Player</Filter>
     </ClInclude>
-    <ClInclude Include="include\PlayerFactory.h">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="include\Settings.h">
-      <Filter>include</Filter>
+    <ClInclude Include="src\Utils\Log.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\AI.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\Game\Battleship\Battleship.cpp">
+      <Filter>Game\Battleship</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\Game\TicTacToe\TicTacToe.cpp">
+      <Filter>Game\TicTacToe</Filter>
     </ClCompile>
-    <ClCompile Include="src\Log.cpp" />
+    <ClCompile Include="src\Player\AI.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utils\Log.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

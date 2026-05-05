@@ -1,4 +1,4 @@
-#include "TicTacToe.h"
+#include "Game/TicTacToe.h"
 
 Game* TicTacToe::GetInstance()
 {

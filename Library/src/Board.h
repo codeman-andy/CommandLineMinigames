@@ -2,11 +2,11 @@
 
 #include "IPrintable.h"
 
-#include "Log.h"
+#include "Utils/Log.h"
 
 #include "Move.h"
 
-#include "Settings.h"
+#include "Game/Settings.h"
 
 
 template <unsigned int x, unsigned int y>

@@ -76,7 +76,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HZ_PLATFORM_WINDOWS;CLG_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <LanguageStandard>stdcpp20</LanguageStandard>
@@ -89,9 +89,7 @@
     <ProjectReference>
     </ProjectReference>
     <PostBuildEvent>
-      <Command>copy /B /Y ..\bin\windows-x86_64-Debug\Library\Library.lib ..\bin\windows-x86_64-Debug\App
-copy /B /Y ..\bin\windows-x86_64-Debug\Library\Library.lib ..\bin\windows-x86_64-Debug\Battleship
-copy /B /Y ..\bin\windows-x86_64-Debug\Library\Library.lib ..\bin\windows-x86_64-Debug\TicTacToe</Command>
+      <Command>copy /B /Y ..\bin\windows-x86_64-Debug\Library\Library.lib ..\bin\windows-x86_64-Debug\App</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -99,7 +97,7 @@ copy /B /Y ..\bin\windows-x86_64-Debug\Library\Library.lib ..\bin\windows-x86_64
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HZ_PLATFORM_WINDOWS;CLG_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -116,9 +114,7 @@ copy /B /Y ..\bin\windows-x86_64-Debug\Library\Library.lib ..\bin\windows-x86_64
     <ProjectReference>
     </ProjectReference>
     <PostBuildEvent>
-      <Command>copy /B /Y ..\bin\windows-x86_64-Release\Library\Library.lib ..\bin\windows-x86_64-Release\App
-copy /B /Y ..\bin\windows-x86_64-Release\Library\Library.lib ..\bin\windows-x86_64-Release\Battleship
-copy /B /Y ..\bin\windows-x86_64-Release\Library\Library.lib ..\bin\windows-x86_64-Release\TicTacToe</Command>
+      <Command>copy /B /Y ..\bin\windows-x86_64-Release\Library\Library.lib ..\bin\windows-x86_64-Release\App</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -126,7 +122,7 @@ copy /B /Y ..\bin\windows-x86_64-Release\Library\Library.lib ..\bin\windows-x86_
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>HZ_PLATFORM_WINDOWS;CLG_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -143,31 +139,36 @@ copy /B /Y ..\bin\windows-x86_64-Release\Library\Library.lib ..\bin\windows-x86_
     <ProjectReference>
     </ProjectReference>
     <PostBuildEvent>
-      <Command>copy /B /Y ..\bin\windows-x86_64-Dist\Library\Library.lib ..\bin\windows-x86_64-Dist\App
-copy /B /Y ..\bin\windows-x86_64-Dist\Library\Library.lib ..\bin\windows-x86_64-Dist\Battleship
-copy /B /Y ..\bin\windows-x86_64-Dist\Library\Library.lib ..\bin\windows-x86_64-Dist\TicTacToe</Command>
+      <Command>copy /B /Y ..\bin\windows-x86_64-Dist\Library\Library.lib ..\bin\windows-x86_64-Dist\App</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="include\AI.h" />
-    <ClInclude Include="include\AIFactory.h" />
-    <ClInclude Include="include\Board.h" />
-    <ClInclude Include="include\BoardTicTacToe.h" />
-    <ClInclude Include="include\Game.h" />
-    <ClInclude Include="include\HPFactory.h" />
-    <ClInclude Include="include\HumanPlayer.h" />
-    <ClInclude Include="include\IGame.h" />
-    <ClInclude Include="include\IPrintable.h" />
-    <ClInclude Include="include\Log.h" />
-    <ClInclude Include="include\Move.h" />
-    <ClInclude Include="include\Player.h" />
-    <ClInclude Include="include\PlayerFactory.h" />
-    <ClInclude Include="include\Settings.h" />
+    <ClInclude Include="src\Board.h" />
+    <ClInclude Include="src\Board\Battleship.h" />
+    <ClInclude Include="src\Board\Battleship\Placement.h" />
+    <ClInclude Include="src\Board\Battleship\Vessel.h" />
+    <ClInclude Include="src\Board\TicTacToe.h" />
+    <ClInclude Include="src\Factory\AIFactory.h" />
+    <ClInclude Include="src\Factory\HumanFactory.h" />
+    <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\Game\Battleship.h" />
+    <ClInclude Include="src\Game\Settings.h" />
+    <ClInclude Include="src\Game\TicTacToe.h" />
+    <ClInclude Include="src\IGame.h" />
+    <ClInclude Include="src\IPrintable.h" />
+    <ClInclude Include="src\Move.h" />
+    <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\Player\AI.h" />
+    <ClInclude Include="src\Player\Factory.h" />
+    <ClInclude Include="src\Player\Human.h" />
+    <ClInclude Include="src\Utils\Log.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\AI.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\Log.cpp" />
+    <ClCompile Include="src\Game\Battleship\Battleship.cpp" />
+    <ClCompile Include="src\Game\TicTacToe\TicTacToe.cpp" />
+    <ClCompile Include="src\Player\AI.cpp" />
+    <ClCompile Include="src\Utils\Log.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

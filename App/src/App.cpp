@@ -1,5 +1,4 @@
-#include "Battleship.h"
-#include "TicTacToe.h"
+#include "CommandLineMinigames.h"
 
 void PlayTicTacToe()
 {

@@ -7,10 +7,6 @@
   </Configurations>
   <Project Path="App\App.vcxproj" Id="46D6870B-B2DF-877C-3B5B-9E7CA763937C" DefaultStartup="true">
   </Project>
-  <Project Path="Battleship\Battleship.vcxproj" Id="55BF1756-4177-59A3-AA7E-32FF9655F493">
-  </Project>
   <Project Path="Library\Library.vcxproj" Id="1AE124DA-86C0-A375-8FD8-2E4CFB360AD7">
-  </Project>
-  <Project Path="TicTacToe\TicTacToe.vcxproj" Id="25C9BBA1-9133-7018-DA71-21BE461B4E6D">
   </Project>
 </Solution>

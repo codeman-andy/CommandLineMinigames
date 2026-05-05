@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BoardTicTacToe.h"
+#include "Board/TicTacToe.h"
 
 #include "Game.h"
 

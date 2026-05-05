@@ -143,12 +143,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Battleship.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\Battleship.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Library\Library.vcxproj">
       <Project>{1AE124DA-86C0-A375-8FD8-2E4CFB360AD7}</Project>
     </ProjectReference>

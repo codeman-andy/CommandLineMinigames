@@ -1,7 +1,7 @@
 #pragma once
 
 // Imports <iostream> to be able to accept user-input
-#include "Log.h"
+#include "Utils/Log.h"
 
 
 /*
