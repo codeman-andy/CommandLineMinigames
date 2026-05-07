@@ -147,13 +147,16 @@
     <ClInclude Include="src\Board\Battleship.h" />
     <ClInclude Include="src\Board\Battleship\Placement.h" />
     <ClInclude Include="src\Board\Battleship\Vessel.h" />
+    <ClInclude Include="src\Board\Snake.h" />
     <ClInclude Include="src\Board\TicTacToe.h" />
     <ClInclude Include="src\Factory\AIFactory.h" />
     <ClInclude Include="src\Factory\HumanFactory.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Game\Battleship.h" />
     <ClInclude Include="src\Game\Settings.h" />
+    <ClInclude Include="src\Game\Snake.h" />
     <ClInclude Include="src\Game\TicTacToe.h" />
+    <ClInclude Include="src\IBoard.h" />
     <ClInclude Include="src\IGame.h" />
     <ClInclude Include="src\IPrintable.h" />
     <ClInclude Include="src\Move.h" />

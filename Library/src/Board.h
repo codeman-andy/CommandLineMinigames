@@ -1,6 +1,6 @@
 #pragma once
 
-#include "IPrintable.h"
+#include "IBoard.h"
 
 #include "Utils/Log.h"
 
@@ -10,7 +10,7 @@
 
 
 template <unsigned int x, unsigned int y>
-struct Gameboard : public IPrintable {
+struct Gameboard : public IBoard {
 	inline static const char CharTranslation[3] = { '-', 'X', 'O' };
 	int coordinates[x][y];
 
@@ -21,7 +21,7 @@ struct Gameboard : public IPrintable {
 		memcpy(this->coordinates, other.coordinates, sizeof(other.coordinates));
 	}
 
-	virtual void Reset()
+	virtual void Reset() override
 	{
 		for (int col = 0; col < x; col++)
 		{
@@ -54,6 +54,11 @@ struct Gameboard : public IPrintable {
 
 		else Log("Your last coordinate was invalid. Please, type your coordinates again.\n");
 		return INVALID_COORDINATE;
+	}
+
+	virtual void OnUpdate()
+	{
+		// Lorem Ipsum
 	}
 
 	virtual ~Gameboard() {}

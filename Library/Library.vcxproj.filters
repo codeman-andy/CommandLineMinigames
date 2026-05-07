@@ -72,6 +72,9 @@
     <ClInclude Include="src\Utils\Log.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\Game\Snake.h" />
+    <ClInclude Include="src\Board\Snake.h" />
+    <ClInclude Include="src\IBoard.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp" />
