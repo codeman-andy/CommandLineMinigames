@@ -6,32 +6,51 @@
 /* Specialized Snake Game Board */
 template <unsigned int x, unsigned int y>
 struct Board : public Gameboard<x, y> {
-	int x_Head, y_Head, x_Tail, y_Tail;
-
 	struct SnakeCell {
-		int x, y;
-		SnakeCell* next, ahead;
+		int x_Pos, y_Pos;
+		Move NextMove;
+
+		SnakeCell(const int& x_Pos, const int& y_Pos, Move next_move)
+					: x_Pos(x_Pos), y_Pos(y_Pos), NextMove(next_move)
+		{}
+
+		MoveCell()
+		{
+			this->x_Pos += NextMove.x;
+			this->y_Pos += NextMove.y;
+		}
+
+		UpdateNextMove(const Move& move)
+		{
+			this->NextMove = move;
+		}
 	};
 
-	Board()
-	{}
+	SnakeCell Head, Tail;
+	unsigned int Length;
+	Move LastMove;
+	Move BoardOfMoves[x][y];
+
+	Board() : Head(2, y), Tail(0, y), Length(3), LastMove(1, 0), BoardOfMoves({ Move(0, 0) })
+	{
+		PlaceCell(Head);
+		PlaceMove(Head.x_Pos, Head.y_Pos, LastMove);
+
+		SnakeCell* middle = new SnakeCell(1, y, &Head, &Tail);
+		PlaceCell(*middle);
+		PlaceMove(middle->x_Pos, middle->y_Pos, LastMove);
+
+		PlaceCell(Tail);
+
+		Head.next = middle;
+
+		Tail.ahead = middle;
+	}
 
 	Board(const Board& other)
 	{
 		memcpy(this->coordinates, other.coordinates, sizeof(other.coordinates));
 	}
-
-	Move* GetValidMoves() const
-	{}
-
-	bool isEmpty() const
-	{}
-
-	bool isFull() const
-	{}
-
-	int hasWinner(const int& index, const int& Check) const
-	{}
 
 	State CheckState(const Move& last_move) const
 	{
@@ -45,9 +64,36 @@ struct Board : public Gameboard<x, y> {
 		this->coordinates[x][y] = X;
 	}
 
+	void PlaceCell(SnakeCell cell)
+	{
+		Mark(cell.x_Pos, cell.y_Pos);
+	}
+
+	void RemoveCell(SnakeCell cell)
+	{
+		this->coordinates[cell.x_Pos][cell.y_Pos] = UNOCCUPIED;
+	}
+
+	void PlaceMove(const int& x, const int& y, Move move)
+	{
+		this->BoardOfMoves[x][y] = move;
+	}
+
 	void OnUpdate() override
 	{
+		Head.UpdateNextMove(LastMove); // Checks for any new input by the user
 
+		PlaceMove(Head.x_Pos, Head.y_Pos, LastMove);
+
+		this->Head.MoveCell();
+
+		PlaceCell(Head);
+
+		RemoveCell(Tail);
+
+		this->Tail.MoveCell();
+
+		this->Tail.UpdateNextMove(BoardOfMoves[Tail.x_Pos][Tail.y_Pos]);
 	}
 
 	void PrintFrame() const
