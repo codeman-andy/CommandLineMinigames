@@ -53,7 +53,7 @@ public:
 		DecrementValidMoves(index);
 	}
 
-	Move MakeMove(Board board) const
+	Move MakeMove(TicTacToeBoard board) const
 	{
 		return (this->*m_algorithm)(board);
 	}
@@ -63,17 +63,17 @@ private:
 	Move* m_valid_moves;
 	unsigned int m_nr_of_valid_moves;
 	Difficulty m_difficulty;
-	Move (AI::* m_algorithm)(const Board&) const;
+	Move (AI::* m_algorithm)(const TicTacToeBoard&) const;
 
 	/* Static Methods */
-	static int FindWinningMoveInRows(Move& winning_move, const Board& board, const Letter& my_letter);
-	static int FindWinningMoveInCols(Move& winning_move, const Board& board, const Letter& my_letter);
-	static int FindWinningMoveInDiagonals(Move& winning_move, const Board& board, const Letter& my_letter);
-	static int FindWinningMove(Move& winning_move, const Board& board, const Letter& my_letter);
+	static int FindWinningMoveInRows(Move& winning_move, const TicTacToeBoard& board, const Letter& my_letter);
+	static int FindWinningMoveInCols(Move& winning_move, const TicTacToeBoard& board, const Letter& my_letter);
+	static int FindWinningMoveInDiagonals(Move& winning_move, const TicTacToeBoard& board, const Letter& my_letter);
+	static int FindWinningMove(Move& winning_move, const TicTacToeBoard& board, const Letter& my_letter);
 	static int Min(const int* const& scores, const int& length);
 	static int Max(const int* const& scores, const int& length);
 	static int FindMax(const int* const& scores, const int& length);
-	static int MinMaxScore(const Move& last_move, const Board& board, const int& last_letter);
+	static int MinMaxScore(const Move& last_move, const TicTacToeBoard& board, const int& last_letter);
 
 	/* Member Methods */
 	unsigned int FindMoveIndex(const Move& move) const
@@ -99,7 +99,7 @@ private:
 		return m_valid_moves[random_index];
 	}
 
-	Move PreventLoss(const Board& board) const
+	Move PreventLoss(const TicTacToeBoard& board) const
 	{
 		Letter opponent_letter = Game::GetInstance()->GetOpponentLetter();
 
@@ -110,7 +110,7 @@ private:
 		return opponent_winning_move;
 	}
 
-	Move FindWinOrMakeRandomMove(const Board& board) const
+	Move FindWinOrMakeRandomMove(const TicTacToeBoard& board) const
 	{
 		Letter my_letter = Game::GetInstance()->GetActiveLetter();
 
@@ -121,7 +121,7 @@ private:
 		else return MakeRandomMove();
 	}
 
-	Move FindWinOrPreventLossOrMakeRandomMove(const Board& board) const
+	Move FindWinOrPreventLossOrMakeRandomMove(const TicTacToeBoard& board) const
 	{
 		Letter my_letter = Game::GetInstance()->GetActiveLetter();
 
@@ -138,7 +138,7 @@ private:
 		else return MakeRandomMove();
 	}
 
-	Move MinMaxMove(const Board& board) const
+	Move MinMaxMove(const TicTacToeBoard& board) const
 	{
 		Letter my_letter = Game::GetInstance()->GetActiveLetter();
 
@@ -147,7 +147,7 @@ private:
 		// Get scores of available moves
 		for (int index = 0; index < board.nr_of_available_moves; index++)
 		{
-			Board new_board = board;
+			TicTacToeBoard new_board = board;
 
 			new_board.Mark(m_valid_moves[index].x, m_valid_moves[index].y, my_letter);
 

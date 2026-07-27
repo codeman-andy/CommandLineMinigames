@@ -179,6 +179,11 @@ struct Homeboard : public Gameboard<11, 9> {
 		Log("   ---------------------\n");
 	}
 
+	// Unused
+	void SetNextMove(const Move& move) override
+	{
+	}
+
 	~Homeboard() {}
 };
 
@@ -210,6 +215,11 @@ struct Hitsboard : Gameboard<11, 9> {
 		}
 
 		Log("   ---------------------\n");
+	}
+
+	// Unused
+	void SetNextMove(const Move& move) override
+	{
 	}
 
 	~Hitsboard() {}

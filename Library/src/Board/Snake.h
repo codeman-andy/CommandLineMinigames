@@ -1,5 +1,6 @@
 #pragma once
 
+// Imports the Board-abstract-struct
 #include "Board.h"
 
 
@@ -14,13 +15,13 @@ struct Board : public Gameboard<x, y> {
 					: x_Pos(x_Pos), y_Pos(y_Pos), NextMove(next_move)
 		{}
 
-		MoveCell()
+		void MakeMove()
 		{
 			this->x_Pos += NextMove.x;
 			this->y_Pos += NextMove.y;
 		}
 
-		UpdateNextMove(const Move& move)
+		void SetNextMove(const Move& move)
 		{
 			this->NextMove = move;
 		}
@@ -69,7 +70,7 @@ struct Board : public Gameboard<x, y> {
 		Mark(cell.x_Pos, cell.y_Pos);
 	}
 
-	void RemoveCell(SnakeCell cell)
+	void ClearCell(SnakeCell cell)
 	{
 		this->coordinates[cell.x_Pos][cell.y_Pos] = UNOCCUPIED;
 	}
@@ -81,19 +82,24 @@ struct Board : public Gameboard<x, y> {
 
 	void OnUpdate() override
 	{
-		Head.UpdateNextMove(LastMove); // Checks for any new input by the user
+		Head.SetNextMove(LastMove); // Checks for any new input by the user
 
 		PlaceMove(Head.x_Pos, Head.y_Pos, LastMove);
 
-		this->Head.MoveCell();
+		this->Head.MakeMove();
 
 		PlaceCell(Head);
 
-		RemoveCell(Tail);
+		ClearCell(Tail);
 
-		this->Tail.MoveCell();
+		this->Tail.MakeMove();
 
-		this->Tail.UpdateNextMove(BoardOfMoves[Tail.x_Pos][Tail.y_Pos]);
+		this->Tail.SetNextMove(BoardOfMoves[Tail.x_Pos][Tail.y_Pos]);
+	}
+
+	void SetNextMove(const Move& move) override
+	{
+		LastMove = move;
 	}
 
 	void PrintFrame() const

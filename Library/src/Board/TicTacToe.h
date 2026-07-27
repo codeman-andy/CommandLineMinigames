@@ -4,15 +4,15 @@
 
 
 /* Specialized Tic-Tac-Toe Game Board */
-struct Board : public Gameboard<3, 3> {
+struct TicTacToeBoard : public Gameboard<3, 3> {
 	int row_counter[3];
 	int col_counter[3];
 	int diagonal_counter[2];
 	int nr_of_available_moves;
 
-	Board() : row_counter({ EMPTY }), col_counter({ EMPTY }), diagonal_counter({ EMPTY }), nr_of_available_moves(9) {}
+	TicTacToeBoard() : row_counter({ EMPTY }), col_counter({ EMPTY }), diagonal_counter({ EMPTY }), nr_of_available_moves(9) {}
 
-	Board(const Board& other) : nr_of_available_moves(other.nr_of_available_moves)
+	TicTacToeBoard(const TicTacToeBoard& other) : nr_of_available_moves(other.nr_of_available_moves)
 	{
 		memcpy(this->coordinates, other.coordinates, sizeof(other.coordinates));
 		memcpy(this->row_counter, other.row_counter, sizeof(other.row_counter));
@@ -133,5 +133,10 @@ struct Board : public Gameboard<3, 3> {
 		Log("  -----\n");
 	}
 
-	~Board() {}
+	// Unused
+	void SetNextMove(const Move& move) override
+	{
+	}
+
+	~TicTacToeBoard() {}
 };

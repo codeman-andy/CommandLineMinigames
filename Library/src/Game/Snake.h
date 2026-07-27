@@ -11,6 +11,9 @@
 
 #include <conio.h>
 
+#include <chrono>
+#include <thread>
+
 
 class Snake : public Game {
 public:
@@ -27,10 +30,57 @@ public:
 	{
 		while (a_State == RUNNING)
 		{
-			while (!_kbhit)
+			while (!_kbhit() && a_State == RUNNING)
 			{
 				m_ActiveBoard->OnUpdate();
+
+				// Wait for 0.5s
+				std::this_thread::sleep_for(std::chrono::milliseconds(500));
 			}
+
+			if (a_State != RUNNING) break; // There was no key stroke. The snake crashed against the wall or itself, ending the game
+
+			// For handling special-keys _getch() returns two separate values, the first one being 0 (0x00) or 224 (0xE0), depending on the compiler
+			// Only then second return value can then properly identify the key pressed
+			switch (_getch())
+			{
+				case 'w':
+				{
+					Move new_move(0, 1);
+					m_ActiveBoard->SetNextMove(new_move);
+					break;
+				}
+				case 'a':
+				{
+					Move new_move(-1, 0);
+					m_ActiveBoard->SetNextMove(new_move);
+					break;
+				}
+				case 's':
+				{
+					Move new_move(0, -1);
+					m_ActiveBoard->SetNextMove(new_move);
+					break;
+				}
+				case 'd':
+				{
+					Move new_move(1, 0);
+					m_ActiveBoard->SetNextMove(new_move);
+					break;
+				}
+				case 0 || 224:
+				{
+					int arrow_key_code = _getch();
+					break;
+				}
+				default:
+				{
+					clear_buffer();
+					continue;
+				}
+			}
+
+			m_ActiveBoard->OnUpdate();
 		}
 	}
 

@@ -13,7 +13,9 @@ void PlayTicTacToe()
 
 void PlayGame(int game)
 {
-	Game* GAME = (game == 1) ? Battleship::GetInstance() : TicTacToe::GetInstance();
+	Game* GAME = (game == 1) ? Battleship::GetInstance()
+			   : (game == 2) ? TicTacToe::GetInstance()
+			   : Snake::GetInstance();
 
 	GAME->Start();
 

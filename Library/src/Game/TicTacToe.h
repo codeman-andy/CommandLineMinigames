@@ -57,12 +57,12 @@ public:
 
 private:
 	/* Variables */
-	Board m_Board;
+	TicTacToeBoard m_Board;
 	Letter m_ActiveLetter;
 
 	/* Constructor */
 	TicTacToe() : Game(),
-				  m_Board(Board()),
+				  m_Board(TicTacToeBoard()),
 				  m_ActiveLetter(UNOCCUPIED)
 	{}
 

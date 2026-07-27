@@ -1,6 +1,6 @@
 #include "AI.h"
 
-int AI::FindWinningMoveInRows(Move& winning_move, const Board& board, const Letter& my_letter)
+int AI::FindWinningMoveInRows(Move& winning_move, const TicTacToeBoard& board, const Letter& my_letter)
 {
 	int my_letter_count;
 	Move available_move = Move();
@@ -26,7 +26,7 @@ int AI::FindWinningMoveInRows(Move& winning_move, const Board& board, const Lett
 	return NOT_FOUND;
 }
 
-int AI::FindWinningMoveInCols(Move& winning_move, const Board& board, const Letter& my_letter)
+int AI::FindWinningMoveInCols(Move& winning_move, const TicTacToeBoard& board, const Letter& my_letter)
 {
 	int my_letter_count;
 	Move available_move = Move();
@@ -52,7 +52,7 @@ int AI::FindWinningMoveInCols(Move& winning_move, const Board& board, const Lett
 	return NOT_FOUND;
 }
 
-int AI::FindWinningMoveInDiagonals(Move& winning_move, const Board& board, const Letter& my_letter)
+int AI::FindWinningMoveInDiagonals(Move& winning_move, const TicTacToeBoard& board, const Letter& my_letter)
 {
 	int my_letter_count;
 	Move available_move = Move();
@@ -94,7 +94,7 @@ int AI::FindWinningMoveInDiagonals(Move& winning_move, const Board& board, const
 	return NOT_FOUND;
 }
 
-int AI::FindWinningMove(Move& winning_move, const Board& board, const Letter& my_letter)
+int AI::FindWinningMove(Move& winning_move, const TicTacToeBoard& board, const Letter& my_letter)
 {
 	if (FindWinningMoveInRows(winning_move, board, my_letter) == WINNER_FOUND) return WINNER_FOUND;
 
@@ -143,7 +143,7 @@ int AI::FindMax(const int* const& scores, const int& length)
 	return max_index;
 }
 
-int AI::MinMaxScore(const Move& last_move, const Board& board, const int& last_letter)
+int AI::MinMaxScore(const Move& last_move, const TicTacToeBoard& board, const int& last_letter)
 {
 	Letter my_letter = Game::GetInstance()->GetActiveLetter();
 
@@ -164,7 +164,7 @@ int AI::MinMaxScore(const Move& last_move, const Board& board, const int& last_l
 	// Get scores of available moves
 	for (int index = 0; index < board.nr_of_available_moves; index++)
 	{
-		Board new_board = board;
+		TicTacToeBoard new_board = board;
 
 		new_board.Mark(valid_moves[index].x, valid_moves[index].y, this_letter);
 
