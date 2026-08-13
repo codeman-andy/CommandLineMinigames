@@ -14,8 +14,9 @@ void PlayTicTacToe()
 void PlayGame(int game)
 {
 	Game* GAME = (game == 1) ? Battleship::GetInstance()
-			   : (game == 2) ? TicTacToe::GetInstance()
-			   : Snake::GetInstance();
+			   : (game == 2) ? TicTacToe ::GetInstance()
+			   :			   Snake	 ::GetInstance()
+	;
 
 	GAME->Start();
 
@@ -28,9 +29,12 @@ int PickGame()
 {
 	int choice;
 	Log("Which game do you want to play?\n");
-	Log("1. Battleship\n2. Tic-Tac-Toe\n");
+	Log("1. Battleship\n2. Tic-Tac-Toe\n3. Snake\n");
 	Log("Choose:");
 	std::cin >> choice;
+
+	ClearScreen();
+
 	return choice;
 }
 

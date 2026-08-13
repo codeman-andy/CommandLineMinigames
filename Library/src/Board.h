@@ -9,7 +9,6 @@
 
 template <unsigned int x, unsigned int y>
 struct Gameboard : public IBoard {
-	inline static const char CharTranslation[3] = { '-', 'X', 'O' };
 	int coordinates[x][y];
 
 	Gameboard() : coordinates({ UNOCCUPIED }) {};

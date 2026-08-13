@@ -20,9 +20,7 @@ public:
 private:
 	const char* GetPlayerNameFromInput()
 	{
-		clear_buffer();
-
-		Log("What do you want to be called? (max. 32-characters)\n");
+		Log("\nWhat do you want to be called? (max. 32-characters)\n");
 		char input[32];
 		std::cin >> input;
 

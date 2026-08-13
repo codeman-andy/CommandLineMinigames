@@ -8,7 +8,7 @@
 
 
 /*
- * Clears in-stream buffer from artifact characters (i.e. the '\n'-character).
+ * Clears in-stream buffer from dangling characters (i.e. the '\n'-character).
  */
 
 void clear_buffer();

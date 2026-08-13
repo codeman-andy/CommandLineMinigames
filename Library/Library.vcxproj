@@ -169,6 +169,7 @@
   <ItemGroup>
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Game\Battleship\Battleship.cpp" />
+    <ClCompile Include="src\Game\Snake\Snake.cpp" />
     <ClCompile Include="src\Game\TicTacToe\TicTacToe.cpp" />
     <ClCompile Include="src\Player\AI.cpp" />
     <ClCompile Include="src\Utils\Log.cpp" />

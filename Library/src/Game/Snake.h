@@ -32,6 +32,10 @@ public:
 		{
 			while (!_kbhit() && a_State == RUNNING)
 			{
+				ClearScreen();
+
+				PrintBoard();
+
 				m_ActiveBoard->OnUpdate();
 
 				// Wait for 0.5s
@@ -94,6 +98,10 @@ public:
 	/* Get singleton-instance */
 	static Game* GetInstance();
 
+	/* Throwaways */
+	Letter GetActiveLetter() const override { return UNOCCUPIED; };
+	Letter GetOpponentLetter() const override { return UNOCCUPIED; };
+
 private:
 	/* Variables */
 	IBoard* m_ActiveBoard;
@@ -111,7 +119,7 @@ private:
 
 		a_Players[1] = nullptr;
 
-		Log("Choose Difficulty:\n1. Easy  2. Medium  3. Expert\n");
+		Log("\nChoose Difficulty:\n1. Easy  2. Medium  3. Expert\n");
 		int input;
 		std::cin >> input;
 
@@ -158,4 +166,17 @@ private:
 	}
 
 	void PrintWelcomeMessage() const override { Log("Welcome to Snake!\n"); }
+
+	/* Throwaways */
+	void MakeMove(const Move& Move) override {};
+	bool GetPlayerMove(Move& Move) const override { return 0; };
+	bool TakePlayerTurn(Move& Move) override { return 0; };
+	void TakeAITurn(const Move& last_move) override {};
+	void PvERound() override {};
+	void PvPRound() override {};
+	void TakeTurn() override {};
+	void TogglePlayer() override {};
+	void SetUpNextTurn() override {};
+	void SetUpPvE() override {};
+	void SetUpPvP() override {};
 };

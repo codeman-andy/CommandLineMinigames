@@ -34,6 +34,9 @@ enum State { RUNNING, FINISHED, DRAW };
 enum Letter { UNOCCUPIED, X, O };
 
 
+const char CharTranslation[3] = { '-', 'X', 'O' };
+
+
 
 /*
  * AI-Difficulty levels.

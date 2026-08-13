@@ -90,5 +90,6 @@
     <ClCompile Include="src\Utils\Log.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game\Snake\Snake.cpp" />
   </ItemGroup>
 </Project>

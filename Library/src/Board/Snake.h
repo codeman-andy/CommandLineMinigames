@@ -32,20 +32,16 @@ struct Board : public Gameboard<x, y> {
 	Move LastMove;
 	Move BoardOfMoves[x][y];
 
-	Board() : Head(2, y), Tail(0, y), Length(3), LastMove(1, 0), BoardOfMoves({ Move(0, 0) })
+	Board() : Head(2, 0, Move(1, 0)), Tail(0, 0, Move(1, 0)), Length(3), LastMove(1, 0), BoardOfMoves({ Move(0, 0) })
 	{
 		PlaceCell(Head);
 		PlaceMove(Head.x_Pos, Head.y_Pos, LastMove);
 
-		SnakeCell* middle = new SnakeCell(1, y, &Head, &Tail);
+		SnakeCell* middle = new SnakeCell(1, 0, Move(1, 0));
 		PlaceCell(*middle);
 		PlaceMove(middle->x_Pos, middle->y_Pos, LastMove);
 
 		PlaceCell(Tail);
-
-		Head.next = middle;
-
-		Tail.ahead = middle;
 	}
 
 	Board(const Board& other)
@@ -116,12 +112,12 @@ struct Board : public Gameboard<x, y> {
 	{
 		PrintFrame();
 
-		for (int y = this->y; y >= 0; y--)
+		for (int row = (y - 1); row >= 0; row--)
 		{
 			std::cout << "| ";
-			for (int x = 0; x < this->x; x++)
+			for (int col = 0; col < x; col++)
 			{
-				std::cout << CharTranslation[this->coordinates[x][y]];
+				std::cout << CharTranslation[this->coordinates[col][row]];
 			}
 			std::cout << "|" << std::endl;
 		}
