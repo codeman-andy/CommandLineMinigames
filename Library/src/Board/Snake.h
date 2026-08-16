@@ -27,12 +27,14 @@ struct Board : public Gameboard<x, y> {
 		}
 	};
 
-	SnakeCell Head, Tail;
-	unsigned int Length;
-	Move LastMove;
+	SnakeCell Head = SnakeCell(2, 0, Move(1, 0));
+	SnakeCell Tail = SnakeCell(0, 0, Move(1, 0));
+	unsigned int Length = 3;
+	Move LastMove = Move(1, 0);
 	Move BoardOfMoves[x][y];
+	void (Board::* food_gen_algorithm)() = &Board::GenerateFoodBasic;
 
-	Board() : Head(2, 0, Move(1, 0)), Tail(0, 0, Move(1, 0)), Length(3), LastMove(1, 0), BoardOfMoves({ Move(0, 0) })
+	Board() : BoardOfMoves({ Move(0, 0) })
 	{
 		PlaceCell(Head);
 		PlaceMove(Head.x_Pos, Head.y_Pos, LastMove);
@@ -43,7 +45,7 @@ struct Board : public Gameboard<x, y> {
 
 		PlaceCell(Tail);
 
-		PlantFood();
+		GenerateFood();
 	}
 
 	Board(const Board& other)
@@ -78,7 +80,7 @@ struct Board : public Gameboard<x, y> {
 		this->BoardOfMoves[x][y] = move;
 	}
 
-	void PlantFood()
+	void GenerateFoodBasic()
 	{
 		int random_x_index = rand() % (x - 1);
 		int random_y_index = rand() % (y - 1);
@@ -90,6 +92,14 @@ struct Board : public Gameboard<x, y> {
 		}
 
 		this->coordinates[random_x_index][random_y_index] = O;
+	}
+
+	void GenerateFood()
+	{
+		(this->*food_gen_algorithm)();
+
+		//if (this->Length >= (x * y / 2))
+		//	food_gen_algorithm = &Board::SomeGenFood;
 	}
 
 	State OnUpdate() override
@@ -109,7 +119,7 @@ struct Board : public Gameboard<x, y> {
 		{
 			Grow();
 
-			PlantFood();
+			GenerateFood();
 		}
 		else
 		{
@@ -128,6 +138,8 @@ struct Board : public Gameboard<x, y> {
 	void Grow()
 	{
 		PlaceCell(Head);
+
+		this->Length++;
 	}
 
 	bool hasEaten()
