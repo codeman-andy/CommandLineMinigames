@@ -21,10 +21,10 @@ private:
 	const char* GetPlayerNameFromInput()
 	{
 		Log("\nWhat do you want to be called? (max. 32-characters)\n");
-		char input[32];
-		std::cin >> input;
+		std::string input;
+		std::getline(std::cin, input);
 
-		size_t name_length = strlen(input);
+		size_t name_length = input.length();
 
 		char* name = (char*) malloc(name_length + 1);
 		for (int i = 0; i <= name_length; i++)

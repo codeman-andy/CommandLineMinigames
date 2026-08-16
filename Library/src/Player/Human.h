@@ -1,5 +1,8 @@
 #pragma once
 
+// Imports 'std::getline()' method to read users' names with whitespaces
+#include <string>
+
 // Imports the parent-class
 #include "Player.h"
 
