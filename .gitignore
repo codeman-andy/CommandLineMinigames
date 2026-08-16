@@ -47,6 +47,7 @@ obj/
 
 # Files
 *.user
+commit_message.txt
 
 # debug information files
 *.dwo

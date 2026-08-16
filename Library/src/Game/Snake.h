@@ -19,8 +19,6 @@ class Snake : public Game {
 public:
 	void End() override
 	{
-		PrintBoard();
-		
 		PrintVictoryMessage();
 
 		Shutdown();
@@ -34,15 +32,21 @@ public:
 			{
 				ClearScreen();
 
-				PrintBoard();
+				a_State = m_ActiveBoard->OnUpdate();
 
-				m_ActiveBoard->OnUpdate();
+				PrintBoard();
 
 				// Wait for 0.5s
 				std::this_thread::sleep_for(std::chrono::milliseconds(500));
 			}
 
-			if (a_State != RUNNING) break; // There was no key stroke. The snake crashed against the wall or itself, ending the game
+			if (a_State != RUNNING)
+			{
+				// There was no key stroke. The snake crashed against the wall or itself, ending the game
+				Log("\nYou have hit the wall and died!\n");
+
+				break;
+			}
 
 			// For handling special-keys _getch() returns two separate values, the first one being 0 (0x00) or 224 (0xE0), depending on the compiler
 			// Only then second return value can then properly identify the key pressed
@@ -83,8 +87,6 @@ public:
 					continue;
 				}
 			}
-
-			m_ActiveBoard->OnUpdate();
 		}
 	}
 
@@ -118,6 +120,8 @@ private:
 		a_Players[0] = HumanPlayerFactory().CreatePlayer();
 
 		a_Players[1] = nullptr;
+
+		a_Active	 = 0;
 
 		Log("\nChoose Difficulty:\n1. Easy  2. Medium  3. Expert\n");
 		int input;
@@ -166,6 +170,10 @@ private:
 	}
 
 	void PrintWelcomeMessage() const override { Log("Welcome to Snake!\n"); }
+
+	/* Destructor */
+	~Snake()
+	{}
 
 	/* Throwaways */
 	void MakeMove(const Move& Move) override {};

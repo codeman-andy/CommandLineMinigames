@@ -53,9 +53,10 @@ struct Gameboard : public IBoard {
 		return INVALID_COORDINATE;
 	}
 
-	virtual void OnUpdate()
+	virtual State OnUpdate()
 	{
-		// Lorem Ipsum
+		// Lorem Ipsum //
+		return RUNNING;
 	}
 
 	virtual ~Gameboard() {}

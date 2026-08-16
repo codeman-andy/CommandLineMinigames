@@ -42,6 +42,8 @@ struct Board : public Gameboard<x, y> {
 		PlaceMove(middle->x_Pos, middle->y_Pos, LastMove);
 
 		PlaceCell(Tail);
+
+		PlantFood();
 	}
 
 	Board(const Board& other)
@@ -76,7 +78,21 @@ struct Board : public Gameboard<x, y> {
 		this->BoardOfMoves[x][y] = move;
 	}
 
-	void OnUpdate() override
+	void PlantFood()
+	{
+		int random_x_index = rand() % (x - 1);
+		int random_y_index = rand() % (y - 1);
+
+		while (this->coordinates[random_x_index][random_y_index] != UNOCCUPIED)
+		{
+			int random_x_index = rand() % (x - 1);
+			int random_y_index = rand() % (y - 1);
+		}
+
+		this->coordinates[random_x_index][random_y_index] = O;
+	}
+
+	State OnUpdate() override
 	{
 		Head.SetNextMove(LastMove); // Checks for any new input by the user
 
@@ -84,13 +100,47 @@ struct Board : public Gameboard<x, y> {
 
 		this->Head.MakeMove();
 
+		if (OutOfBounds())
+		{
+			return FINISHED;
+		}
+
+		if (hasEaten())
+		{
+			Grow();
+
+			PlantFood();
+		}
+		else
+		{
+			PlaceCell(Head);
+
+			ClearCell(Tail);
+
+			this->Tail.MakeMove();
+
+			this->Tail.SetNextMove(BoardOfMoves[Tail.x_Pos][Tail.y_Pos]);
+		}
+
+		return RUNNING;
+	}
+
+	void Grow()
+	{
 		PlaceCell(Head);
+	}
 
-		ClearCell(Tail);
+	bool hasEaten()
+	{
+		return (this->coordinates[Head.x_Pos][Head.y_Pos] == O);
+	}
 
-		this->Tail.MakeMove();
-
-		this->Tail.SetNextMove(BoardOfMoves[Tail.x_Pos][Tail.y_Pos]);
+	bool OutOfBounds()
+	{
+		return !(Head.x_Pos >= 0 &&
+				 Head.x_Pos < x  &&
+				 Head.y_Pos >= 0 &&
+				 Head.y_Pos < y);
 	}
 
 	void SetNextMove(const Move& move) override
