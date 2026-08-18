@@ -26,3 +26,9 @@ void ClearScreen();
  */
 
 void Log(const char* const& message);
+
+/*
+ * Logs a number out to the console.
+ */
+
+void Log(const unsigned int& number);

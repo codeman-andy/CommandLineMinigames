@@ -50,8 +50,8 @@ int main()
 		PlayGame(game);
 		clear_buffer();
 
-		Log("Would you like to play again?\n");
-		Log("1. Yes [0. Exit]\n");
+		Log("\nWould you like to play again?");
+		Log("\n1. Yes [0. Exit]\n");
 		std::cin >> ProgramState;
 	}
 

@@ -15,3 +15,8 @@ void Log(const char* const& message)
 {
 	std::cout << message;
 }
+
+void Log(const unsigned int& number)
+{
+	std::cout << number;
+}

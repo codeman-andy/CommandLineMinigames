@@ -32,7 +32,6 @@ struct Board : public Gameboard<x, y> {
 	unsigned int Length = 3;
 	Move LastMove = Move(1, 0);
 	Move BoardOfMoves[x][y];
-	void (Board::* food_gen_algorithm)() = &Board::GenerateFoodBasic;
 
 	Board() : BoardOfMoves({ Move(0, 0) })
 	{
@@ -60,6 +59,11 @@ struct Board : public Gameboard<x, y> {
 		else return RUNNING;
 	}
 
+	unsigned int GetLength() const
+	{
+		return Length;
+	}
+
 	void Mark(const int& x, const int& y)
 	{
 		this->coordinates[x][y] = X;
@@ -80,26 +84,18 @@ struct Board : public Gameboard<x, y> {
 		this->BoardOfMoves[x][y] = move;
 	}
 
-	void GenerateFoodBasic()
-	{
-		int random_x_index = rand() % (x - 1);
-		int random_y_index = rand() % (y - 1);
-
-		while (this->coordinates[random_x_index][random_y_index] != UNOCCUPIED)
-		{
-			int random_x_index = rand() % (x - 1);
-			int random_y_index = rand() % (y - 1);
-		}
-
-		this->coordinates[random_x_index][random_y_index] = O;
-	}
-
 	void GenerateFood()
 	{
-		(this->*food_gen_algorithm)();
+		int random_x_index;
+		int random_y_index;
 
-		//if (this->Length >= (x * y / 2))
-		//	food_gen_algorithm = &Board::SomeGenFood;
+		do
+		{
+			random_x_index = rand() % (x - 1);
+			random_y_index = rand() % (y - 1);
+		} while (this->coordinates[random_x_index][random_y_index] != UNOCCUPIED);
+
+		this->coordinates[random_x_index][random_y_index] = O;
 	}
 
 	State OnUpdate() override
@@ -112,10 +108,21 @@ struct Board : public Gameboard<x, y> {
 
 		if (OutOfBounds())
 		{
+			Print();
+
+			Log("\nYou have hit the wall and died!\n");
 			return FINISHED;
 		}
 
-		if (hasEaten())
+		else if (HitItself())
+		{
+			Print();
+
+			Log("\nYou have hit yourself and died!\n");
+			return FINISHED;
+		}
+
+		else if (hasEaten())
 		{
 			Grow();
 
@@ -123,8 +130,6 @@ struct Board : public Gameboard<x, y> {
 		}
 		else
 		{
-			PlaceCell(Head);
-
 			ClearCell(Tail);
 
 			this->Tail.MakeMove();
@@ -132,19 +137,26 @@ struct Board : public Gameboard<x, y> {
 			this->Tail.SetNextMove(BoardOfMoves[Tail.x_Pos][Tail.y_Pos]);
 		}
 
+		PlaceCell(Head);
+
+		Print();
+
 		return RUNNING;
 	}
 
 	void Grow()
 	{
-		PlaceCell(Head);
-
 		this->Length++;
 	}
 
 	bool hasEaten()
 	{
 		return (this->coordinates[Head.x_Pos][Head.y_Pos] == O);
+	}
+
+	bool HitItself()
+	{
+		return (this->coordinates[Head.x_Pos][Head.y_Pos] == X);
 	}
 
 	bool OutOfBounds()
@@ -157,7 +169,13 @@ struct Board : public Gameboard<x, y> {
 
 	void SetNextMove(const Move& move) override
 	{
-		LastMove = move;
+		if (IsValid(move))
+			LastMove = move;
+	}
+
+	bool IsValid(const Move& move)
+	{
+		return (move.x * LastMove.x + move.y * LastMove.y == 0);
 	}
 
 	void PrintFrame() const
@@ -167,6 +185,13 @@ struct Board : public Gameboard<x, y> {
 		for (int i = 0; i < x; i++)
 			Log("-");
 
+		Log("\n");
+	}
+
+	void PrintScore() const
+	{
+		Log("\nYour current score is: ");
+		Log(Length - 3);
 		Log("\n");
 	}
 
@@ -185,6 +210,8 @@ struct Board : public Gameboard<x, y> {
 		}
 
 		PrintFrame();
+
+		PrintScore();
 	}
 
 	~Board()

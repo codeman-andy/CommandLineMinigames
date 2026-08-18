@@ -19,8 +19,6 @@ class Snake : public Game {
 public:
 	void End() override
 	{
-		PrintVictoryMessage();
-
 		Shutdown();
 	}
 
@@ -34,8 +32,6 @@ public:
 
 				a_State = m_ActiveBoard->OnUpdate();
 
-				PrintBoard();
-
 				// Wait for 0.5s
 				std::this_thread::sleep_for(std::chrono::milliseconds(500));
 			}
@@ -43,8 +39,6 @@ public:
 			if (a_State != RUNNING)
 			{
 				// There was no key stroke. The snake crashed against the wall or itself, ending the game
-				Log("\nYou have hit the wall and died!\n");
-
 				break;
 			}
 
@@ -164,9 +158,7 @@ private:
 
 	void PrintVictoryMessage() const override
 	{
-		const char* winner = a_Players[a_Active]->GetName();
-
-		std::cout << "Congratulations, " << winner << "! You won!" << std::endl;
+		// Lorem ipsum
 	}
 
 	void PrintWelcomeMessage() const override { Log("Welcome to Snake!\n"); }
