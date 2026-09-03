@@ -2,9 +2,11 @@
 
 #include "Board.h"
 
+#include "TurnBased.h"
+
 
 /* Specialized Tic-Tac-Toe Game Board */
-struct TicTacToeBoard : public Gameboard<3, 3> {
+struct TicTacToeBoard : public TurnBased<3, 3> {
 	int row_counter[3];
 	int col_counter[3];
 	int diagonal_counter[2];
@@ -40,12 +42,12 @@ struct TicTacToeBoard : public Gameboard<3, 3> {
 		return valid_moves;
 	}
 
-	bool isEmpty() const
+	bool IsEmpty() const override
 	{
 		return (this->nr_of_available_moves == 9);
 	}
 
-	bool isFull() const
+	bool IsFull() const override
 	{
 		return (this->nr_of_available_moves == 0);
 	}
@@ -71,7 +73,7 @@ struct TicTacToeBoard : public Gameboard<3, 3> {
 		return RUNNING;
 	}
 
-	State CheckState(const Move& last_move) const
+	State CheckState(const Move& last_move) const override
 	{
 		if ((this->row_counter[last_move.y] == FULL && this->hasWinner(last_move.y, InRow))
 			|| (this->col_counter[last_move.x] == FULL && this->hasWinner(last_move.x, InCol))
@@ -79,7 +81,7 @@ struct TicTacToeBoard : public Gameboard<3, 3> {
 			|| (this->diagonal_counter[1] == FULL && this->hasWinner(1, InDiagRight))
 			) return FINISHED;
 
-		else if (this->isFull()) return DRAW;
+		else if (this->IsFull()) return DRAW;
 
 		else return RUNNING;
 	}
@@ -131,11 +133,6 @@ struct TicTacToeBoard : public Gameboard<3, 3> {
 		}
 
 		Log("  -----\n");
-	}
-
-	// Unused
-	void SetNextMove(const Move& move) override
-	{
 	}
 
 	~TicTacToeBoard() {}

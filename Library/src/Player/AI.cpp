@@ -153,7 +153,7 @@ int AI::MinMaxScore(const Move& last_move, const TicTacToeBoard& board, const in
 		else return -10;
 	}
 
-	if (board.isFull()) return 0;
+	if (board.IsFull()) return 0;
 
 	Letter this_letter = (last_letter == O) ? X : O;
 

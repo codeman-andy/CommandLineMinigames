@@ -6,11 +6,7 @@
 
 #include "Game/Settings.h"
 
-class IBoard : public IPrintable {
+class IGameboard : public IPrintable {
 public:
-	virtual State OnUpdate() = 0;
-
-	virtual  void SetNextMove(const Move& move) = 0;
-
 	virtual  void Reset() = 0;
 };

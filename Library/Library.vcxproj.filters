@@ -74,7 +74,11 @@
     </ClInclude>
     <ClInclude Include="src\Game\Snake.h" />
     <ClInclude Include="src\Board\Snake.h" />
-    <ClInclude Include="src\IBoard.h" />
+    <ClInclude Include="src\IGameboard.h" />
+    <ClInclude Include="src\ITurnBased.h" />
+    <ClInclude Include="src\IRealTime.h" />
+    <ClInclude Include="src\TurnBased.h" />
+    <ClInclude Include="src\RealTime.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp" />

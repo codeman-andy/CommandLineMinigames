@@ -156,14 +156,18 @@
     <ClInclude Include="src\Game\Settings.h" />
     <ClInclude Include="src\Game\Snake.h" />
     <ClInclude Include="src\Game\TicTacToe.h" />
-    <ClInclude Include="src\IBoard.h" />
+    <ClInclude Include="src\IGameboard.h" />
     <ClInclude Include="src\IGame.h" />
     <ClInclude Include="src\IPrintable.h" />
+    <ClInclude Include="src\IRealTime.h" />
+    <ClInclude Include="src\ITurnBased.h" />
     <ClInclude Include="src\Move.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\Player\AI.h" />
     <ClInclude Include="src\Player\Factory.h" />
     <ClInclude Include="src\Player\Human.h" />
+    <ClInclude Include="src\RealTime.h" />
+    <ClInclude Include="src\TurnBased.h" />
     <ClInclude Include="src\Utils\Log.h" />
   </ItemGroup>
   <ItemGroup>

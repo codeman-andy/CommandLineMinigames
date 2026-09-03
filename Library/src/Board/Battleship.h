@@ -3,13 +3,15 @@
 // Imports the Board-abstract-struct
 #include "Board.h"
 
+#include "TurnBased.h"
+
 #include "Battleship/Placement.h"
 
 #include "Battleship/Vessel.h"
 
 
 /* Specialized Battleship Game Boards */
-struct Homeboard : public Gameboard<11, 9> {
+struct Homeboard : public TurnBased<11, 9> {
 	int nr_of_vessels;
 	Vessel vessels[5];
 	Placement placements[5];
@@ -30,19 +32,19 @@ struct Homeboard : public Gameboard<11, 9> {
 		memcpy(this->placements, other.placements, sizeof(other.placements));
 	}
 
-	bool isEmpty() const
+	bool IsEmpty() const override
 	{
 		return (this->nr_of_vessels == 0);
 	}
 
-	bool isFull() const
+	bool IsFull() const override
 	{
 		return (this->nr_of_vessels == 5);
 	}
 
-	State CheckState() const
+	State CheckState(const Move& last_move) const override
 	{
-		if (this->isEmpty()) return FINISHED;
+		if (this->IsEmpty()) return FINISHED;
 
 		else return RUNNING;
 	}
@@ -141,7 +143,7 @@ struct Homeboard : public Gameboard<11, 9> {
 		this->nr_of_vessels = 5;
 	}
 
-	bool isPossible(Placement placement)
+	bool IsPossible(Placement placement)
 	{
 		bool is_possible = true;
 
@@ -179,15 +181,10 @@ struct Homeboard : public Gameboard<11, 9> {
 		Log("   ---------------------\n");
 	}
 
-	// Unused
-	void SetNextMove(const Move& move) override
-	{
-	}
-
 	~Homeboard() {}
 };
 
-struct Hitsboard : Gameboard<11, 9> {
+struct Hitsboard : TurnBased<11, 9> {
 
 	void MarkHit(const int& x, const int& y)
 	{
@@ -215,11 +212,6 @@ struct Hitsboard : Gameboard<11, 9> {
 		}
 
 		Log("   ---------------------\n");
-	}
-
-	// Unused
-	void SetNextMove(const Move& move) override
-	{
 	}
 
 	~Hitsboard() {}

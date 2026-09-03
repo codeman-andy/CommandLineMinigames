@@ -26,6 +26,8 @@ public:
 
 	void End() override
 	{
+		Log("\n");
+
 		PrintBoard();
 
 		if (a_State == DRAW) PrintDrawMessage();
@@ -91,7 +93,7 @@ private:
 	{
 		if (GetPlayerMove(Move) == INVALID_COORDINATE) return INVALID_COORDINATE;
 
-		else if (!m_Board.isPossible(Move)) return INVALID_MOVE;
+		else if (!m_Board.IsPossible(Move)) return INVALID_MOVE;
 
 		MakeMove(Move);
 
@@ -106,7 +108,7 @@ private:
 
 		const char* bot_name = bot->GetName();
 
-		std::cout << "It's  " << bot_name << "'s turn! ";
+		std::cout << "\nIt's  " << bot_name << "'s turn! ";
 
 		Move ai_move = bot->MakeMove(m_Board);
 
@@ -185,13 +187,16 @@ private:
 	{
 		if (a_State != RUNNING) Reset();
 
-		Log("Select a match:\n1. Player vs. Player\n2. Player vs. AI\n");
+		Log("\nSelect a match:\n1. Player vs. Player\n2. Player vs. AI\n");
 		int input;
 		std::cin >> input;
+		clear_buffer();
 
 		if (input == PvP) SetUpPvP();
 
 		else SetUpPvE();
+
+		ClearScreen();
 	}
 
 	void Reset() override
@@ -215,13 +220,13 @@ private:
 	{
 		const char* winner = a_Players[a_Active]->GetName();
 
-		std::cout << "Congratulations, " << winner << "! You won!" << std::endl;
+		std::cout << std::endl << "Congratulations, " << winner << "! You won!" << std::endl;
 	}
 
 	void PrintWelcomeMessage() const override {	Log("Let's play a game of Tic-Tac-Toe!\n");	}
 
 	/* Additional Logging */
-	void PrintDrawMessage() const {	Log("The game ended with no victor...\n"); }
+	void PrintDrawMessage() const {	Log("\nThe game ended with no victor...\n"); }
 
 	/* Destructor */
 	~TicTacToe()

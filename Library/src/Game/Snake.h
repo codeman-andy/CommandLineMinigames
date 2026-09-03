@@ -3,7 +3,7 @@
 // Imports Game-struct and the game settings
 #include "Game.h"
 
-// Imports TicTacToeBoard struct
+// Imports Snake-board struct
 #include "Board/Snake.h"
 
 // Imports the Human_Player-subclass factory
@@ -100,7 +100,7 @@ public:
 
 private:
 	/* Variables */
-	IBoard* m_ActiveBoard;
+	IRealTime* m_ActiveBoard;
 
 	Board<10, 10> m_SmallBoard;
 	Board<20, 20> m_MediumBoard;

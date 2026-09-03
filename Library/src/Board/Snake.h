@@ -3,10 +3,12 @@
 // Imports the Board-abstract-struct
 #include "Board.h"
 
+#include "RealTime.h"
+
 
 /* Specialized Snake Game Board */
 template <unsigned int x, unsigned int y>
-struct Board : public Gameboard<x, y> {
+struct Board : public RealTime<x, y> {
 	struct SnakeCell {
 		int x_Pos, y_Pos;
 		Move NextMove;
@@ -30,17 +32,26 @@ struct Board : public Gameboard<x, y> {
 	SnakeCell Head = SnakeCell(2, 0, Move(1, 0));
 	SnakeCell Tail = SnakeCell(0, 0, Move(1, 0));
 	unsigned int Length = 3;
-	Move LastMove = Move(1, 0);
 	Move BoardOfMoves[x][y];
+
+	/*
+	 * 'LastMove' is a non-dependent name.Non-dependent names are looked up and associated with a declaration immediately,
+	 * whereas dependent names (i.e. 'this->LastMove') aren't until the template they depend on is instantiated.
+	 * 
+	 * Non-dependent name lookup doesn't check inside base class templates (dependent base classes), because the contents
+	 * of that class can change depending on which specialization is chosen.
+	 * 
+	 * Hence, if here we used 'LastMove' it would send off a compiler error, and 'this->LastMove' must be used instead.
+	 */
 
 	Board() : BoardOfMoves({ Move(0, 0) })
 	{
 		PlaceCell(Head);
-		PlaceMove(Head.x_Pos, Head.y_Pos, LastMove);
+		PlaceMove(Head.x_Pos, Head.y_Pos, this->LastMove);
 
 		SnakeCell* middle = new SnakeCell(1, 0, Move(1, 0));
 		PlaceCell(*middle);
-		PlaceMove(middle->x_Pos, middle->y_Pos, LastMove);
+		PlaceMove(middle->x_Pos, middle->y_Pos, this->LastMove);
 
 		PlaceCell(Tail);
 
@@ -50,13 +61,6 @@ struct Board : public Gameboard<x, y> {
 	Board(const Board& other)
 	{
 		memcpy(this->coordinates, other.coordinates, sizeof(other.coordinates));
-	}
-
-	State CheckState(const Move& last_move) const
-	{
-		if (1) return FINISHED;
-
-		else return RUNNING;
 	}
 
 	unsigned int GetLength() const
@@ -100,9 +104,9 @@ struct Board : public Gameboard<x, y> {
 
 	State OnUpdate() override
 	{
-		Head.SetNextMove(LastMove); // Checks for any new input by the user
+		Head.SetNextMove(this->LastMove); // Checks for any new input by the user
 
-		PlaceMove(Head.x_Pos, Head.y_Pos, LastMove);
+		PlaceMove(Head.x_Pos, Head.y_Pos, this->LastMove);
 
 		this->Head.MakeMove();
 
@@ -122,7 +126,7 @@ struct Board : public Gameboard<x, y> {
 			return FINISHED;
 		}
 
-		else if (hasEaten())
+		else if (HasEaten())
 		{
 			Grow();
 
@@ -149,7 +153,7 @@ struct Board : public Gameboard<x, y> {
 		this->Length++;
 	}
 
-	bool hasEaten()
+	bool HasEaten()
 	{
 		return (this->coordinates[Head.x_Pos][Head.y_Pos] == O);
 	}
@@ -159,23 +163,12 @@ struct Board : public Gameboard<x, y> {
 		return (this->coordinates[Head.x_Pos][Head.y_Pos] == X);
 	}
 
-	bool OutOfBounds()
+	bool OutOfBounds() const override
 	{
 		return !(Head.x_Pos >= 0 &&
 				 Head.x_Pos < x  &&
 				 Head.y_Pos >= 0 &&
 				 Head.y_Pos < y);
-	}
-
-	void SetNextMove(const Move& move) override
-	{
-		if (IsValid(move))
-			LastMove = move;
-	}
-
-	bool IsValid(const Move& move)
-	{
-		return (move.x * LastMove.x + move.y * LastMove.y == 0);
 	}
 
 	void PrintFrame() const

@@ -63,7 +63,7 @@ private:
 		if (m_PlayerHomeboard[a_Opponent].CheckHit(Move.x, Move.y) == HIT)
 		{
 			if (m_PlayerHomeboard[a_Opponent].MarkHit(Move.x, Move.y) == true
-				&& m_PlayerHomeboard[a_Opponent].CheckState() == GAME_END)
+				&& m_PlayerHomeboard[a_Opponent].CheckState(Move) == GAME_END)
 			{
 				a_State = FINISHED;
 			}
@@ -93,7 +93,7 @@ private:
 	{
 		if (GetPlayerMove(Move) == INVALID_COORDINATE) return INVALID_COORDINATE;
 
-		else if (!m_PlayerHitsboard[a_Active].isPossible(Move)) return INVALID_MOVE;
+		else if (!m_PlayerHitsboard[a_Active].IsPossible(Move)) return INVALID_MOVE;
 
 		MakeMove(Move);
 
@@ -215,7 +215,7 @@ private:
 				std::cin >> placement.x_start >> placement.x_end >> placement.y_start >> placement.y_end;
 
 				placement.Sort();
-			} while (!placement.isValid(vessel_size) || !m_PlayerHomeboard[a_Active].isPossible(placement));
+			} while (!placement.isValid(vessel_size) || !m_PlayerHomeboard[a_Active].IsPossible(placement));
 
 			m_PlayerHomeboard[a_Active].PlaceVessel(current_type, placement);
 
